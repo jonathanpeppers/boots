@@ -48,7 +48,7 @@ jobs:
     inputs:
       version: 2.1.701
 
-  - bash: |
+  - script: |
       wget https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg -O mono.pkg
       sudo installer -pkg mono.pkg -target / -verbose
     displayName: install Mono
