@@ -11,7 +11,7 @@ namespace Boots.Core
 
 		public TextWriter Logger { get; set; } = Console.Out;
 
-		public async Task Install (CancellationToken token)
+		public async Task Install (CancellationToken token = new CancellationToken ())
 		{
 			if (string.IsNullOrEmpty (Url))
 				throw new ArgumentNullException (nameof (Uri));
