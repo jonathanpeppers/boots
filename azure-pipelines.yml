@@ -6,6 +6,9 @@ name: $(BuildID)
 trigger:
 - master
 
+variables:
+  configuration: Release
+
 jobs:
 
 - job: windows
@@ -22,7 +25,11 @@ jobs:
     displayName: 'build'
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore'
+      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+  - task: VSTest@2
+    displayName: 'Run tests'
+    inputs:
+      testAssemblyVer2: '.\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll'
 
 - job: mac
   pool:
@@ -43,4 +50,8 @@ jobs:
     displayName: 'build'
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore'
+      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+  - task: VSTest@2
+    displayName: 'Run tests'
+    inputs:
+      testAssemblyVer2: '.\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll'
