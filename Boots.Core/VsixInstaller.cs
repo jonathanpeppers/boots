@@ -3,12 +3,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Build.Locator;
 
 namespace Boots.Core
 {
 	class VsixInstaller : Installer
 	{
+		string visualStudioDirectory;
+
 		public VsixInstaller (Bootstrapper boots) : base (boots) { }
 
 		public override string Extension => ".vsix";
@@ -18,11 +19,36 @@ namespace Boots.Core
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException (nameof (file));
 
-			var vsixInstaller = await GetVsixInstallerPath (token);
+			var vs = await GetVisualStudioDirectory (token);
+			var vsixInstaller = Path.Combine (vs, "Common7", "IDE", "VSIXInstaller.exe");
+			var log = Path.GetTempFileName ();
+			try {
+				await RunProcess (vsixInstaller, $"/quiet /logFile:{log} \"{file}\"", token);
+			} finally {
+				await ReadLogFile (log, token);
+			}
+		}
 
+		Task ReadLogFile (string log, CancellationToken token)
+		{
+			return Task.Factory.StartNew (() => {
+				if (File.Exists (log)) {
+					using (var reader = File.OpenText (log)) {
+						while (!reader.EndOfStream) {
+							Boots.Logger.WriteLine (reader.ReadLine ());
+						}
+					}
+				} else {
+					Boots.Logger.WriteLine ($"Log file did not exist: {log}");
+				}
+			}, token);
+		}
+
+		async Task RunProcess (string fileName, string arguments, CancellationToken token)
+		{
 			var psi = new ProcessStartInfo {
-				FileName = vsixInstaller,
-				Arguments = $"/quiet \"{file}\"",
+				FileName = fileName,
+				Arguments = arguments,
 				UseShellExecute = false,
 				RedirectStandardError = true,
 				RedirectStandardOutput = true,
@@ -31,9 +57,9 @@ namespace Boots.Core
 				process.StartInfo = psi;
 				process.ErrorDataReceived += (sender, e) => Boots.Logger.WriteLine (e.Data);
 				process.OutputDataReceived += (sender, e) => Boots.Logger.WriteLine (e.Data);
+				process.Start ();
 				process.BeginErrorReadLine ();
 				process.BeginOutputReadLine ();
-				process.Start ();
 
 				await Task.Run (process.WaitForExit, token);
 
@@ -42,22 +68,45 @@ namespace Boots.Core
 			}
 		}
 
-		async Task<string> GetVsixInstallerPath (CancellationToken token)
+		static async Task<string> Exec (string fileName, string arguments, CancellationToken token)
 		{
-			if (vsixInstaller != null)
-				return vsixInstaller;
-
-			return await Task.Run (() => {
-				var instances = MSBuildLocator.QueryVisualStudioInstances (new VisualStudioInstanceQueryOptions {
-					DiscoveryTypes = DiscoveryType.VisualStudioSetup,
-				});
-				foreach (var instance in instances) {
-					return vsixInstaller = Path.Combine (instance.VisualStudioRootPath, "VSIXInstaller.exe");
-				}
-				throw new Exception ("No Visual Studio instances found!");
-			}, token);
+			var info = new ProcessStartInfo {
+				FileName = fileName,
+				WorkingDirectory = Path.GetDirectoryName (fileName),
+				Arguments = arguments,
+				UseShellExecute = false,
+				RedirectStandardOutput = true,
+				CreateNoWindow = true,
+				WindowStyle = ProcessWindowStyle.Hidden,
+			};
+			using (var process = Process.Start (info)) {
+				await Task.Run (process.WaitForExit, token);
+				return process.StandardOutput.ReadToEnd ().Trim ();
+			}
 		}
 
-		string vsixInstaller;
+		async Task<string> GetVisualStudioDirectory (CancellationToken token)
+		{
+			if (visualStudioDirectory != null)
+				return visualStudioDirectory;
+
+			var vsInstallDir = Environment.GetEnvironmentVariable ("VSINSTALLDIR");
+			if (string.IsNullOrEmpty (vsInstallDir)) {
+				var programFiles = Environment.GetFolderPath (Environment.SpecialFolder.ProgramFilesX86);
+				var vswhere = Path.Combine (programFiles, "Microsoft Visual Studio", "Installer", "vswhere.exe");
+				if (!File.Exists (vswhere))
+					throw new FileNotFoundException ("Cannot find vswhere.exe!", vswhere);
+				visualStudioDirectory = await Exec (vswhere, "-latest -products * -property installationPath", token);
+				if (!Directory.Exists (visualStudioDirectory)) {
+					throw new DirectoryNotFoundException ($"vswhere.exe result returned a directory that did not exist: {visualStudioDirectory}");
+				}
+				Boots.Logger.WriteLine ($"Using path from vswhere: {visualStudioDirectory}");
+				return visualStudioDirectory;
+			} else {
+				Boots.Logger.WriteLine ($"Using path from %VSINSTALLDIR%: {visualStudioDirectory}");
+				return visualStudioDirectory = vsInstallDir;
+			}
+
+		}
 	}
 }

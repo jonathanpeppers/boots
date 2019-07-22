@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,7 +20,7 @@ namespace Boots.Core
 				throw new ArgumentNullException (nameof (Uri));
 
 			Installer installer = null;
-			if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows)) {
+			if (Helpers.IsWindows) {
 				installer = new VsixInstaller (this);
 			} else {
 				installer = new PkgInstaller (this);
