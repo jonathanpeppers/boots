@@ -17,6 +17,8 @@ jobs:
     demands:
     - msbuild
     - vstest
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   steps:
 
   - task: MSBuild@1
@@ -41,6 +43,8 @@ jobs:
   pool:
     name: Hosted macOS
     demands: msbuild
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   steps:
 
   - task: UseDotNet@2
