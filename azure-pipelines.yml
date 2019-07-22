@@ -29,6 +29,7 @@ jobs:
     displayName: Run tests
     inputs:
       testAssemblyVer2: Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll
+      testRunTitle: windows
 
 - job: mac
   pool:
@@ -59,5 +60,6 @@ jobs:
   - task: PublishTestResults@2
     displayName: publish test results
     inputs:
-      testResultsFiles: TestResults\*.trx
+      testResultsFiles: TestResults/*.trx
+      testRunTitle: mac
     condition: succeededOrFailed()
