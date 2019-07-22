@@ -32,6 +32,7 @@ jobs:
   - task: PublishTestResults@2
     displayName: publish test results
     inputs:
+      testResultsFormat: VSTest
       testResultsFiles: TestResults\*.trx
       testRunTitle: windows
     condition: succeededOrFailed()
@@ -65,6 +66,7 @@ jobs:
   - task: PublishTestResults@2
     displayName: publish test results
     inputs:
+      testResultsFormat: VSTest
       testResultsFiles: TestResults/*.trx
       testRunTitle: mac
     condition: succeededOrFailed()
