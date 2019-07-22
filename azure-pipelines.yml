@@ -56,10 +56,4 @@ jobs:
       msbuildArguments: '/restore /p:Configuration=$(configuration)'
 
   - bash: |
-      dotnet vstest .\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll /logger:trx
-
-  - task: PublishTestResults@2
-    displayName: publish test results
-    inputs:
-      testResultsFiles: '*.trx'
-    condition: succeededOrFailed()
+      dotnet vstest .\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:TfsPublisher
