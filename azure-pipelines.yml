@@ -26,6 +26,7 @@ jobs:
     inputs:
       solution: boots.sln
       msbuildArguments: '/restore /p:Configuration=$(configuration)'
+
   - task: VSTest@2
     displayName: 'Run tests'
     inputs:
@@ -42,16 +43,23 @@ jobs:
     displayName: install .NET Core
     inputs:
       version: 2.1.701
+
   - bash: |
       wget https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg -O mono.pkg
       sudo installer -pkg mono.pkg -target / -verbose
     displayName: install Mono
+
   - task: MSBuild@1
     displayName: 'build'
     inputs:
       solution: boots.sln
       msbuildArguments: '/restore /p:Configuration=$(configuration)'
-  - task: VSTest@2
-    displayName: 'Run tests'
+
+  - bash: |
+      dotnet vstest .\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll /logger:trx
+
+  - task: PublishTestResults@2
+    displayName: publish test results
     inputs:
-      testAssemblyVer2: '.\Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll'
+      testResultsFiles: '*.trx'
+    condition: succeededOrFailed()
