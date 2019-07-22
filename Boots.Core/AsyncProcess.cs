@@ -51,7 +51,7 @@ namespace Boots.Core
 			process.Start ();
 			process.BeginErrorReadLine ();
 			process.BeginOutputReadLine ();
-			return Task.Run (() => process.WaitForExit (), token);
+			return Task.Run (process.WaitForExit, token);
 		}
 
 		async Task<int> Run (CancellationToken token = new CancellationToken ())
