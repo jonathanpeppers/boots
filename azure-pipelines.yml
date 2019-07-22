@@ -25,11 +25,16 @@ jobs:
       solution: boots.sln
       msbuildArguments: '/restore /p:Configuration=$(configuration)'
 
-  - task: VSTest@2
+  - script: |
+      dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
     displayName: Run tests
+
+  - task: PublishTestResults@2
+    displayName: publish test results
     inputs:
-      testAssemblyVer2: Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll
+      testResultsFiles: TestResults\*.trx
       testRunTitle: windows
+    condition: succeededOrFailed()
 
 - job: mac
   pool:
@@ -53,7 +58,7 @@ jobs:
       solution: boots.sln
       msbuildArguments: '/restore /p:Configuration=$(configuration)'
 
-  - bash: |
+  - script: |
       dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
     displayName: Run tests
 

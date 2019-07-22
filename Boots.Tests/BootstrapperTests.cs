@@ -14,7 +14,7 @@ namespace Boots.Tests
 			boots.Logger = new TestWriter (output);
 		}
 
-		[SkippableFact (Skip = "On AzDO it wants to close `vstest.console.exe`, skip for now.")]
+		[SkippableFact]
 		public async Task ProjectSystemToolsVsix ()
 		{
 			Skip.IfNot (Helpers.IsWindows);
