@@ -5,13 +5,15 @@ namespace Boots.Core
 {
 	abstract class Installer
 	{
-		protected Bootstrapper Boots;
+		protected readonly Bootstrapper Boots;
 
 		public Installer (Bootstrapper boots)
 		{
 			Boots = boots;
 		}
 
-		public abstract Task Install (CancellationToken token);
+		public abstract string Extension { get; }
+
+		public abstract Task Install (string file, CancellationToken token);
 	}
 }

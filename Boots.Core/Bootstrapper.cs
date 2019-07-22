@@ -19,10 +19,17 @@ namespace Boots.Core
 			if (string.IsNullOrEmpty (Url))
 				throw new ArgumentNullException (nameof (Uri));
 
-			if (Url.EndsWith (".vsix", StringComparison.OrdinalIgnoreCase)) {
-				var vsixInstaller = new VsixInstaller (this);
-				await vsixInstaller.Install (token);
-				return;
+			Installer installer = null;
+			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+				installer = new VsixInstaller (this);
+			} else {
+				//TODO: pkg support here
+				throw new NotImplementedException ();
+			}
+
+			using (var downloader = new Downloader (this, installer.Extension)) {
+				await downloader.Download (token);
+				await installer.Install (downloader.TempFile, token);
 			}
 		}
 	}

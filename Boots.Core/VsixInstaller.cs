@@ -11,18 +11,18 @@ namespace Boots.Core
 	{
 		public VsixInstaller (Bootstrapper boots) : base (boots) { }
 
-		public string FilePath { get; set; }
+		public override string Extension => ".vsix";
 
-		public async override Task Install (CancellationToken token = new CancellationToken ())
+		public async override Task Install (string file, CancellationToken token = new CancellationToken ())
 		{
-			if (string.IsNullOrEmpty (FilePath))
-				throw new ArgumentException (nameof (FilePath));
+			if (string.IsNullOrEmpty (file))
+				throw new ArgumentException (nameof (file));
 
 			var vsixInstaller = await GetVsixInstallerPath (token);
 
 			var psi = new ProcessStartInfo {
 				FileName = vsixInstaller,
-				Arguments = $"/quiet \"{FilePath}\"",
+				Arguments = $"/quiet \"{file}\"",
 				UseShellExecute = false,
 				RedirectStandardError = true,
 				RedirectStandardOutput = true,

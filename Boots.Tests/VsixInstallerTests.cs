@@ -11,7 +11,7 @@ namespace Boots.Tests
 		public async Task NoFilePath ()
 		{
 			var installer = new VsixInstaller (new Bootstrapper ());
-			await Assert.ThrowsAsync<ArgumentException> (() => installer.Install ());
+			await Assert.ThrowsAsync<ArgumentException> (() => installer.Install (null));
 		}
 	}
 }
