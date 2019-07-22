@@ -17,8 +17,6 @@ jobs:
     demands:
     - msbuild
     - vstest
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   steps:
 
   - task: MSBuild@1
@@ -30,6 +28,8 @@ jobs:
   - script: |
       dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
     displayName: Run tests
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
   - task: PublishTestResults@2
     displayName: publish test results
@@ -43,8 +43,6 @@ jobs:
   pool:
     name: Hosted macOS
     demands: msbuild
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   steps:
 
   - task: UseDotNet@2
@@ -66,6 +64,8 @@ jobs:
   - script: |
       dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
     displayName: Run tests
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
   - task: PublishTestResults@2
     displayName: publish test results
