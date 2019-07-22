@@ -19,7 +19,7 @@ namespace Boots.Core
 			if (!File.Exists (file))
 				throw new FileNotFoundException ($"Could not find '${Extension}' installer file.", file);
 
-			using (var proc = new AsyncProcess {
+			using (var proc = new AsyncProcess (Boots) {
 				Command = "/usr/sbin/installer",
 				Arguments = $"-pkg \"{file}\" -target / -verbose",
 				Elevate = true,

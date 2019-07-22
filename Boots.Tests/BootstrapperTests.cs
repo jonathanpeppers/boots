@@ -14,9 +14,10 @@ namespace Boots.Tests
 			boots.Logger = new TestWriter (output);
 		}
 
-		[WindowsOnlyFact]
+		[SkippableFact]
 		public async Task ProjectSystemToolsVsix ()
 		{
+			Skip.IfNot (Helpers.IsWindows);
 			boots.Url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioProductTeam/vsextensions/ProjectSystemTools/1.0.1.1927902/vspackage";
 			await boots.Install ();
 		}

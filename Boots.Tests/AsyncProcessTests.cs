@@ -1,19 +1,28 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Boots.Core;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Boots.Tests
 {
 	public class AsyncProcessTests
 	{
-		[Fact]
+		readonly Bootstrapper boots = new Bootstrapper ();
+
+		public AsyncProcessTests (ITestOutputHelper output)
+		{
+			boots.Logger = new TestWriter (output);
+		}
+
+		[SkippableFact]
 		public async Task EchoShouldNotThrow ()
 		{
-			using (var proc = new AsyncProcess {
-				Command = "echo",
-				Arguments = "hello world"
+			using (var proc = new AsyncProcess (boots) {
+				Command = Helpers.IsWindows ? "cmd" : "echo",
+				Arguments = Helpers.IsWindows ? "/C echo test" : "test"
 			}) {
 				await proc.RunAsync (new CancellationToken ());
 			}
@@ -22,13 +31,23 @@ namespace Boots.Tests
 		[Fact]
 		public async Task NonExistingCommandShouldThrow ()
 		{
-			using (var proc = new AsyncProcess {
+			using (var proc = new AsyncProcess (boots) {
 				Command = Guid.NewGuid ().ToString ()
 			}) {
-				await Assert.ThrowsAsync<System.ComponentModel.Win32Exception> (() =>
-					 proc.RunAsync (new CancellationToken ()));
+				await Assert.ThrowsAsync<Win32Exception> (() => proc.RunAsync ());
 			}
 		}
 
+		[Fact]
+		public async Task RunWithOutput ()
+		{
+			using (var proc = new AsyncProcess (boots) {
+				Command = Helpers.IsWindows ? "cmd" : "echo",
+				Arguments = Helpers.IsWindows ? "/C echo test" : "test"
+			}) {
+				var text = await proc.RunWithOutputAsync ();
+				Assert.Equal ("test", text.Trim ());
+			}
+		}
 	}
 }

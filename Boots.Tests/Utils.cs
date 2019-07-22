@@ -7,24 +7,6 @@ using Xunit.Abstractions;
 
 namespace Boots.Tests
 {
-	public class WindowsOnlyFact : FactAttribute
-	{
-		public WindowsOnlyFact ()
-		{
-			if (!Helpers.IsWindows)
-				Skip = "Ignored on non-Windows platforms";
-		}
-	}
-
-	public class MacOnlyFact : FactAttribute
-	{
-		public MacOnlyFact ()
-		{
-			if (!Helpers.IsMac)
-				Skip = "Ignored on Windows platforms";
-		}
-	}
-
 	public class TestWriter : TextWriter
 	{
 		readonly ITestOutputHelper output;

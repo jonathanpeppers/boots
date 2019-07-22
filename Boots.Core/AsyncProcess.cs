@@ -1,35 +1,41 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Boots.Core
 {
-	public class AsyncProcess : IDisposable
+	class AsyncProcess : IDisposable
 	{
+		readonly Bootstrapper boots;
+
 		public string Command { get; set; }
 		public string Arguments { get; set; }
 		public bool Elevate { get; set; } = false;
 
 		Process process;
 
-		public AsyncProcess () { }
+		public AsyncProcess (Bootstrapper boots)
+		{
+			this.boots = boots;
+		}
 
-		public AsyncProcess (string cmd, params string [] argumentList)
+		public AsyncProcess (Bootstrapper boots, string cmd, params string [] argumentList)
+			: this (boots)
 		{
 			Command = cmd;
 			Arguments = string.Join (" ", argumentList);
 		}
 
-		async Task<int> Run (CancellationToken token)
+		Process CreateProcess ()
 		{
-			if (RuntimeInformation.IsOSPlatform (OSPlatform.OSX) && Elevate) {
+			if (!Helpers.IsWindows && Elevate) {
 				Arguments = $"{Command} {Arguments}";
 				Command = "/usr/bin/sudo";
 			}
-
-			process = new Process {
+			return new Process {
 				StartInfo = new ProcessStartInfo {
 					FileName = Command,
 					Arguments = Arguments,
@@ -38,26 +44,45 @@ namespace Boots.Core
 					RedirectStandardOutput = true,
 				}
 			};
+		}
 
-			// TODO Fix output capture / logging
-			process.ErrorDataReceived += (sender, e) => Console.WriteLine (e.Data);
-			process.OutputDataReceived += (sender, e) => Console.WriteLine (e.Data);
-
+		Task StartAndWait (Process process, CancellationToken token)
+		{
 			process.Start ();
 			process.BeginErrorReadLine ();
 			process.BeginOutputReadLine ();
+			return Task.Run (process.WaitForExit, token);
+		}
 
-			await Task.Run (process.WaitForExit, token);
+		async Task<int> Run (CancellationToken token = new CancellationToken ())
+		{
+			process = CreateProcess ();
+			process.ErrorDataReceived += (sender, e) => boots.Logger.WriteLine (e.Data);
+			process.OutputDataReceived += (sender, e) => boots.Logger.WriteLine (e.Data);
+
+			await StartAndWait (process, token);
 			return process.ExitCode;
 		}
 
-		public async Task<int> RunAsync (CancellationToken token)
+		public async Task<int> RunAsync (CancellationToken token = new CancellationToken ())
 		{
 			int exitCode = await Run (token);
 			if (exitCode != 0)
 				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {process.ExitCode}");
-
 			return exitCode;
+		}
+
+		public async Task<string> RunWithOutputAsync (CancellationToken token = new CancellationToken ())
+		{
+			var builder = new StringBuilder ();
+			process = CreateProcess ();
+			process.ErrorDataReceived += (sender, e) => builder.AppendLine (e.Data);
+			process.OutputDataReceived += (sender, e) => builder.AppendLine (e.Data);
+
+			await StartAndWait (process, token);
+			if (process.ExitCode != 0)
+				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {process.ExitCode}");
+			return builder.ToString ();
 		}
 
 		public async Task<int> TryRunAsync (CancellationToken token)
