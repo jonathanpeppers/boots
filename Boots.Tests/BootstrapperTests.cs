@@ -15,10 +15,15 @@ namespace Boots.Tests
 		}
 
 		[SkippableFact]
-		public async Task ProjectSystemToolsVsix ()
+		public async Task SimpleInstall ()
 		{
-			Skip.IfNot (Helpers.IsWindows);
-			boots.Url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioProductTeam/vsextensions/ProjectSystemTools/1.0.1.1927902/vspackage";
+			if (Helpers.IsWindows) {
+				boots.Url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioProductTeam/vsextensions/ProjectSystemTools/1.0.1.1927902/vspackage";
+			} else if (Helpers.IsMac) {
+				boots.Url = "https://aka.ms/objective-sharpie";
+			} else {
+				Skip.If (true, "Not supported on Linux yet");
+			}
 			await boots.Install ();
 		}
 	}

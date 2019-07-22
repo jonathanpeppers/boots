@@ -6,41 +6,71 @@ name: $(BuildID)
 trigger:
 - master
 
+variables:
+  configuration: Release
+
 jobs:
 
 - job: windows
-
   pool:
     name: Hosted Windows 2019 with VS2019
     demands:
     - msbuild
     - vstest
-
   steps:
 
   - task: MSBuild@1
-    displayName: 'build'
+    displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore'
+      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+
+  - script: |
+      dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
+    displayName: Run tests
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+  - task: PublishTestResults@2
+    displayName: publish test results
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: TestResults\*.trx
+      testRunTitle: windows
+    condition: succeededOrFailed()
 
 - job: mac
   pool:
     name: Hosted macOS
     demands: msbuild
-
   steps:
 
   - task: UseDotNet@2
     displayName: install .NET Core
     inputs:
       version: 2.1.701
-  - bash: |
+
+  - script: |
       wget https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg -O mono.pkg
       sudo installer -pkg mono.pkg -target / -verbose
     displayName: install Mono
+
   - task: MSBuild@1
-    displayName: 'build'
+    displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore'
+      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+
+  - script: |
+      dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
+    displayName: Run tests
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+  - task: PublishTestResults@2
+    displayName: publish test results
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: TestResults/*.trx
+      testRunTitle: mac
+    condition: succeededOrFailed()
