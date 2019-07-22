@@ -1,0 +1,35 @@
+
+# https://aka.ms/yaml
+
+name: $(BuildID)
+
+trigger:
+- master
+
+jobs:
+- job: windows
+
+  pool:
+    name: Hosted Windows 2019 with VS2019
+    demands:
+    - msbuild
+    - vstest
+
+  steps:
+  - task: MSBuild@1
+    displayName: 'build'
+    inputs:
+      solution: boots.sln
+      msbuildArguments: '/restore'
+
+- job: mac
+  pool:
+    name: Hosted macOS
+    demands: msbuild
+
+  steps:
+  - task: MSBuild@1
+    displayName: 'build'
+    inputs:
+      solution: boots.sln
+      msbuildArguments: '/restore'
