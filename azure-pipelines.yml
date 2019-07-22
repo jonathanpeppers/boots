@@ -35,6 +35,10 @@ jobs:
     displayName: install .NET Core
     inputs:
       version: 2.1.701
+  - bash: |
+      wget https://download.mono-project.com/archive/5.20.1/macos-10-universal/MonoFramework-MDK-5.20.1.19.macos10.xamarin.universal.pkg -o mono.pkg
+      sudo installer -pkg mono.pkg -target / -verbose
+    displayName: install Mono
   - task: MSBuild@1
     displayName: 'build'
     inputs:
