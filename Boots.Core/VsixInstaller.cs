@@ -66,7 +66,8 @@ namespace Boots.Core
 					Arguments = "-latest -products * -property installationPath",
 				}) {
 					visualStudioDirectory = await process.RunWithOutputAsync (token);
-				}				
+					visualStudioDirectory = visualStudioDirectory.Trim ();
+				}
 				if (!Directory.Exists (visualStudioDirectory)) {
 					throw new DirectoryNotFoundException ($"vswhere.exe result returned a directory that did not exist: {visualStudioDirectory}");
 				}
@@ -76,7 +77,6 @@ namespace Boots.Core
 				Boots.Logger.WriteLine ($"Using path from %VSINSTALLDIR%: {visualStudioDirectory}");
 				return visualStudioDirectory = vsInstallDir;
 			}
-
 		}
 	}
 }
