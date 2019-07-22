@@ -1,0 +1,46 @@
+
+# https://aka.ms/yaml
+
+name: $(BuildID)
+
+trigger:
+- master
+
+jobs:
+
+- job: windows
+
+  pool:
+    name: Hosted Windows 2019 with VS2019
+    demands:
+    - msbuild
+    - vstest
+
+  steps:
+
+  - task: MSBuild@1
+    displayName: 'build'
+    inputs:
+      solution: boots.sln
+      msbuildArguments: '/restore'
+
+- job: mac
+  pool:
+    name: Hosted macOS
+    demands: msbuild
+
+  steps:
+
+  - task: UseDotNet@2
+    displayName: install .NET Core
+    inputs:
+      version: 2.1.701
+  - bash: |
+      wget https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg -O mono.pkg
+      sudo installer -pkg mono.pkg -target / -verbose
+    displayName: install Mono
+  - task: MSBuild@1
+    displayName: 'build'
+    inputs:
+      solution: boots.sln
+      msbuildArguments: '/restore'
