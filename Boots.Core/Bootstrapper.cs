@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,11 +21,10 @@ namespace Boots.Core
 				throw new ArgumentNullException (nameof (Uri));
 
 			Installer installer = null;
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT) {
+			if (RuntimeInformation.IsOSPlatform (OSPlatform.Windows)) {
 				installer = new VsixInstaller (this);
 			} else {
-				//TODO: pkg support here
-				throw new NotImplementedException ();
+				installer = new PkgInstaller (this);
 			}
 
 			using (var downloader = new Downloader (this, installer.Extension)) {
