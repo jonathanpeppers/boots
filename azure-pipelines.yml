@@ -7,6 +7,7 @@ trigger:
 - master
 
 jobs:
+
 - job: windows
 
   pool:
@@ -16,6 +17,7 @@ jobs:
     - vstest
 
   steps:
+
   - task: MSBuild@1
     displayName: 'build'
     inputs:
@@ -28,6 +30,11 @@ jobs:
     demands: msbuild
 
   steps:
+
+  - task: UseDotNet@2
+    displayName: install .NET Core
+    inputs:
+      version: 2.1.701
   - task: MSBuild@1
     displayName: 'build'
     inputs:
