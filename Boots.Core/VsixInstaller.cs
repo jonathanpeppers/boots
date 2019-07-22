@@ -18,6 +18,8 @@ namespace Boots.Core
 		{
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException (nameof (file));
+			if (!File.Exists (file))
+				throw new FileNotFoundException ($"{Extension} file did not exist: {file}", file);
 
 			var vs = await GetVisualStudioDirectory (token);
 			var vsixInstaller = Path.Combine (vs, "Common7", "IDE", "VSIXInstaller.exe");

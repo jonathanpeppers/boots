@@ -15,9 +15,8 @@ namespace Boots.Core
 		{
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException (nameof (file));
-
 			if (!File.Exists (file))
-				throw new FileNotFoundException ($"Could not find '${Extension}' installer file.", file);
+				throw new FileNotFoundException ($"{Extension} file did not exist: {file}", file);
 
 			using (var proc = new AsyncProcess (Boots) {
 				Command = "/usr/sbin/installer",
