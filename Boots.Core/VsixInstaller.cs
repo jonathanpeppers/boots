@@ -13,7 +13,7 @@ namespace Boots.Core
 
 		public string FilePath { get; set; }
 
-		public async override Task Install (CancellationToken token)
+		public async override Task Install (CancellationToken token = new CancellationToken ())
 		{
 			if (string.IsNullOrEmpty (FilePath))
 				throw new ArgumentException (nameof (FilePath));
