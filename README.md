@@ -36,6 +36,6 @@ I got each URL from:
 
 To _upgrade_ .NET Core on Mac OSX, assuming you have some version of .NET Core to start with:
 
-    boots https://dotnet.microsoft.com/download/thank-you/dotnet-sdk-2.2.301-macos-x64-installer
+    boots https://download.visualstudio.microsoft.com/download/pr/1440e4a9-4e5f-4148-b8d2-8a2b3da4e622/d0c5cb2712e51c188200ea420d771c2f/dotnet-sdk-2.2.301-osx-x64.pkg
 
-Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-core/2.2). _NOTE: I used the Network tab in Chrome to find the final URL_.
