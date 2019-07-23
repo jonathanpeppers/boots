@@ -2,6 +2,8 @@
 
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 
+dotnet --version
+dotnet --list-runtimes
 dotnet tool install --global boots --version 0.1.0.251-beta
 
 # Workaround instead of restarting shell
