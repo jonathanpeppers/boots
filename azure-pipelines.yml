@@ -69,7 +69,7 @@ jobs:
 
   - script: |
       dotnet tool install --global boots --version 0.1.0.251-beta
-      boots install $(Mono.Pkg)
+      boots $(Mono.Pkg)
     displayName: install Mono
 
   - task: MSBuild@1
