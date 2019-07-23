@@ -23,7 +23,7 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /t:Pack /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(configuration)'
 
   - script: |
       dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
@@ -72,7 +72,7 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /t:Pack /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(configuration)'
 
   - script: |
       dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
