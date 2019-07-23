@@ -1,6 +1,6 @@
 <Project>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Target Name="Build">
+  <Target Name="Check">
     <Message
         Text="XamarinAndroidVersion: $(XamarinAndroidVersion)"
         Importance="High"
