@@ -3,7 +3,7 @@ parameters:
 
 steps:
 - script: |
-    dotnet tool install --global boots --version $(PackageVersion)
+    dotnet tool install --global --add-source bin boots --version $(PackageVersion)
     boots ${{ parameters.url }}
   displayName: install xamarin-android
 - task: MSBuild@1
