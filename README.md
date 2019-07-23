@@ -50,12 +50,5 @@ The `samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured
 
 ![AppCenter](docs/AppCenter.png)
 
-`appcenter-post-clone.sh`:
+See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example.
 
-```bash
-#!/usr/bin/env bash
-
-dotnet tool install --global boots --version 0.1.0.251-beta
-boots https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg
-boots https://aka.ms/xamarin-android-commercial-d16-2-macos
-```
