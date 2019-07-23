@@ -23,7 +23,7 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Pack /p:Configuration=$(configuration)'
 
   - script: |
       dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
@@ -72,7 +72,7 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Pack /p:Configuration=$(configuration)'
 
   - script: |
       dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
@@ -89,7 +89,7 @@ jobs:
     condition: succeededOrFailed()
 
   - script: |
-      dotnet tool install --global --add-source .\bin\ boots --version 0.1.0.1-beta
+      dotnet tool install --global --add-source ./bin/ boots --version 0.1.0.1-beta
       boots https://aka.ms/xamarin-android-commercial-d16-2-macos
     env:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
