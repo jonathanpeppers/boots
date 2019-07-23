@@ -7,6 +7,7 @@
     <ToolCommandName>boots</ToolCommandName>
     <PackageOutputPath>..\bin</PackageOutputPath>
     <PackageId>boots</PackageId>
+    <PackageIcon>icon.png</PackageIcon>
     <Authors>Jonathan Peppers, Peter Collins</Authors>
     <Title>boots</Title>
     <Description>boots is a dotnet global tool for "bootstrapping" vsix &amp; pkg files.</Description>
@@ -19,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
