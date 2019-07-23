@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <BootsVersion>0.1.0</BootsVersion>
+    <BootsSuffix>-beta</BootsSuffix>
+    <BuildNumber Condition=" '$(BuildNumber)' == '' And '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</BuildNumber>
+    <BuildNumber Condition=" '$(BuildNumber)' == '' ">1</BuildNumber>
+    <AssemblyVersion>$(BootsVersion).$(BuildNumber)</AssemblyVersion>
+    <PackageVersion>$(BootsVersion).$(BuildNumber)$(BootsSuffix)</PackageVersion>
+  </PropertyGroup>
+</Project>

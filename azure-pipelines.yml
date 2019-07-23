@@ -39,6 +39,19 @@ jobs:
       testRunTitle: windows
     condition: succeededOrFailed()
 
+  - script: |
+      dotnet tool install --global --add-source .\bin\ boots --version 0.1.0.1-beta
+      boots https://aka.ms/xamarin-android-commercial-d16-2-windows
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+  - task: PublishPipelineArtifact@0
+    displayName: artifacts
+    inputs:
+      artifactName: windows
+      targetPath: bin
+    condition: succeededOrFailed()
+
 - job: mac
   pool:
     name: Hosted macOS
@@ -73,4 +86,17 @@ jobs:
       testResultsFormat: VSTest
       testResultsFiles: TestResults/*.trx
       testRunTitle: mac
+    condition: succeededOrFailed()
+
+  - script: |
+      dotnet tool install --global --add-source .\bin\ boots --version 0.1.0.1-beta
+      boots https://aka.ms/xamarin-android-commercial-d16-2-macos
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+  - task: PublishPipelineArtifact@0
+    displayName: artifacts
+    inputs:
+      artifactName: mac
+      targetPath: bin
     condition: succeededOrFailed()
