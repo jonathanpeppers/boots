@@ -1,0 +1,18 @@
+<Project>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <Target Name="Build">
+    <Message
+        Text="XamarinAndroidVersion: $(XamarinAndroidVersion)"
+        Importance="High"
+    />
+    <Message
+        Text="Expected: $(Expected)"
+        Importance="High"
+        Condition=" '$(Expected)' != '' "
+    />
+    <Error
+        Text="$(XamarinAndroidVersion) did not match $(Expected)"
+        Condition=" '$(Expected)' != '' And '$(Expected)' != '$(XamarinAndroidVersion)' "
+    />
+  </Target>
+</Project>
