@@ -7,7 +7,14 @@ trigger:
 - master
 
 variables:
-  configuration: Release
+  Configuration: Release
+  BootsVersion: 0.1.0
+  BootsSuffix: -beta
+  PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
+  Mono.Pkg: https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg
+  XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/d78329f2-f4e6-440d-97d1-5a1b6b52a4ee/9595a9df7a9ceebe52c761cf18e68440/xamarin.android.sdk-9.4.0.34.vsix
+  XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/f47d66fe-3033-454d-9c69-887497f8d57b/37ac8f50cb8067fdf9dd527a26bb45b8/xamarin.android-9.4.0.34.pkg
+  XA.Version: 9.4.0-34
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:
@@ -24,10 +31,10 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
 
   - script: |
-      dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
+      dotnet vstest Boots.Tests\bin\$(Configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
     displayName: Run tests
 
   - task: PublishTestResults@2
@@ -40,8 +47,7 @@ jobs:
 
   - template: scripts/verify.yaml
     parameters:
-      url: https://download.visualstudio.microsoft.com/download/pr/d78329f2-f4e6-440d-97d1-5a1b6b52a4ee/9595a9df7a9ceebe52c761cf18e68440/xamarin.android.sdk-9.4.0.34.vsix
-      version: 9.4.0-34
+      url: $(XA.Vsix)
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
@@ -62,7 +68,7 @@ jobs:
       version: 2.1.701
 
   - script: |
-      wget https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg -O mono.pkg
+      wget $(Mono.Pkg) -O mono.pkg
       sudo installer -pkg mono.pkg -target / -verbose
     displayName: install Mono
 
@@ -70,10 +76,10 @@ jobs:
     displayName: build
     inputs:
       solution: boots.sln
-      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(configuration)'
+      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
 
   - script: |
-      dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
+      dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
     displayName: Run tests
 
   - task: PublishTestResults@2
@@ -86,8 +92,7 @@ jobs:
 
   - template: scripts/verify.yaml
     parameters:
-      url: https://download.visualstudio.microsoft.com/download/pr/f47d66fe-3033-454d-9c69-887497f8d57b/37ac8f50cb8067fdf9dd527a26bb45b8/xamarin.android-9.4.0.34.pkg
-      version: 9.4.0-34
+      url: $(XA.Pkg)
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
