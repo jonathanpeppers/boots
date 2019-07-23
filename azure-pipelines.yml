@@ -68,8 +68,8 @@ jobs:
       version: 2.1.701
 
   - script: |
-      wget $(Mono.Pkg) -O mono.pkg
-      sudo installer -pkg mono.pkg -target / -verbose
+      dotnet tool install --global boots --version 0.1.0.251-beta
+      boots install $(Mono.Pkg)
     displayName: install Mono
 
   - task: MSBuild@1
