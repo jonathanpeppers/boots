@@ -14,6 +14,6 @@ namespace Boots.Core
 
 		public abstract string Extension { get; }
 
-		public abstract Task Install (string file, CancellationToken token);
+		public abstract Task Install (string file, CancellationToken token = new CancellationToken ());
 	}
 }
