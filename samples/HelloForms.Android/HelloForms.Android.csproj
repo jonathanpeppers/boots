@@ -103,11 +103,11 @@
       <Name>HelloForms</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="BeforeBuild">
     <Message
         Text="XamarinAndroidVersion: $(XamarinAndroidVersion)"
         Importance="High"
     />
   </Target>
- <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
