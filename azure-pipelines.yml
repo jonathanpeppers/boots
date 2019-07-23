@@ -8,6 +8,7 @@ trigger:
 
 variables:
   configuration: Release
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:
 
@@ -28,8 +29,6 @@ jobs:
   - script: |
       dotnet vstest Boots.Tests\bin\$(configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
     displayName: Run tests
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
   - task: PublishTestResults@2
     displayName: publish test results
@@ -39,13 +38,9 @@ jobs:
       testRunTitle: windows
     condition: succeededOrFailed()
 
-  - script: |
-      dotnet tool install --global --add-source .\bin\ boots --version 0.1.0.1-beta
-      boots https://download.visualstudio.microsoft.com/download/pr/d78329f2-f4e6-440d-97d1-5a1b6b52a4ee/9595a9df7a9ceebe52c761cf18e68440/xamarin.android.sdk-9.4.0.34.vsix
-      msbuild scripts\xa-version.targets /v:minimal /nologo /t:Check /p:Expected=9.4.0-34
-    displayName: install and verify
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  - template: scripts/verify.yaml
+    url: https://download.visualstudio.microsoft.com/download/pr/d78329f2-f4e6-440d-97d1-5a1b6b52a4ee/9595a9df7a9ceebe52c761cf18e68440/xamarin.android.sdk-9.4.0.34.vsix
+    version: 9.4.0-34
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
@@ -79,8 +74,6 @@ jobs:
   - script: |
       dotnet vstest Boots.Tests/bin/$(configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
     displayName: Run tests
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
   - task: PublishTestResults@2
     displayName: publish test results
@@ -90,13 +83,9 @@ jobs:
       testRunTitle: mac
     condition: succeededOrFailed()
 
-  - script: |
-      dotnet tool install --global --add-source ./bin/ boots --version 0.1.0.1-beta
-      boots https://download.visualstudio.microsoft.com/download/pr/f47d66fe-3033-454d-9c69-887497f8d57b/37ac8f50cb8067fdf9dd527a26bb45b8/xamarin.android-9.4.0.34.pkg
-      msbuild scripts/xa-version.targets /v:minimal /nologo /t:Check /p:Expected=9.4.0-34
-    displayName: install and verify
-    env:
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  - template: scripts/verify.yaml
+    url: https://download.visualstudio.microsoft.com/download/pr/f47d66fe-3033-454d-9c69-887497f8d57b/37ac8f50cb8067fdf9dd527a26bb45b8/xamarin.android-9.4.0.34.pkg
+    version: 9.4.0-34
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts

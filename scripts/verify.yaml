@@ -1,0 +1,14 @@
+parameters:
+  url: ''
+  version: ''
+
+steps:
+- script: |
+    dotnet tool install --global boots --version 0.1.0.1-beta
+    boots ${{ parameters.url }}
+  displayName: install xamarin-android
+- task: MSBuild@1
+  displayName: verify
+  inputs:
+    solution: scripts/xa-version.targets
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=${{ parameters.version }}'
