@@ -2,11 +2,23 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>boots</ToolCommandName>
+    <PackageOutputPath>..\bin</PackageOutputPath>
+    <PackageId>boots</PackageId>
+    <Authors>Jonathan Peppers, Peter Collins</Authors>
+    <Title>boots</Title>
+    <Description>boots is a dotnet global tool for "bootstrapping" vsix &amp; pkg files.</Description>
+    <Copyright>$([System.DateTime]::Now.Year) $(Authors)</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/jonathanpeppers/boots</PackageProjectUrl>
+    <PackageTags>Bootstrap CI Xamarin</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>
