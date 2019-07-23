@@ -2,7 +2,9 @@
 
 ![boots](icon.png)
 
-[![Build status](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge)](https://appcenter.ms)
+| Azure DevOps | App Center |
+| --           | --         |
+| [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | ![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge) |
 
 boots is a dotnet global tool for "bootstrapping" vsix & pkg files.
 
