@@ -2,6 +2,10 @@
 
 ![boots](icon.png)
 
+| Azure DevOps | App Center |
+| --           | --         |
+| [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | ![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge) |
+
 boots is a dotnet global tool for "bootstrapping" vsix & pkg files.
 
 boots is useful for "pinning" a version of Mono, Xamarin, etc. when building projects on [Azure DevOps Hosted Agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops). You don't get to _choose_ what versions of things are installed on each agent, so it makes sense to install things yourself for reproducible builds. It also allows you to install preview versions of things (or more recent!) before they come available on the Hosted Agents.
@@ -39,3 +43,12 @@ To _upgrade_ .NET Core on Mac OSX, assuming you have some version of .NET Core t
     boots https://download.visualstudio.microsoft.com/download/pr/1440e4a9-4e5f-4148-b8d2-8a2b3da4e622/d0c5cb2712e51c188200ea420d771c2f/dotnet-sdk-2.2.301-osx-x64.pkg
 
 Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-core/2.2). _NOTE: I used the Network tab in Chrome to find the final URL_.
+
+### App Center
+
+The `samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured to build with boots installing newer versions than what is available:
+
+![AppCenter](docs/AppCenter.png)
+
+See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example.
+
