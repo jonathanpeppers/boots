@@ -50,7 +50,7 @@ jobs:
     parameters:
       url: $(XA.Vsix)
 
-  - powershell: build.ps1
+  - powershell: Cake.Boots\build.ps1
     displayName: Cake test
     workingDirectory: Cake.Boots
 
@@ -99,7 +99,7 @@ jobs:
     parameters:
       url: $(XA.Pkg)
 
-  - bash: build.sh
+  - bash: Cake.Boots/build.sh
     displayName: Cake test
     workingDirectory: Cake.Boots
 
