@@ -10,7 +10,7 @@ boots is a dotnet global tool for "bootstrapping" vsix & pkg files.
 
 boots is useful for "pinning" a version of Mono, Xamarin, etc. when building projects on [Azure DevOps Hosted Agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops). You don't get to _choose_ what versions of things are installed on each agent, so it makes sense to install things yourself for reproducible builds. It also allows you to install preview versions of things (or more recent!) before they come available on the Hosted Agents.
 
-To use it:
+## Use it
 
     dotnet tool install --global boots --version 0.1.0.251-beta
     boots https://url/to/your/package
@@ -19,6 +19,18 @@ boots currently supports Windows & Mac OSX, therefore:
 
 * On Windows - assumes the file is a `.vsix` and installs it into all instances of Visual Studio via `VSIXInstaller.exe`.
 * On Mac OSX - assumes the file is a `.pkg` and installs it
+
+#### Use the Azure Pipeline Extension Task
+Install the extension into your DevOps instance and add the task to a build or release, or use it from YAML:
+
+```yaml
+steps:
+- task: Boots@0
+  displayName: Install Xamarin.Android
+  inputs:
+    uri: https://aka.ms/xamarin-android-commercial-d16-2-windows
+```
+See the [Boots Task Extension Source](https://github.com/pjcollins/azure-web-extensions#use-in-your-yaml-pipeline) for more details.
 
 ## Some Examples
 

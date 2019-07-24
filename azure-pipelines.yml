@@ -68,11 +68,10 @@ jobs:
     inputs:
       version: 2.1.701
 
-  - script: |
-      dotnet tool install --global boots --version $(ShippedBoots)
-      boots $(Mono.Pkg)
-      dotnet tool uninstall --global boots
+  - task: Boots@0
     displayName: install Mono
+    inputs:
+      uri: $(Mono.Pkg)
 
   - task: MSBuild@1
     displayName: build
