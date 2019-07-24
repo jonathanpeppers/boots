@@ -5,6 +5,7 @@
     <PackageOutputPath>..\bin</PackageOutputPath>
     <PackageId>Cake.Boots</PackageId>
     <Title>$(PackageId)</Title>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
+    <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)Boots.Core.*" Pack="true" PackagePath="lib\netstandard2.0" />
   </ItemGroup>
 
 </Project>
