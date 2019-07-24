@@ -55,7 +55,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       platform: mac
-      url: $(XA.Vsix)
+      url: $(XA.Pkg)
 
   - bash: ./build.sh
     displayName: Cake test
