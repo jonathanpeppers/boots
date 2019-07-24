@@ -25,19 +25,11 @@ jobs:
     name: Hosted Windows 2019 with VS2019
     demands:
     - msbuild
-    - vstest
   steps:
 
-  - template: scripts/build.yaml
+  - template: scripts/build-and-test.yaml
     parameters:
       platform: windows
-
-  - template: scripts/tests.yaml
-    parameters:
-      platform: mac
-
-  - template: scripts/verify.yaml
-    parameters:
       url: $(XA.Vsix)
 
   - powershell: .\build.ps1
@@ -60,17 +52,10 @@ jobs:
     inputs:
       uri: $(Mono.Pkg)
 
-  - template: scripts/build.yaml
+  - template: scripts/build-and-test.yaml
     parameters:
       platform: mac
-
-  - template: scripts/tests.yaml
-    parameters:
-      platform: mac
-
-  - template: scripts/verify.yaml
-    parameters:
-      url: $(XA.Pkg)
+      url: $(XA.Vsix)
 
   - bash: ./build.sh
     displayName: Cake test
