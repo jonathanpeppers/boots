@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>boots</ToolCommandName>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageOutputPath>..\bin</PackageOutputPath>
-    <PackageId>boots</PackageId>
+    <PackageId>Cake.Boots</PackageId>
     <Title>$(PackageId)</Title>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Cake.Core" Version="0.34.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />

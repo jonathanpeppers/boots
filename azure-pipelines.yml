@@ -50,6 +50,10 @@ jobs:
     parameters:
       url: $(XA.Vsix)
 
+  - powershell: .\build.ps1
+    displayName: Cake test
+    workingDirectory: Cake.Boots
+
   - task: PublishPipelineArtifact@0
     displayName: artifacts
     inputs:
@@ -94,6 +98,10 @@ jobs:
   - template: scripts/verify.yaml
     parameters:
       url: $(XA.Pkg)
+
+  - bash: ./build.sh
+    displayName: Cake test
+    workingDirectory: Cake.Boots
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts

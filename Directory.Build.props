@@ -6,5 +6,16 @@
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">1</BuildNumber>
     <AssemblyVersion>$(BootsVersion).$(BuildNumber)</AssemblyVersion>
     <PackageVersion>$(BootsVersion).$(BuildNumber)$(BootsSuffix)</PackageVersion>
+    <Authors>Jonathan Peppers, Peter Collins</Authors>
+    <Copyright>$([System.DateTime]::Now.Year) $(Authors)</Copyright>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/jonathanpeppers/boots</PackageProjectUrl>
+    <PackageTags>Bootstrap CI Xamarin Cake Azure DevOps</PackageTags>
+    <Description>boots is a dotnet global tool for "bootstrapping" vsix &amp; pkg files.</Description>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 </Project>
