@@ -1,0 +1,40 @@
+parameters:
+  platform: ''
+  url: ''
+steps:
+
+- task: MSBuild@1
+  displayName: build
+  inputs:
+    solution: boots.sln
+    msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
+
+- task: PublishPipelineArtifact@0
+  displayName: artifacts
+  inputs:
+    artifactName: ${{ parameters.platform }}
+    targetPath: bin
+  condition: succeededOrFailed()
+
+- script: |
+    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
+  displayName: Run tests
+
+- task: PublishTestResults@2
+  displayName: publish test results
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: TestResults/*.trx
+    testRunTitle: ${{ parameters.platform }}
+  condition: succeededOrFailed()
+
+- task: Boots@0
+  displayName: install xamarin-android
+  inputs:
+    uri: ${{ parameters.url }}
+
+- task: MSBuild@1
+  displayName: verify
+  inputs:
+    solution: scripts/xa-version.targets
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version)'
