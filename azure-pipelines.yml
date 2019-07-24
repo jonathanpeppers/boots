@@ -52,7 +52,7 @@ jobs:
 
   - powershell: .\build.ps1
     displayName: Cake test
-    workingDirectory: $(System.WorkingDirectory)\Cake.Boots
+    workingDirectory: Cake.Boots
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
@@ -101,7 +101,7 @@ jobs:
 
   - bash: ./build.sh
     displayName: Cake test
-    workingDirectory: $(System.WorkingDirectory)/Cake.Boots
+    workingDirectory: Cake.Boots
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts

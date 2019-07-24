@@ -18,7 +18,7 @@ namespace Boots.Tests
 		public async Task SimpleInstall ()
 		{
 			if (Helpers.IsWindows) {
-				boots.Url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/VisualStudioProductTeam/vsextensions/ProjectSystemTools/1.0.1.1927902/vspackage";
+				boots.Url = "http://vsixgallery.com/extensions/1209461d-57f8-46a4-814a-dbe5fecef941/EditorConfig%20Language%20Service%20v1.17.271.vsix";
 			} else if (Helpers.IsMac) {
 				boots.Url = "https://aka.ms/objective-sharpie";
 			} else {
