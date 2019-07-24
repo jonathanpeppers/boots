@@ -50,9 +50,9 @@ jobs:
     parameters:
       url: $(XA.Vsix)
 
-  - powershell: Cake.Boots\build.ps1
+  - powershell: .\build.ps1
     displayName: Cake test
-    workingDirectory: Cake.Boots
+    workingDirectory: $(System.WorkingDirectory)\Cake.Boots
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
@@ -99,9 +99,9 @@ jobs:
     parameters:
       url: $(XA.Pkg)
 
-  - bash: Cake.Boots/build.sh
+  - bash: ./build.sh
     displayName: Cake test
-    workingDirectory: Cake.Boots
+    workingDirectory: $(System.WorkingDirectory)/Cake.Boots
 
   - task: PublishPipelineArtifact@0
     displayName: artifacts
