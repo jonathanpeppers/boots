@@ -28,23 +28,13 @@ jobs:
     - vstest
   steps:
 
-  - task: MSBuild@1
-    displayName: build
-    inputs:
-      solution: boots.sln
-      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
+  - template: scripts/build.yaml
+    parameters:
+      platform: windows
 
-  - script: |
-      dotnet vstest Boots.Tests\bin\$(Configuration)\netcoreapp2.0\Boots.Tests.dll --logger:trx
-    displayName: Run tests
-
-  - task: PublishTestResults@2
-    displayName: publish test results
-    inputs:
-      testResultsFormat: VSTest
-      testResultsFiles: TestResults\*.trx
-      testRunTitle: windows
-    condition: succeededOrFailed()
+  - template: scripts/tests.yaml
+    parameters:
+      platform: mac
 
   - template: scripts/verify.yaml
     parameters:
@@ -53,13 +43,6 @@ jobs:
   - powershell: .\build.ps1
     displayName: Cake test
     workingDirectory: Cake.Boots
-
-  - task: PublishPipelineArtifact@0
-    displayName: artifacts
-    inputs:
-      artifactName: windows
-      targetPath: bin
-    condition: succeededOrFailed()
 
 - job: mac
   pool:
@@ -77,23 +60,13 @@ jobs:
     inputs:
       uri: $(Mono.Pkg)
 
-  - task: MSBuild@1
-    displayName: build
-    inputs:
-      solution: boots.sln
-      msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
+  - template: scripts/build.yaml
+    parameters:
+      platform: mac
 
-  - script: |
-      dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
-    displayName: Run tests
-
-  - task: PublishTestResults@2
-    displayName: publish test results
-    inputs:
-      testResultsFormat: VSTest
-      testResultsFiles: TestResults/*.trx
-      testRunTitle: mac
-    condition: succeededOrFailed()
+  - template: scripts/tests.yaml
+    parameters:
+      platform: mac
 
   - template: scripts/verify.yaml
     parameters:
@@ -102,10 +75,3 @@ jobs:
   - bash: ./build.sh
     displayName: Cake test
     workingDirectory: Cake.Boots
-
-  - task: PublishPipelineArtifact@0
-    displayName: artifacts
-    inputs:
-      artifactName: mac
-      targetPath: bin
-    condition: succeededOrFailed()
