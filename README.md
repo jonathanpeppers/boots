@@ -12,7 +12,7 @@ boots is useful for "pinning" a version of Mono, Xamarin, etc. when building pro
 
 ## Use it
 
-    dotnet tool install --global boots --version 0.1.0.251-beta
+    dotnet tool install --global boots --version 0.1.0.284-beta
     boots https://url/to/your/package
 
 boots currently supports Windows & Mac OSX, therefore:
@@ -74,10 +74,7 @@ You can use `boots` from a Cake script, which is helpful if you need other logic
 Task("Boots")
     .Does(async () =>
 {
-    var url = IsRunningOnWindows() ?
-        "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/SteveCadwallader/vsextensions/CodeMaid/11.0.183/vspackage" :
-        "https://aka.ms/objective-sharpie";
-
-    await Boots (url);
+    var platform = IsRunningOnWindows() ? "windows" : "macos";
+    await Boots ($"https://aka.ms/xamarin-android-commercial-d16-2-{platform}");
 });
 ```
