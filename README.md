@@ -32,6 +32,14 @@ steps:
 ```
 See the [Boots Task Extension Source](https://github.com/pjcollins/azure-web-extensions#use-in-your-yaml-pipeline) for more details.
 
+If you don't want to use the extension, alternatively you can:
+
+```yaml
+- script: |
+  dotnet tool install --global boots
+  boots https://aka.ms/xamarin-android-commercial-d16-2-windows
+```
+
 ## Some Examples
 
 Install Mono, Xamarin.Android, and Xamarin.iOS on Mac OSX:
