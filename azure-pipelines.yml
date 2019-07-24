@@ -15,7 +15,7 @@ variables:
   XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/d78329f2-f4e6-440d-97d1-5a1b6b52a4ee/9595a9df7a9ceebe52c761cf18e68440/xamarin.android.sdk-9.4.0.34.vsix
   XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/f47d66fe-3033-454d-9c69-887497f8d57b/37ac8f50cb8067fdf9dd527a26bb45b8/xamarin.android-9.4.0.34.pkg
   XA.Version: 9.4.0-34
-  ShippedBoots: 0.1.0.284-beta
+  ShippedBoots: 1.0.0.287
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:

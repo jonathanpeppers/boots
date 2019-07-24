@@ -2,7 +2,7 @@
 
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 
-dotnet tool install --global boots --version 0.1.0.284-beta
+dotnet tool install --global boots
 
 # Workaround instead of restarting shell
 # see: https://github.com/dotnet/cli/issues/9114#issuecomment-494226139

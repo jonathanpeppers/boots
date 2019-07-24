@@ -12,7 +12,7 @@ boots is useful for "pinning" a version of Mono, Xamarin, etc. when building pro
 
 ## Use it
 
-    dotnet tool install --global boots --version 0.1.0.284-beta
+    dotnet tool install --global boots
     boots https://url/to/your/package
 
 boots currently supports Windows & Mac OSX, therefore:
