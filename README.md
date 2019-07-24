@@ -64,3 +64,20 @@ The `samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured
 
 See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example.
 
+### Cake
+
+You can use `boots` from a Cake script, which is helpful if you need other logic to decide what needs to be installed.
+
+```csharp
+#addin nuget:?package=Cake.Boots
+
+Task("Boots")
+    .Does(async () =>
+{
+    var url = IsRunningOnWindows() ?
+        "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/SteveCadwallader/vsextensions/CodeMaid/11.0.183/vspackage" :
+        "https://aka.ms/objective-sharpie";
+
+    await Boots (url);
+});
+```

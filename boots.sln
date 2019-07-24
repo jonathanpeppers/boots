@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boots.Core", "Boots.Core\Boots.Core.csproj", "{977D3870-832A-4E80-BB7D-EBADD0C1DE3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boots", "Boots\Boots.csproj", "{5108C889-ABB7-4B95-BAD2-3DF11FDD05EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boots", "Boots\Boots.csproj", "{5108C889-ABB7-4B95-BAD2-3DF11FDD05EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boots.Tests", "Boots.Tests\Boots.Tests.csproj", "{393FF93B-5A0B-490E-9E28-4B38E579AF7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boots.Tests", "Boots.Tests\Boots.Tests.csproj", "{393FF93B-5A0B-490E-9E28-4B38E579AF7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Boots", "Cake.Boots\Cake.Boots.csproj", "{10B653C6-675D-49D1-8BA6-DC62F2131742}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{393FF93B-5A0B-490E-9E28-4B38E579AF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{393FF93B-5A0B-490E-9E28-4B38E579AF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{393FF93B-5A0B-490E-9E28-4B38E579AF7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
