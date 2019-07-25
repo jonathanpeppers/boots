@@ -98,6 +98,6 @@ Task("Boots")
 * [AppVeyor](https://www.appveyor.com/)
 * [Travis CI](https://travis-ci.org/)
 
-Any build environment that can be configured to run .NET Core 2.1, can run `boots`. If you have success on CI systems, let us know!
+Any build environment that can be configured to run .NET Core 2.1, can run `boots`. If you have success on other CI systems, let us know!
 
 [appcenter]: https://appcenter.ms
