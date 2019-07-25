@@ -4,23 +4,24 @@
 
 | Azure DevOps | App Center |
 | --           | --         |
-| [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | [![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge)](https://appcenter.ms) |
+| [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | [![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge)][appcenter] |
 
-boots is a dotnet global tool for "bootstrapping" vsix & pkg files.
+`boots` is a [.NET global tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools) for "bootstrapping" vsix & pkg files.
 
-boots is useful for "pinning" a version of Mono, Xamarin, etc. when building projects on [Azure DevOps Hosted Agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops). You don't get to _choose_ what versions of things are installed on each agent, so it makes sense to install things yourself for reproducible builds. It also allows you to install preview versions of things (or more recent!) before they come available on the Hosted Agents.
+`boots` is useful for pinning a version of Mono, Xamarin, etc. when building projects on [Azure DevOps Hosted Agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops). You don't get to _choose_ what versions of things are installed on each agent, so it makes sense to install things yourself for reproducible builds. It also allows you to install preview versions of things (or more recent!) before they come preinstalled on Hosted build agents.
 
 ## Use it
 
     dotnet tool install --global boots
     boots https://url/to/your/package
 
-boots currently supports Windows & Mac OSX, therefore:
+`boots` currently supports Windows & Mac OSX, therefore:
 
 * On Windows - assumes the file is a `.vsix` and installs it into all instances of Visual Studio via `VSIXInstaller.exe`.
 * On Mac OSX - assumes the file is a `.pkg` and installs it
 
-#### Use the Azure Pipeline Extension Task
+### Use the Azure Pipeline Extension Task
+
 Install the extension into your DevOps instance and add the task to a build or release, or use it from YAML:
 
 ```yaml
@@ -30,6 +31,7 @@ steps:
   inputs:
     uri: https://aka.ms/xamarin-android-commercial-d16-2-windows
 ```
+
 See the [Boots Task Extension Source](https://github.com/pjcollins/azure-web-extensions#use-in-your-yaml-pipeline) for more details.
 
 If you don't want to use the extension, alternatively you can:
@@ -66,7 +68,7 @@ Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-cor
 
 ### App Center
 
-The `samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured to build with boots installing newer versions than what is available:
+`samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured with `boots` installing newer versions than what is available on [App Center][appcenter]:
 
 ![AppCenter](docs/AppCenter.png)
 
@@ -81,8 +83,21 @@ You can use `boots` from a Cake script, which is helpful if you need other logic
 
 Task("Boots")
     .Does(async () =>
-{
-    var platform = IsRunningOnWindows() ? "windows" : "macos";
-    await Boots ($"https://aka.ms/xamarin-android-commercial-d16-2-{platform}");
-});
+    {
+        var platform = IsRunningOnWindows() ? "windows" : "macos";
+        await Boots ($"https://aka.ms/xamarin-android-commercial-d16-2-{platform}");
+    });
 ```
+
+### Other CI Systems
+
+`boots` has been tested, and appears to work fine on:
+
+* [Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)
+* [App Center][appcenter]
+* [AppVeyor](https://www.appveyor.com/)
+* [Travis CI](https://travis-ci.org/)
+
+Any build environment that can be configured to run .NET Core 2.1, can run `boots`. If you have success on CI systems, let us know!
+
+[appcenter]: https://appcenter.ms
