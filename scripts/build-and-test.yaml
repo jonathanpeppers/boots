@@ -9,13 +9,6 @@ steps:
     solution: boots.sln
     msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
 
-- task: PublishPipelineArtifact@0
-  displayName: artifacts
-  inputs:
-    artifactName: ${{ parameters.platform }}
-    targetPath: bin
-  condition: succeededOrFailed()
-
 - script: |
     dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
   displayName: Run tests
@@ -38,3 +31,10 @@ steps:
   inputs:
     solution: scripts/xa-version.targets
     msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version)'
+
+- task: PublishPipelineArtifact@0
+  displayName: artifacts
+  inputs:
+    artifactName: ${{ parameters.platform }}
+    targetPath: bin
+  condition: succeededOrFailed()
