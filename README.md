@@ -32,15 +32,21 @@ steps:
     uri: https://aka.ms/xamarin-android-commercial-d16-2-windows
 ```
 
+You can install the [Boots Extension from the VS Marketplace](https://marketplace.visualstudio.com/items?itemName=pjcollins.azp-utilities-boots).
+
 See the [Boots Task Extension Source](https://github.com/pjcollins/azure-web-extensions#use-in-your-yaml-pipeline) for more details.
 
 If you don't want to use the extension, alternatively you can:
 
 ```yaml
+variables:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+steps:
 - script: |
-  dotnet tool install --global boots
-  boots https://aka.ms/xamarin-android-commercial-d16-2-windows
+    dotnet tool install --global boots
+    boots https://aka.ms/xamarin-android-commercial-d16-2-windows
 ```
+`DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is optional, but will speed up the first `dotnet` command.
 
 ## Some Examples
 
