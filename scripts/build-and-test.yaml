@@ -21,7 +21,7 @@ steps:
     testRunTitle: ${{ parameters.platform }}
   condition: succeededOrFailed()
 
-- task: Boots@0
+- task: Boots@1
   displayName: install xamarin-android
   inputs:
     uri: ${{ parameters.url }}
