@@ -47,7 +47,7 @@ jobs:
     inputs:
       version: 2.1.701
 
-  - task: Boots@0
+  - task: Boots@1
     displayName: install Mono
     inputs:
       uri: $(Mono.Pkg)
