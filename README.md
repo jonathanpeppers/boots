@@ -20,6 +20,10 @@
 * On Windows - assumes the file is a `.vsix` and installs it into all instances of Visual Studio via `VSIXInstaller.exe`.
 * On Mac OSX - assumes the file is a `.pkg` and installs it
 
+[@motz](https://www.twitch.tv/jamesmontemagno) gives a quick walkthrough on [Twitch.tv](https://clips.twitch.tv/embed?clip=FunAgitatedCourgetteSmoocherZ):
+
+[![Twitch](https://clips-media-assets2.twitch.tv/AT-cm%7C502459489-preview-260x147.jpg)](https://clips.twitch.tv/embed?clip=FunAgitatedCourgetteSmoocherZ)
+
 ### Use the Azure Pipeline Extension Task
 
 Install the extension into your DevOps instance and add the task to a build or release, or use it from YAML:
