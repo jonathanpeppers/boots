@@ -82,11 +82,11 @@ Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-cor
 
 ![AppCenter](docs/AppCenter.png)
 
-See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example.
+See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example of setting up `boots`. See the [App Center docs](https://aka.ms/docs/build/custom/scripts) for further detail about custom build scripts.
 
 ### Cake
 
-You can use `boots` from a Cake script, which is helpful if you need other logic to decide what needs to be installed.
+You can use `boots` from a [Cake](https://cakebuild.net/) script, which is helpful if you need other logic to decide what needs to be installed.
 
 ```csharp
 #addin nuget:?package=Cake.Boots
