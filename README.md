@@ -106,6 +106,7 @@ Task("Boots")
 * [Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)
 * [App Center][appcenter]
 * [AppVeyor](https://www.appveyor.com/)
+* [Bitrise](https://www.bitrise.io/)
 * [Travis CI](https://travis-ci.org/)
 
 Any build environment that can be configured to run .NET Core 2.1, can run `boots`. If you have success on other CI systems, let us know!
