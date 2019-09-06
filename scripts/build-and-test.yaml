@@ -32,6 +32,12 @@ steps:
     solution: scripts/xa-version.targets
     msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version)'
 
+- task: MSBuild@1
+  displayName: build sample
+  inputs:
+    solution: samples/HelloForms.Android/HelloForms.Android.csproj
+    msbuildArguments: '/bl:$(System.DefaultWorkingDirectory)/sample.binlog /restore /t:SignAndroidPackage /p:AndroidPackageFormat=aab'
+
 - task: PublishPipelineArtifact@0
   displayName: artifacts
   inputs:
