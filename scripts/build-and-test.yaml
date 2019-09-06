@@ -7,7 +7,7 @@ steps:
   displayName: build
   inputs:
     solution: boots.sln
-    msbuildArguments: '/restore /t:Build,Pack /p:Configuration=$(Configuration)'
+    msbuildArguments: '/restore /t:Build,Pack /bl:$(System.DefaultWorkingDirectory)/bin/boots.binlog'
 
 - script: |
     dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
@@ -30,7 +30,13 @@ steps:
   displayName: verify
   inputs:
     solution: scripts/xa-version.targets
-    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version)'
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version) /bl:$(System.DefaultWorkingDirectory)/bin/verify.binlog'
+
+- task: MSBuild@1
+  displayName: build sample
+  inputs:
+    solution: samples/HelloForms.Android/HelloForms.Android.csproj
+    msbuildArguments: '/restore /t:SignAndroidPackage /p:AndroidPackageFormat=aab /bl:$(System.DefaultWorkingDirectory)/bin/sample.binlog'
 
 - task: PublishPipelineArtifact@0
   displayName: artifacts
