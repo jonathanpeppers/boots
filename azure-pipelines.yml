@@ -16,7 +16,7 @@ variables:
   XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/edd7782e-dc4f-4be5-9b55-8a51eeb7a718/ed8c238ec095b5d1051e2539cea38113/xamarin.android-10.0.0.40.pkg
   XA.Version: 9.5.0-27
   ShippedBoots: 1.0.0.291
-  DotNetCoreVersion: 2.2.x
+  DotNetCoreVersion: 2.2.401
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
   - task: UseDotNet@2
     displayName: install .NET Core
     inputs:
-      version: $(DotNetCore)
+      version: $(DotNetCoreVersion)
 
   - task: Boots@1
     displayName: install Mono
