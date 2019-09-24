@@ -24,12 +24,12 @@ jobs:
 
   windows:
    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run a multi-line script
-      shell: pwsh
-      run: |
-        $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE='true'
-        dotnet tool install --global boots
-        boots https://aka.ms/xamarin-android-commercial-d16-3-windows
-        msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
+   steps:
+   - uses: actions/checkout@v1
+   - name: Run a multi-line script
+     shell: pwsh
+     run: |
+       $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE='true'
+       dotnet tool install --global boots
+       boots https://aka.ms/xamarin-android-commercial-d16-3-windows
+       msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
