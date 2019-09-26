@@ -84,6 +84,12 @@ Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-cor
 
 See [`appcenter-pre-build.sh`](samples/HelloForms.Android/appcenter-pre-build.sh) in this repo for an example of setting up `boots`. See the [App Center docs](https://aka.ms/docs/build/custom/scripts) for further detail about custom build scripts.
 
+### GitHub Actions
+
+[Github Actions][actions] is currently in beta, but I was able to get `boots` to work on both Windows & macOS.
+
+See [`actions.yml`](.github/workflows/actions.yml) for an example.
+
 ### Cake
 
 You can use `boots` from a [Cake](https://cakebuild.net/) script, which is helpful if you need other logic to decide what needs to be installed.
@@ -107,8 +113,10 @@ Task("Boots")
 * [App Center][appcenter]
 * [AppVeyor](https://www.appveyor.com/)
 * [Bitrise](https://www.bitrise.io/)
+* [Github Actions][actions]
 * [Travis CI](https://travis-ci.org/)
 
 Any build environment that can be configured to run .NET Core 2.1, can run `boots`. If you have success on other CI systems, let us know!
 
 [appcenter]: https://appcenter.ms
+[actions]: https://github.com/features/actions
