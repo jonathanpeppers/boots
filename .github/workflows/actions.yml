@@ -18,6 +18,7 @@ jobs:
       run: |
         wget https://dot.net/v1/dotnet-install.sh
         sh dotnet-install.sh -Version 2.2.402
+        export PATH="$PATH:~/.dotnet/tools"
         export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
         dotnet tool install --global boots
         boots https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg
