@@ -82,7 +82,7 @@ Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-cor
 
 ![AppCenter](docs/AppCenter.png)
 
-See [`appcenter-post-clone.sh`](samples/HelloForms.Android/appcenter-post-clone.sh) in this repo for an example of setting up `boots`. See the [App Center docs](https://aka.ms/docs/build/custom/scripts) for further detail about custom build scripts.
+See [`appcenter-pre-build.sh`](samples/HelloForms.Android/appcenter-pre-build.sh) in this repo for an example of setting up `boots`. See the [App Center docs](https://aka.ms/docs/build/custom/scripts) for further detail about custom build scripts.
 
 ### Cake
 
