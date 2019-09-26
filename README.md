@@ -33,7 +33,7 @@ steps:
 - task: Boots@1
   displayName: Install Xamarin.Android
   inputs:
-    uri: https://aka.ms/xamarin-android-commercial-d16-2-windows
+    uri: https://aka.ms/xamarin-android-commercial-d16-3-windows
 ```
 
 You can install the [Boots Extension from the VS Marketplace](https://marketplace.visualstudio.com/items?itemName=pjcollins.azp-utilities-boots).
@@ -48,7 +48,7 @@ variables:
 steps:
 - script: |
     dotnet tool install --global boots
-    boots https://aka.ms/xamarin-android-commercial-d16-2-windows
+    boots https://aka.ms/xamarin-android-commercial-d16-3-windows
 ```
 `DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is optional, but will speed up the first `dotnet` command.
 
@@ -56,19 +56,19 @@ steps:
 
 Install Mono, Xamarin.Android, and Xamarin.iOS on Mac OSX:
 
-    boots https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg
-    boots https://aka.ms/xamarin-android-commercial-d16-2-macos
-    boots https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/xcode10.3/72cb587a39c12dfaa20cd5a0b1eb60a908ff88a6/1/package/xamarin.ios-12.14.0.113.pkg
+    boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.189.macos10.xamarin.universal.pkg
+    boots https://aka.ms/xamarin-android-commercial-d16-3-macos
+    boots https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/d16-3/d532e90de664caf46baea6226d742b9f68b3173a/44/package/xamarin.ios-13.2.0.46.pkg
 
 Install Xamarin.Android on Windows:
 
-    boots https://aka.ms/xamarin-android-commercial-d16-2-windows
+    boots https://aka.ms/xamarin-android-commercial-d16-3-windows
 
 I got each URL from:
 
 * [Mono Downloads](https://www.mono-project.com/download/stable/#download-mac)
 * [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
-* [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-2)
+* [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-3)
 
 To _upgrade_ .NET Core on Mac OSX, assuming you have some version of .NET Core to start with:
 
@@ -101,7 +101,7 @@ Task("Boots")
     .Does(async () =>
     {
         var platform = IsRunningOnWindows() ? "windows" : "macos";
-        await Boots ($"https://aka.ms/xamarin-android-commercial-d16-2-{platform}");
+        await Boots ($"https://aka.ms/xamarin-android-commercial-d16-3-{platform}");
     });
 ```
 
