@@ -13,13 +13,11 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '2.2.401'
     - name: build
       shell: bash
       run: |
-        export PATH="$PATH:~/.dotnet/tools"
+        wget https://dot.net/v1/dotnet-install.sh
+        sh dotnet-install.sh -Version 2.2.401 -Runtime dotnet
         export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
         dotnet tool install --global boots
         boots https://download.mono-project.com/archive/6.0.0/macos-10-universal/MonoFramework-MDK-6.0.0.313.macos10.xamarin.universal.pkg
