@@ -50,7 +50,7 @@ jobs:
 
   - script: |
       dotnet tool install --global boots --version $(ShippedBoots)
-      boots install $(Mono.Pkg)
+      boots install https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.189.macos10.xamarin.universal.pkg
     displayName: install Mono
 
   - template: scripts/build-and-test.yaml
