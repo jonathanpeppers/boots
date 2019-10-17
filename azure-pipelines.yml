@@ -48,10 +48,10 @@ jobs:
     inputs:
       version: $(DotNetCoreVersion)
 
-  - task: Boots@1
+  - script: |
+      dotnet tool install --global boots --version $(ShippedBoots)
+      boots install $(Mono.Pkg)
     displayName: install Mono
-    inputs:
-      uri: $(Mono.Pkg)
 
   - template: scripts/build-and-test.yaml
     parameters:
