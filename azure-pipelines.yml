@@ -11,10 +11,10 @@ variables:
   BootsVersion: 1.0.0
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
-  Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.189.macos10.xamarin.universal.pkg
-  XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/68e5a599-5d9b-4d59-b41a-8348d23faa73/abd0a8f9a6b6253facfaaa97e5e138509b004263134d310cc6d49c2f1ac734b9/Xamarin.Android.Sdk-10.0.0.40.vsix
-  XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/edd7782e-dc4f-4be5-9b55-8a51eeb7a718/ed8c238ec095b5d1051e2539cea38113/xamarin.android-10.0.0.40.pkg
-  XA.Version: 10.0.0-40
+  Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
+  XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/c5d8e76d-8871-4b15-8391-b0569595c6bd/26dd9383f383cd737cddbfe4ed919877cf62ea42ff31e8293fd8a217e1008157/Xamarin.Android.Sdk-10.1.0.29.vsix
+  XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/6dee3850-6d48-45c9-b25a-80c6abd3254e/04899faf2dd793d0bf3cfbd806a48560/xamarin.android-10.1.0.29.pkg
+  XA.Version: 10.1.0-29
   ShippedBoots: 1.0.0.291
   DotNetCoreVersion: 2.2.402
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true

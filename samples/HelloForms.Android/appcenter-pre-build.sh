@@ -4,5 +4,5 @@
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
 
 dotnet tool install --global boots
-boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.189.macos10.xamarin.universal.pkg
-boots https://aka.ms/xamarin-android-commercial-d16-3-macos
+boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
+boots https://aka.ms/xamarin-android-commercial-d16-4-macos
