@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,7 +56,7 @@
     <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.0.0-preview02" />
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0-preview02" />
     <PackageReference Include="Xamarin.AndroidX.MediaRouter" Version="1.0.0-preview02" />
-    <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.0-preview03" />
+    <PackageReference Include="Xamarin.AndroidX.Migration" Version="1.0.0-preview05" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.0.0-preview02" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
@@ -89,11 +89,11 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
+    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HelloForms\HelloForms.csproj">
@@ -103,9 +103,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="BeforeBuild">
-    <Message
-        Text="XamarinAndroidVersion: $(XamarinAndroidVersion)"
-        Importance="High"
-    />
+    <Message Text="XamarinAndroidVersion: $(XamarinAndroidVersion)" Importance="High" />
   </Target>
 </Project>
