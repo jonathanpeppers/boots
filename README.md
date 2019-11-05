@@ -2,9 +2,14 @@
 
 ![boots](icon.png)
 
-| NuGet | Azure DevOps | App Center | Github Actions | Bitrise |
-| --    | --           | --         | --             | --      |
-| [![NuGet](https://img.shields.io/nuget/dt/boots.svg)](https://www.nuget.org/packages/boots) | [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | [![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge)][appcenter] | [![Github Actions](https://github.com/jonathanpeppers/boots/workflows/GitHub%20Actions/badge.svg)](https://github.com/jonathanpeppers/boots/actions) | [![Bitrise](https://app.bitrise.io/app/bb148b2cc62339da/status.svg?token=TEhuHdoNElmh2w8uQ-mYcQ&branch=master)](https://app.bitrise.io/app/bb148b2cc62339da) |
+| NuGet |
+| --           |
+| `boots` <br/> [![NuGet](https://img.shields.io/nuget/dt/boots.svg)](https://www.nuget.org/packages/boots) |
+| `Cake.Boots` <br/> [![NuGet](https://img.shields.io/nuget/dt/Cake.Boots.svg)](https://www.nuget.org/packages/Cake.Boots) |
+
+| Azure DevOps | App Center | Github Actions | Bitrise |
+| --           | --         | --             | --      |
+| [![DevOps](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_apis/build/status/jonathanpeppers.boots?branchName=master)](https://jopepper.visualstudio.com/Jon%20Peppers%20OSS/_build/latest?definitionId=8&branchName=master) | [![AppCenter](https://build.appcenter.ms/v0.1/apps/87931b9c-e617-4fb7-bfa9-9bfd74f39abb/branches/master/badge)][appcenter] | [![Github Actions](https://github.com/jonathanpeppers/boots/workflows/GitHub%20Actions/badge.svg)](https://github.com/jonathanpeppers/boots/actions) | [![Bitrise](https://app.bitrise.io/app/bb148b2cc62339da/status.svg?token=TEhuHdoNElmh2w8uQ-mYcQ&branch=master)](https://app.bitrise.io/app/bb148b2cc62339da) |
 
 `boots` is a [.NET global tool](https://docs.microsoft.com/en-us/dotnet/core/tools/global-tools) for "bootstrapping" vsix & pkg files.
 
