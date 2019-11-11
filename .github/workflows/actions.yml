@@ -11,6 +11,8 @@ on:
 jobs:
   macOS:
     runs-on: macOS-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
     - uses: actions/checkout@v1
     - name: install .NET Core
@@ -25,19 +27,17 @@ jobs:
         boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
         boots https://aka.ms/xamarin-android-commercial-d16-4-macos
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
-      env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
 
   windows:
-   runs-on: windows-latest
-   steps:
-   - uses: actions/checkout@v1
-   - uses: warrenbuckley/Setup-MSBuild@v1
-   - name: build
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+    steps:
+    - uses: actions/checkout@v1
+    - uses: warrenbuckley/Setup-MSBuild@v1
+    - name: build
       shell: pwsh
       run: |
         dotnet tool install --global boots
         boots https://aka.ms/xamarin-android-commercial-d16-4-windows
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
-      env:
-        DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
