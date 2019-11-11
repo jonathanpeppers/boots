@@ -15,10 +15,12 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
     - uses: actions/checkout@v1
-    - name: install .NET Core
+    - name: build
       shell: bash
       run: |
         wget https://dot.net/v1/dotnet-install.sh
+        # NOTE: temporarily installing *both* 2.2 and 3.0
+        sh dotnet-install.sh -Version 2.2.402
         sh dotnet-install.sh -Version 3.0.100
         # Workaround, see: https://github.com/dotnet/cli/issues/9114#issuecomment-494226139
         export PATH="$PATH:~/.dotnet/tools"
