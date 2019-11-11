@@ -18,11 +18,11 @@ jobs:
       run: |
         wget https://dot.net/v1/dotnet-install.sh
         sh dotnet-install.sh -Version 3.0.100
-        export PATH="$PATH:~/.dotnet/tools"
     - name: build
       shell: bash
       run: |
         dotnet tool install --global boots
+        export PATH="$PATH:~/.dotnet/tools"
         boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
         boots https://aka.ms/xamarin-android-commercial-d16-4-macos
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
