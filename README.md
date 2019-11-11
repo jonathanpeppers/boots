@@ -49,13 +49,16 @@ If you don't want to use the extension, alternatively you can:
 
 ```yaml
 variables:
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 steps:
 - script: |
     dotnet tool install --global boots
     boots https://aka.ms/xamarin-android-commercial-d16-4-windows
 ```
-`DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is optional, but will speed up the first `dotnet` command. It is no longer needed on .NET Core 3.0, however.
+
+`DOTNET_CLI_TELEMETRY_OPTOUT` is optional.
+
+`DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is also a good idea if you are running on a .NET Core older than 3.0.
 
 ## Some Examples
 

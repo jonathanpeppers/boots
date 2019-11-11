@@ -15,7 +15,7 @@ variables:
   XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/c5d8e76d-8871-4b15-8391-b0569595c6bd/26dd9383f383cd737cddbfe4ed919877cf62ea42ff31e8293fd8a217e1008157/Xamarin.Android.Sdk-10.1.0.29.vsix
   XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/6dee3850-6d48-45c9-b25a-80c6abd3254e/04899faf2dd793d0bf3cfbd806a48560/xamarin.android-10.1.0.29.pkg
   XA.Version: 10.1.0-29
-  ShippedBoots: 1.0.0.291
+  ShippedBoots: 1.0.1.386
   DotNetCoreVersion: 3.0.100
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
@@ -44,12 +44,6 @@ jobs:
     demands: msbuild
   steps:
 
-  # NOTE: temporarily installing *both* 2.2 and 3.0
-  - task: UseDotNet@2
-    displayName: install .NET Core
-    inputs:
-      version: 2.2.402
-
   - task: UseDotNet@2
     displayName: install .NET Core
     inputs:
@@ -59,6 +53,7 @@ jobs:
     displayName: install Mono
     inputs:
       uri: $(Mono.Pkg)
+      version: $(ShippedBoots)
 
   - template: scripts/build-and-test.yaml
     parameters:
