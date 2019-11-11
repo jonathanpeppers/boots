@@ -18,6 +18,7 @@ jobs:
       run: |
         wget https://dot.net/v1/dotnet-install.sh
         sh dotnet-install.sh -Version 3.0.100
+        export PATH="$PATH:~/.dotnet/tools"
     - name: build
       shell: bash
       run: |
