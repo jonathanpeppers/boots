@@ -55,7 +55,7 @@ steps:
     dotnet tool install --global boots
     boots https://aka.ms/xamarin-android-commercial-d16-4-windows
 ```
-`DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is optional, but will speed up the first `dotnet` command.
+`DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is optional, but will speed up the first `dotnet` command. It is no longer needed on .NET Core 3.0, however.
 
 ## Some Examples
 
@@ -74,12 +74,6 @@ I got each URL from:
 * [Mono Downloads](https://www.mono-project.com/download/stable/#download-mac)
 * [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
 * [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-4)
-
-To _upgrade_ .NET Core on Mac OSX, assuming you have some version of .NET Core to start with:
-
-    boots https://download.visualstudio.microsoft.com/download/pr/1440e4a9-4e5f-4148-b8d2-8a2b3da4e622/d0c5cb2712e51c188200ea420d771c2f/dotnet-sdk-2.2.301-osx-x64.pkg
-
-Url from: [.NET Core Downloads](https://dotnet.microsoft.com/download/dotnet-core/2.2). _NOTE: I used the Network tab in Chrome to find the final URL_.
 
 ### App Center
 

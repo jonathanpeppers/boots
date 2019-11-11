@@ -16,8 +16,9 @@ variables:
   XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/6dee3850-6d48-45c9-b25a-80c6abd3254e/04899faf2dd793d0bf3cfbd806a48560/xamarin.android-10.1.0.29.pkg
   XA.Version: 10.1.0-29
   ShippedBoots: 1.0.0.291
-  DotNetCoreVersion: 2.2.402
+  DotNetCoreVersion: 3.0.100
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
 
@@ -42,6 +43,12 @@ jobs:
     name: Hosted macOS
     demands: msbuild
   steps:
+
+  # NOTE: temporarily installing *both* 2.2 and 3.0
+  - task: UseDotNet@2
+    displayName: install .NET Core
+    inputs:
+      version: 2.2.402
 
   - task: UseDotNet@2
     displayName: install .NET Core
