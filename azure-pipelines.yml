@@ -16,8 +16,7 @@ variables:
   XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/6dee3850-6d48-45c9-b25a-80c6abd3254e/04899faf2dd793d0bf3cfbd806a48560/xamarin.android-10.1.0.29.pkg
   XA.Version: 10.1.0-29
   ShippedBoots: 1.0.0.291
-  DotNetCoreVersion: 2.2.402
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DotNetCoreVersion: 3.0.100
 
 jobs:
 
