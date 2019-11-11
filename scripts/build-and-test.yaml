@@ -10,7 +10,7 @@ steps:
     msbuildArguments: '/restore /t:Build,Pack /bl:$(System.DefaultWorkingDirectory)/bin/boots.binlog'
 
 - script: |
-    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp2.0/Boots.Tests.dll --logger:trx
+    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.0/Boots.Tests.dll --logger:trx
   displayName: Run tests
 
 - task: PublishTestResults@2
