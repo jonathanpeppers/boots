@@ -78,6 +78,19 @@ I got each URL from:
 * [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
 * [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-4)
 
+### Xamarin.Android Stable & Preview URLs
+
+I've had a few requests for some kind of `-stable` or `-preview` switch, which makes sense for a lot of use cases.
+
+We have a way to do this for Xamarin.Android, so far by choosing one of these URLs:
+
+* https://aka.ms/xamarin-android-commercial-release-windows
+* https://aka.ms/xamarin-android-commercial-release-macos
+* https://aka.ms/xamarin-android-commercial-preview-macos
+* https://aka.ms/xamarin-android-commercial-preview-windows
+
+I may be able to get something more user friendly down the road. The issue is getting a URL for all of the different products: Mono, Xamarin.Android, and Xamarin.iOS. Each team does their own thing, and the way you get the URLs are drastically different for VS Windows and VS Mac.
+
 ### App Center
 
 `samples/HelloForms.sln` is a "Hello World" Xamarin.Forms project configured with `boots` installing newer versions than what is available on [App Center][appcenter]:
