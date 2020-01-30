@@ -12,7 +12,7 @@
     />
     <Error
         Text="$(XamarinAndroidVersion) did not match $(Expected)"
-        Condition=" '$(Expected)' != '' And '$(Expected)' != '$(XamarinAndroidVersion)' "
+        Condition=" '$(Expected)' != '' And $(XamarinAndroidVersion.StartsWith('$(Expected)')) "
     />
   </Target>
 </Project>
