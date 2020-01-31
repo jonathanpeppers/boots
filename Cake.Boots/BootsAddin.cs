@@ -22,7 +22,7 @@ namespace Cake.Boots
 		}
 
 		[CakeMethodAlias]
-		public static async Task Boots (this ICakeContext context, ReleaseChannel channel, Product product)
+		public static async Task Boots (this ICakeContext context, Product product, ReleaseChannel channel = ReleaseChannel.Stable)
 		{
 			var boots = new Bootstrapper {
 				Channel = channel,
