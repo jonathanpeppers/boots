@@ -60,14 +60,14 @@ namespace Boots.Core
 				case ReleaseChannel.Preview:
 					return "Beta";
 				default:
-					throw new NotImplementedException ($"Unexpected value for {nameof (ReleaseChannel)}: {channel}");
+					throw new NotImplementedException ($"Unexpected value for release: {channel}");
 			}
 		}
 
 		string GetProductId (Product product)
 		{
 			if (!ProductIds.TryGetValue (product, out string id)) {
-				throw new NotImplementedException ($"Unexpected value for {nameof (Product)}: {product}");
+				throw new NotImplementedException ($"Unexpected value for product: {product}");
 			}
 			return id;
 		}

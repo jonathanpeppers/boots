@@ -79,7 +79,7 @@ namespace Boots.Core
 				case ReleaseChannel.Preview:
 					return "Microsoft.VisualStudio.Manifests.VisualStudioPreview";
 				default:
-					throw new NotImplementedException ($"Unexpected value for {nameof (ReleaseChannel)}: {channel}"); ;
+					throw new NotImplementedException ($"Unexpected value for release: {channel}"); ;
 			}
 		}
 
@@ -91,9 +91,9 @@ namespace Boots.Core
 				case Product.Mono:
 				case Product.XamariniOS:
 				case Product.XamarinMac:
-					throw new NotImplementedException ($"Value for {nameof (Product)} not implemented on Windows: {product}");
+					throw new NotImplementedException ($"Value for product not implemented on Windows: {product}");
 				default:
-					throw new NotImplementedException ($"Unexpected value for {nameof (Product)}: {product}");
+					throw new NotImplementedException ($"Unexpected value for product: {product}");
 			}
 		}
 
