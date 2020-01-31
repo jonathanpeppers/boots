@@ -23,7 +23,7 @@ jobs:
         export PATH="$PATH:~/.dotnet/tools"
         dotnet tool install --global boots
         boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-        boots https://aka.ms/xamarin-android-commercial-d16-4-macos
+        boots https://aka.ms/xamarin-android-commercial-preview-macos
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
 
   windows:
@@ -37,5 +37,5 @@ jobs:
       shell: pwsh
       run: |
         dotnet tool install --global boots
-        boots https://aka.ms/xamarin-android-commercial-d16-4-windows
+        boots https://aka.ms/xamarin-android-commercial-preview-windows
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage

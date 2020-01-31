@@ -12,9 +12,9 @@ variables:
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-  XA.Vsix: https://download.visualstudio.microsoft.com/download/pr/c5d8e76d-8871-4b15-8391-b0569595c6bd/26dd9383f383cd737cddbfe4ed919877cf62ea42ff31e8293fd8a217e1008157/Xamarin.Android.Sdk-10.1.0.29.vsix
-  XA.Pkg: https://download.visualstudio.microsoft.com/download/pr/6dee3850-6d48-45c9-b25a-80c6abd3254e/04899faf2dd793d0bf3cfbd806a48560/xamarin.android-10.1.0.29.pkg
-  XA.Version: 10.1.0-29
+  XA.Vsix: https://aka.ms/xamarin-android-commercial-preview-windows
+  XA.Pkg: https://aka.ms/xamarin-android-commercial-preview-macos
+  XA.Version: 10.2
   ShippedBoots: 1.0.1.386
   DotNetCoreVersion: 3.0.100
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
