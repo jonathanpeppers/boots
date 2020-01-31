@@ -1,10 +1,5 @@
-using System;
-
-namespace Boots.Core
+public enum ReleaseChannel
 {
-	public enum ReleaseChannel
-	{
-		Stable,
-		Preview,
-	}
+	Stable,
+	Preview,
 }

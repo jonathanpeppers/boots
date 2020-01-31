@@ -1,12 +1,7 @@
-using System;
-
-namespace Boots.Core
+public enum Product
 {
-	public enum Product
-	{
-		Mono,
-		XamarinAndroid,
-		XamariniOS,
-		XamarinMac,
-	}
+	Mono,
+	XamarinAndroid,
+	XamariniOS,
+	XamarinMac,
 }
