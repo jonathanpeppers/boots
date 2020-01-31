@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -16,18 +17,23 @@ namespace Boots.Core
 			{ Product.XamarinMac,     "0ab364ff-c0e9-43a8-8747-3afb02dc7731" },
 		};
 
-		HttpClient httpClient = new HttpClient ();
+		readonly HttpClient httpClient = new HttpClient ();
 
-		public async override Task<string> Resolve (ReleaseChannel channel, Product product)
+		public MacUrlResolver (Bootstrapper boots) : base (boots) { }
+
+		public async override Task<string> Resolve (ReleaseChannel channel, Product product, CancellationToken token = new CancellationToken ())
 		{
 			string level = GetLevel (channel);
 			string productId = GetProductId (product);
 
-			var response = await httpClient.GetAsync (Url + level);
+			var uri = new Uri (Url + level);
+			Boots.Logger.WriteLine ($"Querying {uri}");
+			var response = await httpClient.GetAsync (uri, token);
 			response.EnsureSuccessStatusCode ();
 
 			var document = new XmlDocument ();
 			using (var stream = await response.Content.ReadAsStreamAsync ()) {
+				token.ThrowIfCancellationRequested ();
 				document.Load (stream);
 
 				var node = document.SelectSingleNode ($"/UpdateInfo/Application[@id='{productId}']/Update/@url");

@@ -27,8 +27,8 @@ namespace Boots.Core
 					throw new ArgumentNullException (nameof (Product));
 
 				var resolver = Helpers.IsMac ?
-					(UrlResolver) new MacUrlResolver () :
-					(UrlResolver) new WindowsUrlResolver ();
+					(UrlResolver) new MacUrlResolver (this) :
+					(UrlResolver) new WindowsUrlResolver (this);
 				Url = await resolver.Resolve (Channel.Value, Product.Value);
 			}
 

@@ -19,6 +19,8 @@ namespace Boots.Tests
 		[InlineData (typeof (MacUrlResolver), ReleaseChannel.Preview, Product.XamariniOS)]
 		[InlineData (typeof (MacUrlResolver), ReleaseChannel.Preview, Product.XamarinMac)]
 		[InlineData (typeof (MacUrlResolver), ReleaseChannel.Preview, Product.Mono)]
+		[InlineData (typeof (WindowsUrlResolver), ReleaseChannel.Stable, Product.XamarinAndroid)]
+		[InlineData (typeof (WindowsUrlResolver), ReleaseChannel.Preview, Product.XamarinAndroid)]
 
 		public async Task Resolve (Type type, ReleaseChannel channel, Product product)
 		{
