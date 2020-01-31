@@ -48,7 +48,6 @@ namespace Boots.Core
 
 				// Just let this throw if it is an invalid Uri
 				new Uri (url);
-
 				return url;
 			}
 		}
