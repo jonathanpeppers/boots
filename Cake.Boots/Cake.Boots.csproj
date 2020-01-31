@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="0.34.1" />
+    <PackageReference Include="System.Text.Json" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="$(OutputPath)*.dll" Pack="true" PackagePath="lib\netstandard2.0" Exclude="$(OutputPath)Cake.Boots.dll" />
+    <None Include="$(OutputPath)*.pdb" Pack="true" PackagePath="lib\netstandard2.0" Exclude="$(OutputPath)Cake.Boots.pdb" />
   </ItemGroup>
 
 </Project>
