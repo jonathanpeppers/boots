@@ -1,6 +1,7 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.CommandLine.Parsing;
 using System.Threading;
 using System.Threading.Tasks;
 using Boots.Core;
@@ -16,7 +17,7 @@ namespace Boots
 				return;
 			}
 
-			const string options = "Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac and Mono.";
+			const string options = "Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.";
 			var rootCommand = new RootCommand
 			{
 				new Option(
@@ -39,7 +40,8 @@ namespace Boots
 				},
 			};
 			rootCommand.Name = "boots";
-			rootCommand.Description = $"boots {Version}";
+			rootCommand.AddValidator (Validator);
+			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
 			rootCommand.Handler = CommandHandler.Create <string, string, string> (Run);
 			await rootCommand.InvokeAsync (args);
 		}
@@ -52,6 +54,16 @@ namespace Boots
 			} catch (UriFormatException) {
 				return false;
 			}
+		}
+
+		static string Validator (CommandResult result)
+		{
+			if (result.ValueForOption ("--url") == null &&
+				result.ValueForOption ("--stable") == null &&
+				result.ValueForOption ("--preview") == null) {
+				return "At least one of --url, --stable, or --preview must be used";
+			}
+			return "";
 		}
 
 		static async Task Run (string url, string stable = null, string preview = null)
