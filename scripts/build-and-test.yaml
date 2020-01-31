@@ -1,6 +1,5 @@
 parameters:
   platform: ''
-  url: ''
 steps:
 
 - task: MSBuild@1
@@ -21,10 +20,9 @@ steps:
     testRunTitle: ${{ parameters.platform }}
   condition: succeededOrFailed()
 
-- task: Boots@1
+- script: |
+    dotnet Boots/bin/$(Configuration)/netcoreapp3.0/Boots.dll --preview Xamarin.Android
   displayName: install xamarin-android
-  inputs:
-    uri: ${{ parameters.url }}
 
 - task: MSBuild@1
   displayName: verify

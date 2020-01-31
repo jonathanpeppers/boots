@@ -28,10 +28,12 @@ namespace Boots.Core
 				var request = new HttpRequestMessage (HttpMethod.Get, uri);
 				var response = await client.SendAsync (request, HttpCompletionOption.ResponseHeadersRead, token);
 				response.EnsureSuccessStatusCode ();
-				using (var httpStream = await response.Content.ReadAsStreamAsync ())
-				using (var fileStream = File.Create (TempFile)) {
-					boots.Logger.WriteLine ($"Writing to {TempFile}");
-					await httpStream.CopyToAsync (fileStream, 8 * 1024, token);
+				using (var httpStream = await response.Content.ReadAsStreamAsync ()) {
+					token.ThrowIfCancellationRequested ();
+					using (var fileStream = File.Create (TempFile)) {
+						boots.Logger.WriteLine ($"Writing to {TempFile}");
+						await httpStream.CopyToAsync (fileStream, 8 * 1024, token);
+					}
 				}
 			}
 		}

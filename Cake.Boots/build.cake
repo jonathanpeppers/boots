@@ -12,6 +12,11 @@ Task("Boots")
         "https://aka.ms/objective-sharpie";
 
     await Boots (url);
+
+    if (!IsRunningOnWindows()) {
+        await Boots (Product.XamariniOS);
+        await Boots (Product.XamarinMac, ReleaseChannel.Preview);
+    }
 });
 
 Task("Default")

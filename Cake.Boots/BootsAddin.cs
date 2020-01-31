@@ -21,6 +21,18 @@ namespace Cake.Boots
 			await boots.Install ();
 		}
 
+		[CakeMethodAlias]
+		public static async Task Boots (this ICakeContext context, Product product, ReleaseChannel channel = ReleaseChannel.Stable)
+		{
+			var boots = new Bootstrapper {
+				Channel = channel,
+				Product = product,
+				Logger = new CakeWriter (context)
+			};
+
+			await boots.Install ();
+		}
+
 		class CakeWriter : TextWriter
 		{
 			const Verbosity verbosity = Verbosity.Normal;
