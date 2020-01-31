@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Boots.Core
 {
@@ -9,5 +7,6 @@ namespace Boots.Core
 		Mono,
 		XamarinAndroid,
 		XamariniOS,
+		XamarinMac,
 	}
 }
