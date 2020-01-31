@@ -9,7 +9,7 @@
     <PackageVersion>$(BootsVersion).$(BuildNumber)$(BootsSuffix)</PackageVersion>
     <Authors>Jonathan Peppers, Peter Collins</Authors>
     <Copyright>$([System.DateTime]::Now.Year) $(Authors)</Copyright>
-    <PackageIconUrl>https://raw.githubusercontent.com/jonathanpeppers/boots/master/icon.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/jonathanpeppers/boots</PackageProjectUrl>
     <PackageTags>Bootstrap CI Xamarin Cake Azure DevOps</PackageTags>
@@ -17,5 +17,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>
