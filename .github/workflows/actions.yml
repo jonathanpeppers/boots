@@ -25,8 +25,8 @@ jobs:
         sh dotnet-install.sh -Version 3.0.100
         export PATH="$PATH:~/.dotnet/tools"
         dotnet tool install --global boots --version $boots_version
-        boots -preview Mono
-        boots -preview XamarinAndroid
+        boots --preview Mono
+        boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
 
   windows:
@@ -40,5 +40,5 @@ jobs:
       shell: pwsh
       run: |
         dotnet tool install --global boots --version $env:boots_version
-        boots -preview XamarinAndroid
+        boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
