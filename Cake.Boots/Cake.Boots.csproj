@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="0.34.1" />
-    <PackageReference Include="System.Text.Json" Version="4.7.0" />
+    <PackageReference Include="System.Text.Json" Version="4.7.0" GeneratePathProperty="true" PrivateAssets="none" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)*.dll" Pack="true" PackagePath="lib\netstandard2.0" Exclude="$(OutputPath)Cake.Boots.dll" />
-    <None Include="$(OutputPath)*.pdb" Pack="true" PackagePath="lib\netstandard2.0" Exclude="$(OutputPath)Cake.Boots.pdb" />
+    <!--These are listed explicitly so if they are missing, we get a build error-->
+    <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="$(PkgSystem_Text_Json)\lib\$(TargetFramework)\System.Text.Json.dll" Pack="true" PackagePath="lib\netstandard2.0" />
   </ItemGroup>
 
 </Project>
