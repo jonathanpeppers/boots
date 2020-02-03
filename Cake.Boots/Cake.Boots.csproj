@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="0.34.1" />
+    <PackageReference Include="System.Memory" Version="4.5.3" GeneratePathProperty="true" PrivateAssets="none" />
     <PackageReference Include="System.Text.Json" Version="4.7.0" GeneratePathProperty="true" PrivateAssets="none" />
   </ItemGroup>
 
@@ -21,6 +22,7 @@
     <!--These are listed explicitly so if they are missing, we get a build error-->
     <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" />
     <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="$(PkgSystem_Memory)\lib\$(TargetFramework)\System.Memory.dll" Pack="true" PackagePath="lib\netstandard2.0" />
     <None Include="$(PkgSystem_Text_Json)\lib\$(TargetFramework)\System.Text.Json.dll" Pack="true" PackagePath="lib\netstandard2.0" />
   </ItemGroup>
 
