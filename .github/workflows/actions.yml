@@ -8,6 +8,9 @@ on:
     branches:
     - master
 
+env:
+  boots_version: 1.0.2.407-pre
+
 jobs:
   macOS:
     runs-on: macOS-latest
@@ -21,9 +24,9 @@ jobs:
         wget https://dot.net/v1/dotnet-install.sh
         sh dotnet-install.sh -Version 3.0.100
         export PATH="$PATH:~/.dotnet/tools"
-        dotnet tool install --global boots
-        boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-        boots https://aka.ms/xamarin-android-commercial-preview-macos
+        dotnet tool install --global boots --version $boots_version
+        boots -preview Mono
+        boots -preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
 
   windows:
@@ -36,6 +39,6 @@ jobs:
     - name: build
       shell: pwsh
       run: |
-        dotnet tool install --global boots
-        boots https://aka.ms/xamarin-android-commercial-preview-windows
+        dotnet tool install --global boots $env:boots_version
+        boots -preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
