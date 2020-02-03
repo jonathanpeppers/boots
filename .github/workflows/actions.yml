@@ -39,6 +39,6 @@ jobs:
     - name: build
       shell: pwsh
       run: |
-        dotnet tool install --global boots $env:boots_version
+        dotnet tool install --global boots --version $env:boots_version
         boots -preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
