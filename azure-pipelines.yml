@@ -9,7 +9,7 @@ trigger:
 variables:
   Configuration: Release
   BootsVersion: 1.0.2
-  BootsSuffix: '-pre'
+  BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
   XA.Version: 10.2
