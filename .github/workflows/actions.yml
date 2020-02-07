@@ -11,7 +11,7 @@ on:
     - '.github/**'
 
 env:
-  boots_version: 1.0.2.407-pre
+  boots_version: 1.0.2.421
 
 jobs:
   macOS:
