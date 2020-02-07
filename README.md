@@ -78,18 +78,57 @@ I got each URL from:
 * [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
 * [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-4)
 
-### Xamarin.Android Stable & Preview URLs
+### New Xamarin Hotness
 
-I've had a few requests for some kind of `-stable` or `-preview` switch, which makes sense for a lot of use cases.
+By querying the Visual Studio updater manifests, `boots` 1.0.2.x allows you to install the latest versions of Xamarin or Mono from the stable or preview channels.
 
-We have a way to do this for Xamarin.Android, so far by choosing one of these URLs:
+Some examples:
+```
+dotnet tool install --global boots --version 1.0.2.421
+boots --stable Mono
+boots --preview XamarinAndroid
+boots --preview XamariniOS
+boots --preview XamarinMac
+```
+This would install the latest stable Mono and the latest previews for Xamarin.Android, Xamarin.iOS, and Xamarin.Mac.
 
-* https://aka.ms/xamarin-android-commercial-release-windows
-* https://aka.ms/xamarin-android-commercial-release-macos
-* https://aka.ms/xamarin-android-commercial-preview-macos
-* https://aka.ms/xamarin-android-commercial-preview-windows
+You can also do this from a `cake` script:
 
-I may be able to get something more user friendly down the road. The issue is getting a URL for all of the different products: Mono, Xamarin.Android, and Xamarin.iOS. Each team does their own thing, and the way you get the URLs are drastically different for VS Windows and VS Mac.
+```csharp
+#addin nuget:?package=Cake.Boots&version=1.0.2.421
+
+Task("Boots")
+    .Does(async () =>
+    {
+        if (!IsRunningOnWindows ()) {
+            await Boots (Product.Mono,       ReleaseChannel.Stable);
+            await Boots (Product.XamariniOS, ReleaseChannel.Preview);
+        }
+        await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
+    });
+```
+If you omit the second `ReleaseChannel` parameter, it will default to `ReleaseChannel.Stable`.
+
+`boots` now uses `System.CommandLine`, so we get rich help text for free:
+
+```
+> boots
+At least one of --url, --stable, or --preview must be used
+
+boots:
+  boots 1.0.2.421 File issues at: https://github.com/jonathanpeppers/boots/issues
+
+Usage:
+  boots [options]
+
+Options:
+  --url <url>            A URL to a pkg or vsix file to install
+  --stable <stable>      Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --preview <preview>    Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --version              Display version information
+```
+
+*NOTE: using a URL is still going to be the most stable & reproducible option. It is possible a Xamarin or Mono update could come along and break your build.* 👀
 
 ### App Center
 
