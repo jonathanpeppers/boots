@@ -37,7 +37,7 @@ jobs:
 
 - job: mac
   pool:
-    name: Hosted macOS
+    name: macOS-10.15
     demands: msbuild
   steps:
 
