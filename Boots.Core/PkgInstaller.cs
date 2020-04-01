@@ -20,7 +20,7 @@ namespace Boots.Core
 
 			using (var proc = new AsyncProcess (Boots) {
 				Command = "/usr/sbin/installer",
-				Arguments = $"-pkg \"{file}\" -target / -verbose",
+				Arguments = $"-verbose -dumplog -pkg \"{file}\" -target /",
 				Elevate = true,
 			}) {
 				await proc.RunAsync (token);

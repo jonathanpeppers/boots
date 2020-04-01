@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Boots.Core;
 using Xunit;
@@ -25,6 +26,14 @@ namespace Boots.Tests
 				Skip.If (true, "Not supported on Linux yet");
 			}
 			await boots.Install ();
+		}
+
+		[SkippableFact]
+		public async Task InvalidInstallerFile ()
+		{
+			Skip.If (!Helpers.IsMac && !Helpers.IsWindows, "Not supported on Linux yet");
+			boots.Url = "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg";
+			await Assert.ThrowsAsync<Exception> (() => boots.Install ());
 		}
 	}
 }

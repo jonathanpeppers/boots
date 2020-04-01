@@ -14,6 +14,8 @@ Task("Boots")
     await Boots (url);
 
     if (!IsRunningOnWindows()) {
+        await Boots (Product.Mono);
+        await Boots (Product.XamarinAndroid);
         await Boots (Product.XamariniOS);
         await Boots (Product.XamarinMac, ReleaseChannel.Preview);
     }
