@@ -37,7 +37,7 @@ jobs:
 
 - job: mac
   pool:
-    name: macOS-10.15
+    name: macOS-latest
     demands: msbuild
   steps:
 
