@@ -24,14 +24,14 @@
 
   <ItemGroup>
     <!--These are listed explicitly so if they are missing, we get a build error-->
-    <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Buffers)\lib\$(TargetFramework)\System.Buffers.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Memory)\lib\$(TargetFramework)\System.Memory.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Numerics_Vectors)\lib\$(TargetFramework)\System.Numerics.Vectors.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Runtime_CompilerServices_Unsafe)\lib\$(TargetFramework)\System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Text_Encodings_Web)\lib\$(TargetFramework)\System.Text.Encodings.Web.dll" Pack="true" PackagePath="lib\netstandard2.0" />
-    <None Include="$(PkgSystem_Text_Json)\lib\$(TargetFramework)\System.Text.Json.dll" Pack="true" PackagePath="lib\netstandard2.0" />
+    <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Buffers)\lib\$(TargetFramework)\System.Buffers.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Memory)\lib\$(TargetFramework)\System.Memory.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Numerics_Vectors)\lib\$(TargetFramework)\System.Numerics.Vectors.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Runtime_CompilerServices_Unsafe)\lib\$(TargetFramework)\System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Text_Encodings_Web)\lib\$(TargetFramework)\System.Text.Encodings.Web.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgSystem_Text_Json)\lib\$(TargetFramework)\System.Text.Json.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
   </ItemGroup>
 
 </Project>
