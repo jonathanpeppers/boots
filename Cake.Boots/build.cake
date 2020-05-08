@@ -14,11 +14,10 @@ Task("Boots")
     await Boots (url);
 
     if (!IsRunningOnWindows()) {
-        //Let's really run through the gauntlet and install 8 .pkg files
-        // await Boots (Product.Mono,           ReleaseChannel.Stable);
-        // await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
-        // await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
-        // await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);
+        //Let's really run through the gauntlet and install 6 .pkg files
+        await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
+        await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
+        await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);
         await Boots (Product.Mono,           ReleaseChannel.Preview);
         await Boots (Product.XamariniOS,     ReleaseChannel.Preview);
         await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
