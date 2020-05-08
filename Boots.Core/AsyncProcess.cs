@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,37 +45,27 @@ namespace Boots.Core
 			};
 		}
 
-		Task StartAndWait (Process process, ManualResetEventSlim stderrEvent, ManualResetEventSlim stdoutEvent, CancellationToken token)
+		Task StartAndWait (Process process, CancellationToken token)
 		{
 			process.Start ();
 			process.BeginErrorReadLine ();
 			process.BeginOutputReadLine ();
-			return Task.Run (() => {
-				process.WaitForExit ();
-				stderrEvent.Wait (token);
-				stdoutEvent.Wait (token);
-			}, token);
+			return Task.Run (process.WaitForExit, token);
 		}
 
 		async Task<int> Run (CancellationToken token = new CancellationToken ())
 		{
-			var stderrEvent = new ManualResetEventSlim (false);
-			var stdoutEvent = new ManualResetEventSlim (false);
 			process = CreateProcess ();
 			process.ErrorDataReceived += (sender, e) => {
 				if (e.Data != null)
 					boots.Logger.WriteLine (e.Data);
-				else
-					stderrEvent.Set ();
 			};
 			process.OutputDataReceived += (sender, e) => {
 				if (e.Data != null)
 					boots.Logger.WriteLine (e.Data);
-				else
-					stdoutEvent.Set ();
 			};
 
-			await StartAndWait (process, stderrEvent, stdoutEvent, token);
+			await StartAndWait (process, token);
 			return process.ExitCode;
 		}
 
@@ -90,24 +79,18 @@ namespace Boots.Core
 
 		public async Task<string> RunWithOutputAsync (CancellationToken token = new CancellationToken ())
 		{
-			var stderrEvent = new ManualResetEventSlim (false);
-			var stdoutEvent = new ManualResetEventSlim (false);
 			var builder = new StringBuilder ();
 			process = CreateProcess ();
 			process.ErrorDataReceived += (sender, e) => {
 				if (e.Data != null)
 					builder.AppendLine (e.Data);
-				else
-					stderrEvent.Set ();
 			};
 			process.OutputDataReceived += (sender, e) => {
 				if (e.Data != null)
 					builder.AppendLine (e.Data);
-				else
-					stdoutEvent.Set ();
 			};
 
-			await StartAndWait (process, stderrEvent, stdoutEvent, token);
+			await StartAndWait (process, token);
 			if (process.ExitCode != 0)
 				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {process.ExitCode}");
 			return builder.ToString ();
