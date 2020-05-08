@@ -4,5 +4,4 @@ test: off
 build_script:
 - sh: >-
     msbuild boots.sln /restore /t:Build,Pack &&
-    ./Cake.Boots/build.sh -t Mono &&
     ./Cake.Boots/build.sh
