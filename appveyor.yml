@@ -1,4 +1,4 @@
-version: {build}
+version: '{build}'
 image: macOS
 build_script:
 - sh: >-
