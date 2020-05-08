@@ -1,0 +1,6 @@
+version: {build}
+image: macOS
+build_script:
+- sh: |
+  dotnet tool install --global boots --version 1.0.2.421
+  boots https://download.visualstudio.microsoft.com/download/pr/905598d0-17a3-4b42-bf13-c5a69d7aac87/853aff73920dcb013c09a74f05da7f6a/dotnet-sdk-3.1.201-osx-x64.pkg
