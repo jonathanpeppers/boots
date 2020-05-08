@@ -101,13 +101,34 @@ Task("Boots")
     .Does(async () =>
     {
         if (!IsRunningOnWindows ()) {
-            await Boots (Product.Mono,       ReleaseChannel.Stable);
+            await Boots (Product.XamarinMac, ReleaseChannel.Stable);
             await Boots (Product.XamariniOS, ReleaseChannel.Preview);
         }
         await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
     });
 ```
 If you omit the second `ReleaseChannel` parameter, it will default to `ReleaseChannel.Stable`.
+
+> NOTE! if you need to install Mono, do this in a separate process from the rest of your Cake build.
+
+For example:
+
+```csharp
+Task("Mono")
+    .Does(async () =>
+    {
+        await Boots (Product.Mono);
+    });
+```
+
+Then invoke Cake twice:
+
+```bash
+./build.sh -t Mono
+./build.sh -t Boots
+```
+
+### System.CommandLine
 
 `boots` now uses `System.CommandLine`, so we get rich help text for free:
 

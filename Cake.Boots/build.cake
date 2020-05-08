@@ -4,6 +4,13 @@ var target = Argument("target", "Default");
 #r "bin/Debug/netstandard2.0/Cake.Boots.dll"
 #r "bin/Release/netstandard2.0/Cake.Boots.dll"
 
+// NOTE: always update Mono in a separate process, run Cake twice.
+Task("Mono")
+    .Does(async () =>
+{
+    await Boots (Product.Mono, ReleaseChannel.Preview);
+});
+
 Task("Boots")
     .Does(async () =>
 {
@@ -18,7 +25,6 @@ Task("Boots")
         await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
         await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
         await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);
-        await Boots (Product.Mono,           ReleaseChannel.Preview);
         await Boots (Product.XamariniOS,     ReleaseChannel.Preview);
         await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
         await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
