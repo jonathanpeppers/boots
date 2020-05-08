@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,8 +56,14 @@ namespace Boots.Core
 		async Task<int> Run (CancellationToken token = new CancellationToken ())
 		{
 			process = CreateProcess ();
-			process.ErrorDataReceived += (sender, e) => boots.Logger.WriteLine (e.Data);
-			process.OutputDataReceived += (sender, e) => boots.Logger.WriteLine (e.Data);
+			process.ErrorDataReceived += (sender, e) => {
+				if (e.Data != null)
+					boots.Logger.WriteLine (e.Data);
+			};
+			process.OutputDataReceived += (sender, e) => {
+				if (e.Data != null)
+					boots.Logger.WriteLine (e.Data);
+			};
 
 			await StartAndWait (process, token);
 			return process.ExitCode;
@@ -76,8 +81,14 @@ namespace Boots.Core
 		{
 			var builder = new StringBuilder ();
 			process = CreateProcess ();
-			process.ErrorDataReceived += (sender, e) => builder.AppendLine (e.Data);
-			process.OutputDataReceived += (sender, e) => builder.AppendLine (e.Data);
+			process.ErrorDataReceived += (sender, e) => {
+				if (e.Data != null)
+					builder.AppendLine (e.Data);
+			};
+			process.OutputDataReceived += (sender, e) => {
+				if (e.Data != null)
+					builder.AppendLine (e.Data);
+			};
 
 			await StartAndWait (process, token);
 			if (process.ExitCode != 0)

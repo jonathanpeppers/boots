@@ -56,6 +56,5 @@ jobs:
     parameters:
       platform: mac
 
-  - bash: ./build.sh
+  - bash: ./Cake.Boots/build.sh -t Mono && ./Cake.Boots/build.sh
     displayName: Cake test
-    workingDirectory: Cake.Boots
