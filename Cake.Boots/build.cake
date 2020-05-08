@@ -11,13 +11,13 @@ Task("Boots")
         "https://github.com/codecadwallader/codemaid/releases/download/v11.0/CodeMaid.v11.0.183.vsix" :
         "https://aka.ms/objective-sharpie";
 
-    await Boots (url);
+    //await Boots (url);
 
     if (!IsRunningOnWindows()) {
-        await Boots (Product.Mono);
-        await Boots (Product.XamarinAndroid);
-        await Boots (Product.XamariniOS);
+        await Boots (Product.Mono, ReleaseChannel.Preview);
+        await Boots (Product.XamariniOS, ReleaseChannel.Preview);
         await Boots (Product.XamarinMac, ReleaseChannel.Preview);
+        await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
     }
 });
 
