@@ -3,5 +3,4 @@ image: macOS
 build_script:
 - sh: >-
     msbuild boots.sln /restore /t:Build,Pack &&
-    cd Cake.Boots &&
-    ./build.sh
+    ./Cake.Boots/build.sh
