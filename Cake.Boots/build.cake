@@ -11,12 +11,17 @@ Task("Boots")
         "https://github.com/codecadwallader/codemaid/releases/download/v11.0/CodeMaid.v11.0.183.vsix" :
         "https://aka.ms/objective-sharpie";
 
-    //await Boots (url);
+    await Boots (url);
 
     if (!IsRunningOnWindows()) {
-        await Boots (Product.Mono, ReleaseChannel.Preview);
-        await Boots (Product.XamariniOS, ReleaseChannel.Preview);
-        await Boots (Product.XamarinMac, ReleaseChannel.Preview);
+        //Let's really run through the gauntlet and install 8 .pkg files
+        await Boots (Product.Mono,           ReleaseChannel.Stable);
+        await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
+        await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
+        await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);
+        await Boots (Product.Mono,           ReleaseChannel.Preview);
+        await Boots (Product.XamariniOS,     ReleaseChannel.Preview);
+        await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
         await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
     }
 });
