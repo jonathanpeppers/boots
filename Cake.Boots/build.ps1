@@ -41,7 +41,7 @@ https://cakebuild.net
 
 [CmdletBinding()]
 Param(
-    [string]$Script = "build.cake",
+    [string]$Script,
     [string]$Target,
     [string]$Configuration,
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
@@ -215,7 +215,9 @@ if (!(Test-Path $CAKE_EXE)) {
     Throw "Could not find Cake.exe at $CAKE_EXE"
 }
 
-
+if ($Script -eq '') {
+    $Script = "$PSScriptRoot\build.cake"
+}
 
 # Build Cake arguments
 $cakeArguments = @("$Script");
