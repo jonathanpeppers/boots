@@ -17,17 +17,68 @@
 
 ## Use it
 
-    dotnet tool install --global boots
-    boots https://url/to/your/package
+```bash
+dotnet tool install --global boots
+boots https://url/to/your/package
+```
 
 `boots` currently supports Windows & Mac OSX, therefore:
 
 * On Windows - assumes the file is a `.vsix` and installs it into all instances of Visual Studio via `VSIXInstaller.exe`.
 * On Mac OSX - assumes the file is a `.pkg` and installs it
 
-[@motz](https://www.twitch.tv/jamesmontemagno) gives a quick walkthrough on [Twitch.tv](https://clips.twitch.tv/embed?clip=FunAgitatedCourgetteSmoocherZ):
+### New Xamarin Hotness
 
-[![Twitch](https://clips-media-assets2.twitch.tv/AT-cm%7C502459489-preview-260x147.jpg)](https://clips.twitch.tv/embed?clip=FunAgitatedCourgetteSmoocherZ)
+By querying the Visual Studio updater manifests, `boots` 1.0.2.x allows you to install the latest versions of Xamarin or Mono from the stable or preview channels.
+
+Some examples:
+
+```bash
+dotnet tool install --global boots --version 1.0.2.421
+boots --stable Mono
+boots --preview XamarinAndroid
+boots --preview XamariniOS
+boots --preview XamarinMac
+```
+
+This would install the latest stable Mono and the latest previews for Xamarin.Android, Xamarin.iOS, and Xamarin.Mac.
+
+You can also do this from a `cake` script:
+
+```csharp
+#addin nuget:?package=Cake.Boots&version=1.0.2.421
+
+Task("Boots")
+    .Does(async () =>
+    {
+        if (!IsRunningOnWindows ()) {
+            await Boots (Product.XamarinMac, ReleaseChannel.Stable);
+            await Boots (Product.XamariniOS, ReleaseChannel.Preview);
+        }
+        await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
+    });
+```
+
+If you omit the second `ReleaseChannel` parameter, it will default to `ReleaseChannel.Stable`.
+
+> NOTE! if you need to install Mono, do this in a separate process from the rest of your Cake build.
+
+For example:
+
+```csharp
+Task("Mono")
+    .Does(async () =>
+    {
+        await Boots (Product.Mono);
+    });
+```
+
+Then invoke Cake twice:
+
+```bash
+./build.sh -t Mono
+./build.sh -t Boots
+```
 
 ### Use the Azure Pipeline Extension Task
 
@@ -64,69 +115,23 @@ steps:
 
 Install Mono, Xamarin.Android, and Xamarin.iOS on Mac OSX:
 
-    boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-    boots https://aka.ms/xamarin-android-commercial-d16-4-macos
-    boots https://download.visualstudio.microsoft.com/download/pr/5a678460-107f-4fcf-8764-80419bc874a0/3f78c6826132f6f8569524690322adba/xamarin.ios-13.8.1.17.pkg
+```bash
+boots https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
+boots https://aka.ms/xamarin-android-commercial-d16-4-macos
+boots https://download.visualstudio.microsoft.com/download/pr/5a678460-107f-4fcf-8764-80419bc874a0/3f78c6826132f6f8569524690322adba/xamarin.ios-13.8.1.17.pkg
+```
 
 Install Xamarin.Android on Windows:
 
-    boots https://aka.ms/xamarin-android-commercial-d16-4-windows
+```cmd
+boots https://aka.ms/xamarin-android-commercial-d16-4-windows
+```
 
 I got each URL from:
 
 * [Mono Downloads](https://www.mono-project.com/download/stable/#download-mac)
 * [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
 * [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-4)
-
-### New Xamarin Hotness
-
-By querying the Visual Studio updater manifests, `boots` 1.0.2.x allows you to install the latest versions of Xamarin or Mono from the stable or preview channels.
-
-Some examples:
-```
-dotnet tool install --global boots --version 1.0.2.421
-boots --stable Mono
-boots --preview XamarinAndroid
-boots --preview XamariniOS
-boots --preview XamarinMac
-```
-This would install the latest stable Mono and the latest previews for Xamarin.Android, Xamarin.iOS, and Xamarin.Mac.
-
-You can also do this from a `cake` script:
-
-```csharp
-#addin nuget:?package=Cake.Boots&version=1.0.2.421
-
-Task("Boots")
-    .Does(async () =>
-    {
-        if (!IsRunningOnWindows ()) {
-            await Boots (Product.XamarinMac, ReleaseChannel.Stable);
-            await Boots (Product.XamariniOS, ReleaseChannel.Preview);
-        }
-        await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
-    });
-```
-If you omit the second `ReleaseChannel` parameter, it will default to `ReleaseChannel.Stable`.
-
-> NOTE! if you need to install Mono, do this in a separate process from the rest of your Cake build.
-
-For example:
-
-```csharp
-Task("Mono")
-    .Does(async () =>
-    {
-        await Boots (Product.Mono);
-    });
-```
-
-Then invoke Cake twice:
-
-```bash
-./build.sh -t Mono
-./build.sh -t Boots
-```
 
 ### System.CommandLine
 
