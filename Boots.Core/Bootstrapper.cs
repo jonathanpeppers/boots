@@ -14,7 +14,7 @@ namespace Boots.Core
 
 		public Product? Product { get; set; }
 
-		public string Url { get; set; }
+		public string Url { get; set; } = "";
 
 		public TextWriter Logger { get; set; } = Console.Out;
 
