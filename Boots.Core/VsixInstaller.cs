@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ namespace Boots.Core
 {
 	class VsixInstaller : Installer
 	{
-		string visualStudioDirectory;
+		string? visualStudioDirectory;
 
 		public VsixInstaller (Bootstrapper boots) : base (boots) { }
 

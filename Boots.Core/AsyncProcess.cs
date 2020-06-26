@@ -10,11 +10,11 @@ namespace Boots.Core
 	{
 		readonly Bootstrapper boots;
 
-		public string Command { get; set; }
-		public string Arguments { get; set; }
+		public string Command { get; set; } = "";
+		public string Arguments { get; set; } = "";
 		public bool Elevate { get; set; } = false;
 
-		Process process;
+		Process? process;
 
 		public AsyncProcess (Bootstrapper boots)
 		{
@@ -73,7 +73,7 @@ namespace Boots.Core
 		{
 			int exitCode = await Run (token);
 			if (exitCode != 0)
-				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {process.ExitCode}");
+				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {exitCode}");
 			return exitCode;
 		}
 

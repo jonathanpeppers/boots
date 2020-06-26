@@ -11,7 +11,7 @@ namespace Boots.Core
 		readonly Bootstrapper boots;
 		readonly Uri uri;
 
-		public Downloader (Bootstrapper boots, string extension = null)
+		public Downloader (Bootstrapper boots, string extension = "")
 		{
 			this.boots = boots;
 			uri = new Uri (boots.Url);

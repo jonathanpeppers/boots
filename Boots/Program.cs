@@ -66,7 +66,7 @@ namespace Boots
 			return "";
 		}
 
-		static async Task Run (string url, string stable = null, string preview = null)
+		static async Task Run (string url, string stable = "", string preview = "")
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
@@ -87,6 +87,6 @@ namespace Boots
 			}
 		}
 
-		static string Version => typeof (Program).Assembly.GetName ().Version.ToString ();
+		static string? Version => typeof (Program).Assembly.GetName ().Version?.ToString ();
 	}
 }

@@ -26,7 +26,7 @@ namespace Boots.Core
 			var response = await httpClient.GetAsync (uri, token);
 			response.EnsureSuccessStatusCode ();
 
-			string payloadManifestUrl;
+			string? payloadManifestUrl;
 			using (var stream = await response.Content.ReadAsStreamAsync ()) {
 				token.ThrowIfCancellationRequested ();
 				var manifest = await JsonSerializer.DeserializeAsync<VSManifest> (stream, cancellationToken: token);
@@ -49,7 +49,8 @@ namespace Boots.Core
 				token.ThrowIfCancellationRequested ();
 				var payload = await JsonSerializer.DeserializeAsync<VSPayloadManifest> (stream, cancellationToken: token);
 				var url = payload.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
-				if (string.IsNullOrEmpty (url)) {
+				// NOTE: workaround NRT in netstandard2.0
+				if (url == null || url == "") {
 					throw new InvalidOperationException ($"Did not find payload url for '{productId}' at: {uri}");
 				}
 
@@ -99,24 +100,24 @@ namespace Boots.Core
 
 		class VSManifest
 		{
-			public VSPackage [] channelItems { get; set; }
+			public VSPackage []? channelItems { get; set; }
 		}
 
 		class VSPayload
 		{
-			public string url { get; set; }
+			public string? url { get; set; }
 		}
 
 		class VSPayloadManifest
 		{
-			public VSPackage [] packages { get; set; }
+			public VSPackage []? packages { get; set; }
 		}
 
 		class VSPackage
 		{
-			public string id { get; set; }
+			public string? id { get; set; }
 
-			public VSPayload [] payloads { get; set; }
+			public VSPayload []? payloads { get; set; }
 		}
 	}
 }
