@@ -7,6 +7,11 @@ namespace Boots.Core
 {
 	class VsixInstaller : Installer
 	{
+		/// <summary>
+		/// See: https://stackoverflow.com/a/28212173
+		/// </summary>
+		const int AlreadyInstalledException = 1001;
+
 		string? visualStudioDirectory;
 
 		public VsixInstaller (Bootstrapper boots) : base (boots) { }
@@ -28,7 +33,12 @@ namespace Boots.Core
 					Command = vsixInstaller,
 					Arguments = $"/quiet /logFile:{log} \"{file}\"",
 				}) {
-					await process.RunAsync (token);
+					int exitCode = await process.RunAsync (token, throwOnError: false);
+					if (exitCode == AlreadyInstalledException) {
+						Boots.Logger.WriteLine ("VSIX already installed.");
+					} else if (exitCode != 0) {
+						process.ThrowForExitCode (exitCode);
+					}
 				}
 			} finally {
 				await ReadLogFile (log, token);

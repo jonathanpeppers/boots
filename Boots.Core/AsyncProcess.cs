@@ -53,7 +53,7 @@ namespace Boots.Core
 			return Task.Run (process.WaitForExit, token);
 		}
 
-		async Task<int> Run (CancellationToken token = new CancellationToken ())
+		async Task<int> Run (CancellationToken token)
 		{
 			process = CreateProcess ();
 			process.ErrorDataReceived += (sender, e) => {
@@ -69,15 +69,18 @@ namespace Boots.Core
 			return process.ExitCode;
 		}
 
-		public async Task<int> RunAsync (CancellationToken token = new CancellationToken ())
+		public async Task<int> RunAsync (CancellationToken token, bool throwOnError = true)
 		{
 			int exitCode = await Run (token);
-			if (exitCode != 0)
-				throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {exitCode}");
+			if (throwOnError && exitCode != 0)
+				ThrowForExitCode (exitCode);
 			return exitCode;
 		}
 
-		public async Task<string> RunWithOutputAsync (CancellationToken token = new CancellationToken ())
+		public void ThrowForExitCode (int exitCode) =>
+			throw new Exception ($"'{Command}' with arguments '{Arguments}' exited with code {exitCode}");
+
+		public async Task<string> RunWithOutputAsync (CancellationToken token)
 		{
 			var builder = new StringBuilder ();
 			process = CreateProcess ();

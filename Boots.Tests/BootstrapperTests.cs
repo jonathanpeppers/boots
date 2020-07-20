@@ -26,6 +26,8 @@ namespace Boots.Tests
 				Skip.If (true, "Not supported on Linux yet");
 			}
 			await boots.Install ();
+			// Two installs back-to-back should be fine
+			await boots.Install ();
 		}
 
 		[SkippableFact]
