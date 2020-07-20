@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Boots.Core;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Boots.Tests
@@ -20,12 +18,16 @@ namespace Boots.Tests
 
 		public override void WriteLine (string value)
 		{
-			output.WriteLine (value ?? "");
+			if (value != null) {
+				output.WriteLine (value);
+				Console.WriteLine (value);
+			}
 		}
 
 		public override void WriteLine (string format, params object [] args)
 		{
 			output.WriteLine (format, args);
+			Console.WriteLine (format, args);
 		}
 	}
 }

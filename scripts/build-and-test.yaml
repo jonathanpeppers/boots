@@ -9,7 +9,7 @@ steps:
     msbuildArguments: '/restore /t:Build,Pack /bl:$(System.DefaultWorkingDirectory)/bin/boots.binlog'
 
 - script: |
-    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.0/Boots.Tests.dll --logger:trx
+    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.0/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
   displayName: Run tests
 
 - task: PublishTestResults@2
@@ -18,6 +18,7 @@ steps:
     testResultsFormat: VSTest
     testResultsFiles: TestResults/*.trx
     testRunTitle: ${{ parameters.platform }}
+    failTaskOnFailedTests: true
   condition: succeededOrFailed()
 
 - script: |
