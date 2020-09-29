@@ -12,7 +12,8 @@ variables:
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-  XA.Version: 11.0
+  XA.StableVersion: 11.0
+  XA.PreviewVersion: 11.1
   ShippedBoots: 1.0.2.421
   DotNetCoreVersion: 3.0.100
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true

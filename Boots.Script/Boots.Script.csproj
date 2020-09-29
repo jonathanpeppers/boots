@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageOutputPath>..\bin</PackageOutputPath>
+    <PackageId>Boots.Script</PackageId>
+    <Title>$(PackageId)</Title>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <BootsCoreOutputPath>..\Boots.Core\bin\$(Configuration)\$(TargetFramework)\</BootsCoreOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--These are listed explicitly so if they are missing, we get a build error-->
+    <None Include="$(BootsCoreOutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(BootsCoreOutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Update="boots.csx" Pack="true" PackagePath="contentFiles\csx\netstandard2.0\main.csx" />
+  </ItemGroup>
+
+  </Project>

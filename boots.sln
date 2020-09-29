@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boots", "Boots\Boots.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boots.Tests", "Boots.Tests\Boots.Tests.csproj", "{393FF93B-5A0B-490E-9E28-4B38E579AF7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Boots", "Cake.Boots\Cake.Boots.csproj", "{10B653C6-675D-49D1-8BA6-DC62F2131742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Boots", "Cake.Boots\Cake.Boots.csproj", "{10B653C6-675D-49D1-8BA6-DC62F2131742}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boots.Script", "Boots.Script\Boots.Script.csproj", "{103AD2B3-BE1A-4A5A-BB43-E4C0505F0D43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10B653C6-675D-49D1-8BA6-DC62F2131742}.Release|Any CPU.Build.0 = Release|Any CPU
+		{103AD2B3-BE1A-4A5A-BB43-E4C0505F0D43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{103AD2B3-BE1A-4A5A-BB43-E4C0505F0D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{103AD2B3-BE1A-4A5A-BB43-E4C0505F0D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{103AD2B3-BE1A-4A5A-BB43-E4C0505F0D43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

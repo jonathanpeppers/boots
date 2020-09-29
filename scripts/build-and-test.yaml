@@ -22,14 +22,24 @@ steps:
   condition: succeededOrFailed()
 
 - script: |
-    dotnet Boots/bin/$(Configuration)/netcoreapp3.0/Boots.dll --preview Xamarin.Android
-  displayName: install xamarin-android
+    dotnet script Boots.Script/main.csx --no-cache -s $(System.DefaultWorkingDirectory)/bin/
+  displayName: dotnet-script xamarin-android stable
 
 - task: MSBuild@1
   displayName: verify
   inputs:
     solution: scripts/xa-version.targets
-    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version) /bl:$(System.DefaultWorkingDirectory)/bin/verify.binlog'
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.StableVersion) /bl:$(System.DefaultWorkingDirectory)/bin/verify-stable.binlog'
+
+- script: |
+    dotnet Boots/bin/$(Configuration)/netcoreapp3.0/Boots.dll --preview Xamarin.Android
+  displayName: boots xamarin-android preview
+
+- task: MSBuild@1
+  displayName: verify
+  inputs:
+    solution: scripts/xa-version.targets
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.PreviewVersion) /bl:$(System.DefaultWorkingDirectory)/bin/verify-preview.binlog'
 
 - task: MSBuild@1
   displayName: build sample
