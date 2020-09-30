@@ -22,8 +22,9 @@ steps:
   condition: succeededOrFailed()
 
 - script: |
+    echo "$(BinDirectory)"
     dotnet tool install -g dotnet-script
-    dotnet script Boots.Script/main.csx --no-cache -s $(System.DefaultWorkingDirectory)/bin/
+    dotnet script Boots.Script/main.csx --verbosity trace --no-cache -s $(BinDirectory)
   displayName: dotnet-script xamarin-android stable
 
 - task: MSBuild@1
