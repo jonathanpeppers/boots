@@ -12,7 +12,7 @@ variables:
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   Mono.Pkg: https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg
-  XA.Version: 11.0
+  XA.Version: 11.1
   ShippedBoots: 1.0.2.421
   DotNetCoreVersion: 3.0.100
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
@@ -22,7 +22,7 @@ jobs:
 
 - job: windows
   pool:
-    name: Hosted Windows 2019 with VS2019
+    vmImage: windows-latest
     demands:
     - msbuild
   steps:
@@ -37,7 +37,7 @@ jobs:
 
 - job: mac
   pool:
-    name: Hosted macOS
+    vmImage: macOS-latest
     demands: msbuild
   steps:
 
