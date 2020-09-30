@@ -22,7 +22,7 @@ jobs:
 
 - job: windows
   pool:
-    name: Hosted Windows 2019 with VS2019
+    vmImage: windows-latest
     demands:
     - msbuild
   steps:
@@ -37,7 +37,7 @@ jobs:
 
 - job: mac
   pool:
-    name: Hosted macOS
+    vmImage: macOS-latest
     demands: msbuild
   steps:
 
