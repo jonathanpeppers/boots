@@ -22,6 +22,7 @@ steps:
   condition: succeededOrFailed()
 
 - script: |
+    dotnet tool install -g dotnet-script
     dotnet script Boots.Script/main.csx --no-cache -s $(System.DefaultWorkingDirectory)/bin/
   displayName: dotnet-script xamarin-android stable
 
