@@ -63,7 +63,7 @@ https://aka.ms/xamarin-android-commercial-d16-7-windows
 
 To find the available Xamarin.iOS / Xamarin.Mac versions you will need to head over to the official [Xamarin.iOS & Xamarin.Mac repository](https://github.com/xamarin/xamarin-macios). You can find the available versions in the [downloads](https://github.com/xamarin/xamarin-macios#downloads) section of the [README.md](https://github.com/xamarin/xamarin-macios/blob/main/README.md).
 
-![How to find android version](GetMacIOSVersion.png)
+![How to find mac ios version](GetMacIosVersion.png)
 
 Select the version you wish to install & copy the link.
 
