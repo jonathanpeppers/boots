@@ -111,6 +111,10 @@ steps:
 
 `DOTNET_SKIP_FIRST_TIME_EXPERIENCE` is also a good idea if you are running on a .NET Core older than 3.0.
 
+## Finding Builds
+
+For more information on how to source urls for each platform, see [how to find builds](docs/HowToFindBuilds.md)
+
 ## Some Examples
 
 Install Mono, Xamarin.Android, and Xamarin.iOS on Mac OSX:
@@ -126,12 +130,6 @@ Install Xamarin.Android on Windows:
 ```cmd
 boots https://aka.ms/xamarin-android-commercial-d16-4-windows
 ```
-
-I got each URL from:
-
-* [Mono Downloads](https://www.mono-project.com/download/stable/#download-mac)
-* [Xamarin.Android README](https://github.com/xamarin/xamarin-android)
-* [Xamarin.iOS Github Status](https://github.com/xamarin/xamarin-macios/commits/d16-4)
 
 ### System.CommandLine
 
