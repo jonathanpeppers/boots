@@ -30,13 +30,13 @@ namespace Boots
 					"--stable",
 					$"Install the latest *stable* version of a product from VS manifests. {options}")
 				{
-					Argument = new Argument<string>()
+					Argument = new Argument<string>("product")
 				},
 				new Option(
 					"--preview",
 					$"Install the latest *preview* version of a product from VS manifests. {options}")
 				{
-					Argument = new Argument<string>()
+					Argument = new Argument<string>("product")
 				},
 			};
 			rootCommand.Name = "boots";

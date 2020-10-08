@@ -147,8 +147,8 @@ Usage:
 
 Options:
   --url <url>            A URL to a pkg or vsix file to install
-  --stable <stable>      Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
-  --preview <preview>    Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --stable <product>     Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --preview <product>    Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
   --version              Display version information
 ```
 
