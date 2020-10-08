@@ -1,10 +1,15 @@
 # How To Find Builds
 
-//TODO
+Boots is all about specifying the version of Xamarin / Mono you want to use, but how do you find out about the available versions and where do you get them from?
 
 ## Latest Builds
 
-To use the latest stable / preview builds you can simply use boots, by passing in `--stable`/`--preview`:
+To use the latest stable / preview builds you can simply use boots, by passing in the following arguments:
+
+| Argument    | Description                     |
+|-------------|---------------------------------|
+| `--stable`  | Uses the latest stable version  |
+| `--preview` | Uses the latest preview version |
 
 ```
 boots --stable Mono
@@ -13,17 +18,12 @@ boots --stable Xamarin.iOS
 boots --stable Xamarin.Mac
 ```
 
-//TODO
-
-
-
+> Note: this feature is only availale for boots versions 1.0.2.X onwards
 
 
 ## Manual Builds
 
-If you want to specify a specific version of a framework, you will have to find the specific package url that you wish to use.
-
-
+If you want to specify a specific version to use, you will have to find the specific package url that you wish to use. The package urls are different for every platform.
 
 ### Mono
 
