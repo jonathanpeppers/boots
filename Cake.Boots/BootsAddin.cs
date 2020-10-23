@@ -11,10 +11,11 @@ namespace Cake.Boots
 	public static class BootsAddin
 	{
 		[CakeMethodAlias]
-		public static async Task Boots (this ICakeContext context, string url)
+		public static async Task Boots (this ICakeContext context, string url, FileType? fileType = default)
 		{
 			var boots = new Bootstrapper {
 				Url = url,
+				FileType = fileType,
 				Logger = new CakeWriter (context)
 			};
 
@@ -48,7 +49,12 @@ namespace Cake.Boots
 
 			public override void WriteLine (string value)
 			{
-				context.Log.Write (verbosity, level, value ?? "");
+				value ??= "";
+
+				// avoid System.FormatException from string.Format
+				value = value.Replace ("{", "{{").Replace ("}", "}}");
+
+				context.Log.Write (verbosity, level, value);
 			}
 
 			public override void WriteLine (string format, params object [] args)

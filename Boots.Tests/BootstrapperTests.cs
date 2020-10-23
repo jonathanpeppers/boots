@@ -31,6 +31,17 @@ namespace Boots.Tests
 		}
 
 		[SkippableFact]
+		public async Task InstallMsi ()
+		{
+			Skip.If (!Helpers.IsWindows, ".msis are only supported on Windows");
+			boots.FileType = FileType.msi;
+			boots.Url = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/82.0/win64/en-US/Firefox%20Setup%2082.0.msi";
+			await boots.Install ();
+			// Two installs back-to-back should be fine
+			await boots.Install ();
+		}
+
+		[SkippableFact]
 		public async Task InvalidInstallerFile ()
 		{
 			Skip.If (!Helpers.IsMac && !Helpers.IsWindows, "Not supported on Linux yet");

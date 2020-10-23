@@ -11,7 +11,7 @@ namespace Boots.Tests
 		[Theory]
 		[InlineData (typeof (VsixInstaller))]
 		[InlineData (typeof (PkgInstaller))]
-
+		[InlineData (typeof (MsiInstaller))]
 		public async Task NoFilePath (Type type)
 		{
 			var installer = (Installer) Activator.CreateInstance (type, new Bootstrapper ());
@@ -21,6 +21,7 @@ namespace Boots.Tests
 		[Theory]
 		[InlineData (typeof (VsixInstaller))]
 		[InlineData (typeof (PkgInstaller))]
+		[InlineData (typeof (MsiInstaller))]
 		public async Task FileDoesNotExist (Type type)
 		{
 			var installer = (Installer) Activator.CreateInstance (type, new Bootstrapper ());
