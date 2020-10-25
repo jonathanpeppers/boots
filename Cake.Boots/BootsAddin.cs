@@ -8,6 +8,7 @@ using Cake.Core.Diagnostics;
 
 namespace Cake.Boots
 {
+	[CakeAliasCategory("Boots")]
 	public static class BootsAddin
 	{
 		[CakeMethodAlias]
