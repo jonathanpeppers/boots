@@ -10,9 +10,6 @@ on:
     paths:
     - '.github/**'
 
-env:
-  boots_version: 1.0.2.421
-
 jobs:
   macOS:
     runs-on: macOS-latest
@@ -20,13 +17,14 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.x'
     - name: build
       shell: bash
       run: |
-        wget https://dot.net/v1/dotnet-install.sh
-        sh dotnet-install.sh -Version 3.0.100
         export PATH="$PATH:~/.dotnet/tools"
-        dotnet tool install --global boots --version $boots_version
+        dotnet tool install --global boots
         boots --preview Mono
         boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
@@ -41,6 +39,6 @@ jobs:
     - name: build
       shell: pwsh
       run: |
-        dotnet tool install --global boots --version $env:boots_version
+        dotnet tool install --global boots
         boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
