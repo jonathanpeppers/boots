@@ -10,9 +10,6 @@ on:
     paths:
     - '.github/**'
 
-env:
-  boots_version: 1.0.2.421
-
 jobs:
   macOS:
     runs-on: macOS-latest
@@ -27,7 +24,7 @@ jobs:
       shell: bash
       run: |
         export PATH="$PATH:~/.dotnet/tools"
-        dotnet tool install --global boots --version $boots_version
+        dotnet tool install --global boots
         boots --preview Mono
         boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
@@ -42,6 +39,6 @@ jobs:
     - name: build
       shell: pwsh
       run: |
-        dotnet tool install --global boots --version $env:boots_version
+        dotnet tool install --global boots
         boots --preview XamarinAndroid
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
