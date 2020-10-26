@@ -20,8 +20,13 @@ Task("Boots")
 
     await Boots (url);
 
-    if (!IsRunningOnWindows()) {
-        //Let's really run through the gauntlet and install 6 .pkg files
+    if (IsRunningOnWindows()) {
+        // Install a Firefox .msi twice
+        var firefox = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/82.0/win64/en-US/Firefox%20Setup%2082.0.msi";
+        await Boots (firefox);
+        await Boots (firefox, fileType: FileType.msi);
+    } else {
+        // Let's really run through the gauntlet and install 6 .pkg files
         await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
         await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
         await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);

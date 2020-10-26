@@ -18,7 +18,7 @@ namespace Boots.Core
 
 		public override string Extension => ".vsix";
 
-		public async override Task Install (string file, CancellationToken token = new CancellationToken ())
+		public async override Task Install (string file, CancellationToken token = default)
 		{
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException (nameof (file));
@@ -41,24 +41,8 @@ namespace Boots.Core
 					}
 				}
 			} finally {
-				await ReadLogFile (log, token);
+				await PrintLogFileAndDelete (log, token);
 			}
-		}
-
-		Task ReadLogFile (string log, CancellationToken token)
-		{
-			return Task.Factory.StartNew (() => {
-				if (File.Exists (log)) {
-					using (var reader = File.OpenText (log)) {
-						while (!reader.EndOfStream) {
-							Boots.Logger.WriteLine (reader.ReadLine ());
-						}
-					}
-					File.Delete (log);
-				} else {
-					Boots.Logger.WriteLine ($"Log file did not exist: {log}");
-				}
-			}, token);
 		}
 
 		async Task<string> GetVisualStudioDirectory (CancellationToken token)

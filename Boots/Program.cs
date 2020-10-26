@@ -38,11 +38,17 @@ namespace Boots
 				{
 					Argument = new Argument<string>("product")
 				},
+				new Option(
+					"--file-type",
+					$"Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.")
+				{
+					Argument = new Argument<FileType>("file-type")
+				},
 			};
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string> (Run);
+			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?> (Run);
 			await rootCommand.InvokeAsync (args);
 		}
 
@@ -66,13 +72,14 @@ namespace Boots
 			return "";
 		}
 
-		static async Task Run (string url, string stable = "", string preview = "")
+		static async Task Run (string url, string stable = "", string preview = "", FileType? fileType = null)
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
 
 			var boots = new Bootstrapper {
 				Url = url,
+				FileType = fileType,
 			};
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);

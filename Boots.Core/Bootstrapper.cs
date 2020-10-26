@@ -14,6 +14,8 @@ namespace Boots.Core
 
 		public Product? Product { get; set; }
 
+		public FileType? FileType { get; set; }
+
 		public string Url { get; set; } = "";
 
 		public TextWriter Logger { get; set; } = Console.Out;
@@ -35,10 +37,25 @@ namespace Boots.Core
 			}
 
 			Installer installer;
-			if (Helpers.IsWindows) {
-				installer = new VsixInstaller (this);
-			} else {
+			if (Helpers.IsMac) {
 				installer = new PkgInstaller (this);
+			} else if (Helpers.IsWindows) {
+				if (FileType == null) {
+					if (Url.EndsWith (".msi", StringComparison.OrdinalIgnoreCase)) {
+						FileType = global::FileType.msi;
+						Logger.WriteLine ("Inferring .msi from URL.");
+					} else if (Url.EndsWith (".vsix", StringComparison.OrdinalIgnoreCase)) {
+						FileType = global::FileType.vsix;
+						Logger.WriteLine ("Inferring .vsix from URL.");
+					}
+				}
+				if (FileType == global::FileType.msi) {
+					installer = new MsiInstaller (this);
+				} else {
+					installer = new VsixInstaller (this);
+				}
+			} else {
+				throw new NotSupportedException ("Unsupported platform, neither macOS or Windows detected.");
 			}
 
 			using (var downloader = new Downloader (this, installer.Extension)) {

@@ -11,7 +11,7 @@ namespace Boots.Core
 
 		public override string Extension => ".pkg";
 
-		public async override Task Install (string file, CancellationToken token = new CancellationToken ())
+		public async override Task Install (string file, CancellationToken token = default)
 		{
 			if (string.IsNullOrEmpty (file))
 				throw new ArgumentException (nameof (file));
