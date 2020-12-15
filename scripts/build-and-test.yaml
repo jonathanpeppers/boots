@@ -2,15 +2,14 @@ parameters:
   platform: ''
 steps:
 
-- task: MSBuild@1
-  displayName: build
-  inputs:
-    solution: boots.sln
-    msbuildArguments: '/restore /t:Build,Pack /bl:$(System.DefaultWorkingDirectory)/bin/boots.binlog'
+- script: dotnet build boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/build.binlog
+  displayName: dotnet build
 
-- script: |
-    dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.0/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
-  displayName: Run tests
+- script: dotnet pack boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/pack.binlog
+  displayName: dotnet pack
+
+- script: dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.1/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
+  displayName: dotnet vstest
 
 - task: PublishTestResults@2
   displayName: publish test results
@@ -21,8 +20,7 @@ steps:
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
 
-- script: |
-    dotnet Boots/bin/$(Configuration)/netcoreapp3.0/Boots.dll --preview Xamarin.Android
+- script: dotnet Boots/bin/$(Configuration)/netcoreapp3.1/Boots.dll --preview Xamarin.Android
   displayName: install xamarin-android
 
 - task: MSBuild@1
