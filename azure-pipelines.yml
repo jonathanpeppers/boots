@@ -21,8 +21,7 @@ jobs:
 - job: windows
   pool:
     vmImage: windows-latest
-    demands:
-    - msbuild
+    demands: msbuild
   steps:
 
   - template: scripts/build-and-test.yaml

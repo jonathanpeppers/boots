@@ -5,7 +5,7 @@ steps:
 - script: dotnet build boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/build.binlog
   displayName: dotnet build
 
-- script: dotnet pack boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/pack.binlog
+- script: dotnet pack boots.sln --no-restore -bl:$(System.DefaultWorkingDirectory)/bin/pack.binlog
   displayName: dotnet pack
 
 - script: dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.1/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
