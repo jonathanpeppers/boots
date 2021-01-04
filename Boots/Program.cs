@@ -64,9 +64,9 @@ namespace Boots
 
 		static string Validator (CommandResult result)
 		{
-			if (result.ValueForOption ("--url") == null &&
-				result.ValueForOption ("--stable") == null &&
-				result.ValueForOption ("--preview") == null) {
+			if (result.GetArgumentValueOrDefault ("--url") == null &&
+				result.GetArgumentValueOrDefault ("--stable") == null &&
+				result.GetArgumentValueOrDefault ("--preview") == null) {
 				return "At least one of --url, --stable, or --preview must be used";
 			}
 			return "";
