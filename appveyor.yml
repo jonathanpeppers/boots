@@ -3,6 +3,7 @@ image: macOS
 test: off
 build_script:
 - sh: >-
-    msbuild boots.sln /restore /t:Build,Pack &&
+    dotnet build boots.sln &&
+    dotnet pack boots.sln &&
     ./Cake.Boots/build.sh -t Mono &&
     ./Cake.Boots/build.sh
