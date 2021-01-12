@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
+    <ProjectReference Include="..\Boots\Boots.csproj" />
   </ItemGroup>
 
 </Project>
