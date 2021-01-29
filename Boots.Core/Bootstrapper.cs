@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace Boots.Core
 {
 	public class Bootstrapper
 	{
+		public TimeSpan? Timeout { get; set; }
+
 		public ReleaseChannel? Channel { get; set; }
 
 		public Product? Product { get; set; }
@@ -62,6 +65,15 @@ namespace Boots.Core
 				await downloader.Download (token);
 				await installer.Install (downloader.TempFile, token);
 			}
+		}
+
+		internal HttpClient GetHttpClient ()
+		{
+			var httpClient = new HttpClient ();
+			if (Timeout != null) {
+				httpClient.Timeout = Timeout.Value;
+			}
+			return httpClient;
 		}
 	}
 }

@@ -12,12 +12,11 @@ namespace Boots.Core
 		const string ReleaseUrl = "https://aka.ms/vs/16/release/channel";
 		const string PreviewUrl = "https://aka.ms/vs/16/pre/channel";
 
-		readonly HttpClient httpClient = new HttpClient ();
-
 		public WindowsUrlResolver (Bootstrapper boots) : base (boots) { }
 
 		public async override Task<string> Resolve (ReleaseChannel channel, Product product, CancellationToken token = new CancellationToken ())
 		{
+			using HttpClient httpClient = Boots.GetHttpClient ();
 			Uri uri = GetUri (channel);
 			string channelId = GetChannelId (channel);
 			string productId = GetProductId (product);

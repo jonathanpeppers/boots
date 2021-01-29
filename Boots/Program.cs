@@ -44,11 +44,16 @@ namespace Boots
 				{
 					Argument = new Argument<FileType>("file-type")
 				},
+				new Option ("--timeout",
+					$"Specifies a timeout (in seconds) for HttpClient. If omitted, uses the .NET default of 100 seconds.")
+				{
+					Argument = new Argument<double>("timeout")
+				},
 			};
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?> (Run);
+			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?> (Run);
 			await rootCommand.InvokeAsync (args);
 		}
 
@@ -72,7 +77,7 @@ namespace Boots
 			return "";
 		}
 
-		static async Task Run (string url, string stable = "", string preview = "", FileType? fileType = null)
+		static async Task Run (string url, string stable = "", string preview = "", FileType? fileType = null, double? timeout = null)
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
@@ -81,6 +86,9 @@ namespace Boots
 				Url = url,
 				FileType = fileType,
 			};
+			if (timeout != null) {
+				boots.Timeout = TimeSpan.FromSeconds (timeout.Value);
+			}
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);
 			await boots.Install (cts.Token);

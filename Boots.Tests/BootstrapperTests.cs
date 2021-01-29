@@ -48,5 +48,23 @@ namespace Boots.Tests
 			boots.Url = "https://i.kym-cdn.com/entries/icons/mobile/000/018/012/this_is_fine.jpg";
 			await Assert.ThrowsAsync<Exception> (() => boots.Install ());
 		}
+
+		[Fact]
+		public void InvalidTimeout ()
+		{
+			var boots = new Bootstrapper {
+				Timeout = TimeSpan.FromSeconds (-1),
+			};
+			Assert.Throws<ArgumentOutOfRangeException> (() => boots.GetHttpClient ());
+		}
+
+		[Fact]
+		public void DefaultTimeout ()
+		{
+			// Mainly validates the 100-second default:
+			// https://docs.microsoft.com/dotnet/api/system.net.http.httpclient.timeout#remarks
+			var boots = new Bootstrapper ();
+			Assert.Equal (TimeSpan.FromSeconds (100), boots.GetHttpClient ().Timeout);
+		}
 	}
 }
