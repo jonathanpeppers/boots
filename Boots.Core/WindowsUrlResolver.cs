@@ -20,43 +20,53 @@ namespace Boots.Core
 			Uri uri = GetUri (channel);
 			string channelId = GetChannelId (channel);
 			string productId = GetProductId (product);
+			string payloadManifestUrl = await GetPayloadManifestUrl (httpClient, uri, channelId, token);
+			return await GetPayloadUrl (httpClient, payloadManifestUrl, productId, token);
+		}
 
+		async Task<string> GetPayloadManifestUrl (HttpClient httpClient, Uri uri, string channelId, CancellationToken token)
+		{
 			Boots.Logger.WriteLine ($"Querying {uri}");
+
 			var response = await httpClient.GetAsync (uri, token);
 			response.EnsureSuccessStatusCode ();
 
-			string? payloadManifestUrl;
-			using (var stream = await response.Content.ReadAsStreamAsync ()) {
-				token.ThrowIfCancellationRequested ();
-				var manifest = await JsonSerializer.DeserializeAsync<VSManifest> (stream, cancellationToken: token);
-				var channelItem = manifest.channelItems?.FirstOrDefault (c => c.id == channelId);
-				if (channelItem == null) {
-					throw new InvalidOperationException ($"Did not find '{channelId}' at: {uri}");
-				}
-				payloadManifestUrl = channelItem.payloads?.Select (p => p.url)?.FirstOrDefault ();
-				if (string.IsNullOrEmpty (payloadManifestUrl)) {
-					throw new InvalidOperationException ($"Did not find manifest url for '{channelId}' at: {uri}");
-				}
+			using var stream = await response.Content.ReadAsStreamAsync ();
+			token.ThrowIfCancellationRequested ();
+
+			var manifest = await JsonSerializer.DeserializeAsync<VSManifest> (stream, cancellationToken: token);
+			var channelItem = manifest.channelItems?.FirstOrDefault (c => c.id == channelId);
+			if (channelItem == null) {
+				throw new InvalidOperationException ($"Did not find '{channelId}' at: {uri}");
 			}
 
-			uri = new Uri (payloadManifestUrl);
+			var payloadManifestUrl = channelItem.payloads?.Select (p => p.url)?.FirstOrDefault ();
+			if (payloadManifestUrl == null || payloadManifestUrl == "") {
+				throw new InvalidOperationException ($"Did not find manifest url for '{channelId}' at: {uri}");
+			}
+			return payloadManifestUrl;
+		}
+
+		async Task<string> GetPayloadUrl (HttpClient httpClient, string payloadManifestUrl, string productId, CancellationToken token)
+		{
+			var uri = new Uri (payloadManifestUrl);
 			Boots.Logger.WriteLine ($"Querying {uri}");
-			response = await httpClient.GetAsync (uri, token);
+
+			var response = await httpClient.GetAsync (uri, token);
 			response.EnsureSuccessStatusCode ();
 
-			using (var stream = await response.Content.ReadAsStreamAsync ()) {
-				token.ThrowIfCancellationRequested ();
-				var payload = await JsonSerializer.DeserializeAsync<VSPayloadManifest> (stream, cancellationToken: token);
-				var url = payload.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
-				// NOTE: workaround NRT in netstandard2.0
-				if (url == null || url == "") {
-					throw new InvalidOperationException ($"Did not find payload url for '{productId}' at: {uri}");
-				}
+			using var stream = await response.Content.ReadAsStreamAsync ();
+			token.ThrowIfCancellationRequested ();
 
-				// Just let this throw if it is an invalid Uri
-				new Uri (url);
-				return url;
+			var payload = await JsonSerializer.DeserializeAsync<VSPayloadManifest> (stream, cancellationToken: token);
+			var url = payload.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
+			if (url == null || url == "") {
+				throw new InvalidOperationException ($"Did not find payload url for '{productId}' at: {uri}");
 			}
+
+			// Just let this throw if it is an invalid Uri
+			new Uri (url);
+			return url;
 		}
 
 		Uri GetUri (ReleaseChannel channel)

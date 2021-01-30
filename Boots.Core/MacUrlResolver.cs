@@ -31,36 +31,32 @@ namespace Boots.Core
 			response.EnsureSuccessStatusCode ();
 
 			var document = new XmlDocument ();
-			using (var stream = await response.Content.ReadAsStreamAsync ()) {
-				token.ThrowIfCancellationRequested ();
-				document.Load (stream);
+			using var stream = await response.Content.ReadAsStreamAsync ();
+			token.ThrowIfCancellationRequested ();
+			document.Load (stream);
 
-				var node = document.SelectSingleNode ($"/UpdateInfo/Application[@id='{productId}']/Update/@url");
-				if (node == null) {
-					throw new XmlException ($"Did not find {product}, at channel {channel}");
-				}
-
-				string url = node.InnerText;
-				if (string.IsNullOrEmpty (url)) {
-					throw new XmlException ($"Did not find {product}, at channel {channel}");
-				}
-
-				// Just let this throw if it is an invalid Uri
-				new Uri (url);
-				return url;
+			var node = document.SelectSingleNode ($"/UpdateInfo/Application[@id='{productId}']/Update/@url");
+			if (node == null) {
+				throw new XmlException ($"Did not find {product}, at channel {channel}");
 			}
+
+			string url = node.InnerText;
+			if (string.IsNullOrEmpty (url)) {
+				throw new XmlException ($"Did not find {product}, at channel {channel}");
+			}
+
+			// Just let this throw if it is an invalid Uri
+			new Uri (url);
+			return url;
 		}
 
 		string GetLevel (ReleaseChannel channel)
 		{
-			switch (channel) {
-				case ReleaseChannel.Stable:
-					return "Stable";
-				case ReleaseChannel.Preview:
-					return "Beta";
-				default:
-					throw new NotImplementedException ($"Unexpected value for release: {channel}");
-			}
+			return channel switch {
+				ReleaseChannel.Stable => "Stable",
+				ReleaseChannel.Preview => "Beta",
+				_ => throw new NotImplementedException ($"Unexpected value for release: {channel}"),
+			};
 		}
 
 		string GetProductId (Product product)
