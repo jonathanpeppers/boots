@@ -1,4 +1,7 @@
 version: '{build}'
+branches:
+  only:
+  - master
 image: macOS
 test: off
 build_script:
