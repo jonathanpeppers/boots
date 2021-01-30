@@ -17,12 +17,11 @@ namespace Boots.Core
 			{ Product.XamarinMac,     "0ab364ff-c0e9-43a8-8747-3afb02dc7731" },
 		};
 
-		readonly HttpClient httpClient = new HttpClient ();
-
 		public MacUrlResolver (Bootstrapper boots) : base (boots) { }
 
 		public async override Task<string> Resolve (ReleaseChannel channel, Product product, CancellationToken token = new CancellationToken ())
 		{
+			using HttpClient httpClient = Boots.GetHttpClient ();
 			string level = GetLevel (channel);
 			string productId = GetProductId (product);
 
