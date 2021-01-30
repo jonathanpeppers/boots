@@ -1,0 +1,39 @@
+---
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: xamarin
+trigger_map:
+- push_branch: master
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4.0.5:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.25: {}
+    - android-sdk-update@1:
+        inputs:
+        - sdk_version: '30'
+    - script@1.1.6:
+        title: Do anything with Script step
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            set -e
+            set -x
+            dotnet tool install --global boots
+            boots --stable Mono
+            boots --preview Xamarin.Android
+            msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj -restore -t:SignAndroidPackage
+    - deploy-to-bitrise-io@1.12.0: {}
+app:
+  envs:
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: samples/HelloForms.sln
+  - opts:
+      is_expand: false
+    BITRISE_XAMARIN_CONFIGURATION: Release
+  - opts:
+      is_expand: false
+    BITRISE_XAMARIN_PLATFORM: Any CPU
