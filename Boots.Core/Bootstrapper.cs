@@ -61,10 +61,9 @@ namespace Boots.Core
 				throw new NotSupportedException ("Unsupported platform, neither macOS or Windows detected.");
 			}
 
-			using (var downloader = new Downloader (this, installer.Extension)) {
-				await downloader.Download (token);
-				await installer.Install (downloader.TempFile, token);
-			}
+			using var downloader = new Downloader (this, installer.Extension);
+			await downloader.Download (token);
+			await installer.Install (downloader.TempFile, token);
 		}
 
 		internal HttpClient GetHttpClient ()

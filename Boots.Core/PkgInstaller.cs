@@ -18,13 +18,12 @@ namespace Boots.Core
 			if (!File.Exists (file))
 				throw new FileNotFoundException ($"{Extension} file did not exist: {file}", file);
 
-			using (var proc = new AsyncProcess (Boots) {
+			using var proc = new AsyncProcess (Boots) {
 				Command = "/usr/sbin/installer",
 				Arguments = $"-verbose -dumplog -pkg \"{file}\" -target /",
 				Elevate = true,
-			}) {
-				await proc.RunAsync (token);
-			}
+			};
+			await proc.RunAsync (token);
 		}
 	}
 }

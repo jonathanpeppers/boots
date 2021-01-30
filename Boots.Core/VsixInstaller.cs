@@ -29,16 +29,15 @@ namespace Boots.Core
 			var vsixInstaller = Path.Combine (vs, "Common7", "IDE", "VSIXInstaller.exe");
 			var log = Path.GetTempFileName ();
 			try {
-				using (var process = new AsyncProcess (Boots) {
+				using var process = new AsyncProcess (Boots) {
 					Command = vsixInstaller,
 					Arguments = $"/quiet /logFile:{log} \"{file}\"",
-				}) {
-					int exitCode = await process.RunAsync (token, throwOnError: false);
-					if (exitCode == AlreadyInstalledException) {
-						Boots.Logger.WriteLine ("VSIX already installed.");
-					} else if (exitCode != 0) {
-						process.ThrowForExitCode (exitCode);
-					}
+				};
+				int exitCode = await process.RunAsync (token, throwOnError: false);
+				if (exitCode == AlreadyInstalledException) {
+					Boots.Logger.WriteLine ("VSIX already installed.");
+				} else if (exitCode != 0) {
+					process.ThrowForExitCode (exitCode);
 				}
 			} finally {
 				await PrintLogFileAndDelete (log, token);
@@ -56,13 +55,12 @@ namespace Boots.Core
 				var vswhere = Path.Combine (programFiles, "Microsoft Visual Studio", "Installer", "vswhere.exe");
 				if (!File.Exists (vswhere))
 					throw new FileNotFoundException ("Cannot find vswhere.exe!", vswhere);
-				using (var process = new AsyncProcess (Boots) {
+				using var process = new AsyncProcess (Boots) {
 					Command = vswhere,
 					Arguments = "-latest -products * -property installationPath",
-				}) {
-					visualStudioDirectory = await process.RunWithOutputAsync (token);
-					visualStudioDirectory = visualStudioDirectory.Trim ();
-				}
+				};
+				visualStudioDirectory = await process.RunWithOutputAsync (token);
+				visualStudioDirectory = visualStudioDirectory.Trim ();
 				if (!Directory.Exists (visualStudioDirectory)) {
 					throw new DirectoryNotFoundException ($"vswhere.exe result returned a directory that did not exist: {visualStudioDirectory}");
 				}

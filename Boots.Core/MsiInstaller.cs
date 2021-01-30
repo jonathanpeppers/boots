@@ -20,13 +20,12 @@ namespace Boots.Core
 
 			var log = Path.GetTempFileName ();
 			try {
-				using (var proc = new AsyncProcess (Boots) {
+				using var proc = new AsyncProcess (Boots) {
 					Command = "msiexec",
 					Arguments = $"/i \"{file}\" /qn /L*V \"{log}\"",
 					Elevate = true,
-				}) {
-					await proc.RunAsync (token);
-				}
+				};
+				await proc.RunAsync (token);
 			} finally {
 				await PrintLogFileAndDelete (log, token);
 			}
