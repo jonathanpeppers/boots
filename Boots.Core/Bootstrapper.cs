@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Polly;
+using Polly.Timeout;
 
 [assembly: InternalsVisibleTo ("Boots.Tests")]
 
@@ -12,6 +14,10 @@ namespace Boots.Core
 	public class Bootstrapper
 	{
 		public TimeSpan? Timeout { get; set; }
+
+		public TimeSpan ReadWriteTimeout { get; set; } = TimeSpan.FromMinutes (5);
+
+		public int NetworkRetries { get; set; } = 3;
 
 		public ReleaseChannel? Channel { get; set; }
 
@@ -23,8 +29,21 @@ namespace Boots.Core
 
 		public TextWriter Logger { get; set; } = Console.Out;
 
+		internal AsyncPolicy ActivePolicy { get; set; } = Policy.NoOpAsync ();
+
+		internal void UpdateActivePolicy ()
+		{
+			ActivePolicy = Policy
+				.Handle<HttpRequestException> ()
+				.Or<TimeoutRejectedException> ()
+				.RetryAsync (NetworkRetries)
+				.WrapAsync (Policy.TimeoutAsync (ReadWriteTimeout));
+		}
+
 		public async Task Install (CancellationToken token = new CancellationToken ())
 		{
+			UpdateActivePolicy ();
+
 			if (string.IsNullOrEmpty (Url)) {
 				if (Channel == null)
 					throw new ArgumentNullException (nameof (Channel));
@@ -64,15 +83,6 @@ namespace Boots.Core
 			using var downloader = new Downloader (this, installer.Extension);
 			await downloader.Download (token);
 			await installer.Install (downloader.TempFile, token);
-		}
-
-		internal HttpClient GetHttpClient ()
-		{
-			var httpClient = new HttpClient ();
-			if (Timeout != null) {
-				httpClient.Timeout = Timeout.Value;
-			}
-			return httpClient;
 		}
 	}
 }

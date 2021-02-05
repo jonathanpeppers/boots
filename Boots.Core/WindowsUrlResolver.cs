@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +14,7 @@ namespace Boots.Core
 
 		public async override Task<string> Resolve (ReleaseChannel channel, Product product, CancellationToken token = new CancellationToken ())
 		{
-			using HttpClient httpClient = Boots.GetHttpClient ();
+			using var httpClient = new HttpClientWithPolicy (Boots);
 			Uri uri = GetUri (channel);
 			string channelId = GetChannelId (channel);
 			string productId = GetProductId (product);
@@ -24,17 +22,11 @@ namespace Boots.Core
 			return await GetPayloadUrl (httpClient, payloadManifestUrl, productId, token);
 		}
 
-		async Task<string> GetPayloadManifestUrl (HttpClient httpClient, Uri uri, string channelId, CancellationToken token)
+		async Task<string> GetPayloadManifestUrl (HttpClientWithPolicy httpClient, Uri uri, string channelId, CancellationToken token)
 		{
 			Boots.Logger.WriteLine ($"Querying {uri}");
 
-			var response = await httpClient.GetAsync (uri, token);
-			response.EnsureSuccessStatusCode ();
-
-			using var stream = await response.Content.ReadAsStreamAsync ();
-			token.ThrowIfCancellationRequested ();
-
-			var manifest = await JsonSerializer.DeserializeAsync<VSManifest> (stream, cancellationToken: token);
+			var manifest = await httpClient.GetJsonAsync<VSManifest> (uri, token);
 			var channelItem = manifest?.channelItems?.FirstOrDefault (c => c.id == channelId);
 			if (channelItem == null) {
 				throw new InvalidOperationException ($"Did not find '{channelId}' at: {uri}");
@@ -47,18 +39,12 @@ namespace Boots.Core
 			return payloadManifestUrl;
 		}
 
-		async Task<string> GetPayloadUrl (HttpClient httpClient, string payloadManifestUrl, string productId, CancellationToken token)
+		async Task<string> GetPayloadUrl (HttpClientWithPolicy httpClient, string payloadManifestUrl, string productId, CancellationToken token)
 		{
 			var uri = new Uri (payloadManifestUrl);
 			Boots.Logger.WriteLine ($"Querying {uri}");
 
-			var response = await httpClient.GetAsync (uri, token);
-			response.EnsureSuccessStatusCode ();
-
-			using var stream = await response.Content.ReadAsStreamAsync ();
-			token.ThrowIfCancellationRequested ();
-
-			var payload = await JsonSerializer.DeserializeAsync<VSPayloadManifest> (stream, cancellationToken: token);
+			var payload = await httpClient.GetJsonAsync<VSPayloadManifest> (uri, token);
 			var url = payload?.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
 			if (url == null || url == "") {
 				throw new InvalidOperationException ($"Did not find payload url for '{productId}' at: {uri}");
