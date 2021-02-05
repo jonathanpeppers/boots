@@ -1,39 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageOutputPath>..\bin</PackageOutputPath>
     <PackageId>Cake.Boots</PackageId>
     <Title>$(PackageId)</Title>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <_NuGetPackagePath>lib\$(TargetFramework)</_NuGetPackagePath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" />
-    <PackageReference Include="Polly" GeneratePathProperty="true" />
-    <PackageReference Include="System.Buffers" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="System.Memory" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="System.Numerics.Vectors" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="System.Text.Encodings.Web" GeneratePathProperty="true" IncludeAssets="none" />
-    <PackageReference Include="System.Text.Json" GeneratePathProperty="true" IncludeAssets="none" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\Boots.Core\Boots.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <!--These are listed explicitly so if they are missing, we get a build error-->
-    <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgPolly)\lib\$(TargetFramework)\Polly.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Buffers)\lib\$(TargetFramework)\System.Buffers.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Memory)\lib\$(TargetFramework)\System.Memory.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Numerics_Vectors)\lib\$(TargetFramework)\System.Numerics.Vectors.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Runtime_CompilerServices_Unsafe)\lib\$(TargetFramework)\System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Text_Encodings_Web)\lib\$(TargetFramework)\System.Text.Encodings.Web.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
-    <None Include="$(PkgSystem_Text_Json)\lib\$(TargetFramework)\System.Text.Json.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(OutputPath)Boots.Core.dll"                             Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)Boots.Core.pdb"                             Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)Polly.dll"                                  Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Buffers.dll"                         Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Memory.dll"                          Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Numerics.Vectors.dll"                Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Runtime.CompilerServices.Unsafe.dll" Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Text.Encodings.Web.dll"              Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)System.Text.Json.dll"                       Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
   </ItemGroup>
 
 </Project>
