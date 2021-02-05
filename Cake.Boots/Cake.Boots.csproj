@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" />
-    <PackageReference Include="Polly" />
+    <PackageReference Include="Polly" GeneratePathProperty="true" />
     <PackageReference Include="System.Buffers" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="System.Memory" GeneratePathProperty="true" IncludeAssets="none" />
     <PackageReference Include="System.Numerics.Vectors" GeneratePathProperty="true" IncludeAssets="none" />
@@ -27,6 +27,7 @@
     <!--These are listed explicitly so if they are missing, we get a build error-->
     <None Include="$(OutputPath)Boots.Core.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
     <None Include="$(OutputPath)Boots.Core.pdb" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
+    <None Include="$(PkgPolly)\lib\$(TargetFramework)\Polly.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
     <None Include="$(PkgSystem_Buffers)\lib\$(TargetFramework)\System.Buffers.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
     <None Include="$(PkgSystem_Memory)\lib\$(TargetFramework)\System.Memory.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
     <None Include="$(PkgSystem_Numerics_Vectors)\lib\$(TargetFramework)\System.Numerics.Vectors.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
