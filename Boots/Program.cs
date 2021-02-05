@@ -50,7 +50,7 @@ namespace Boots
 					Argument = new Argument<double>("seconds")
 				},
 				new Option ("--read-write-timeout",
-					$"Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 5 minutes.")
+					$"Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 300 seconds.")
 				{
 					Argument = new Argument<double>("seconds")
 				},
