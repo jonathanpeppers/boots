@@ -35,7 +35,7 @@ namespace Boots.Core
 			token.ThrowIfCancellationRequested ();
 
 			var manifest = await JsonSerializer.DeserializeAsync<VSManifest> (stream, cancellationToken: token);
-			var channelItem = manifest.channelItems?.FirstOrDefault (c => c.id == channelId);
+			var channelItem = manifest?.channelItems?.FirstOrDefault (c => c.id == channelId);
 			if (channelItem == null) {
 				throw new InvalidOperationException ($"Did not find '{channelId}' at: {uri}");
 			}
@@ -59,7 +59,7 @@ namespace Boots.Core
 			token.ThrowIfCancellationRequested ();
 
 			var payload = await JsonSerializer.DeserializeAsync<VSPayloadManifest> (stream, cancellationToken: token);
-			var url = payload.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
+			var url = payload?.packages?.FirstOrDefault (p => p.id == productId)?.payloads?.Select (p => p.url).FirstOrDefault ();
 			if (url == null || url == "") {
 				throw new InvalidOperationException ($"Did not find payload url for '{productId}' at: {uri}");
 			}
