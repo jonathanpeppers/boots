@@ -45,15 +45,25 @@ namespace Boots
 					Argument = new Argument<FileType>("file-type")
 				},
 				new Option ("--timeout",
-					$"Specifies a timeout (in seconds) for HttpClient. If omitted, uses the .NET default of 100 seconds.")
+					$"Specifies a timeout for HttpClient. If omitted, uses the .NET default of 100 seconds.")
 				{
-					Argument = new Argument<double>("timeout")
+					Argument = new Argument<double>("seconds")
+				},
+				new Option ("--read-write-timeout",
+					$"Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 5 minutes.")
+				{
+					Argument = new Argument<double>("seconds")
+				},
+				new Option ("--retries",
+					$"Specifies a number of retries for HttpClient failures. If omitted, uses a default of 3 retries.")
+				{
+					Argument = new Argument<int>("int")
 				},
 			};
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?> (Run);
+			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?, double?, int?> (Run);
 			await rootCommand.InvokeAsync (args);
 		}
 
@@ -77,7 +87,14 @@ namespace Boots
 			return "";
 		}
 
-		static async Task Run (string url, string stable = "", string preview = "", FileType? fileType = null, double? timeout = null)
+		static async Task Run (
+			string url,
+			string stable = "",
+			string preview = "",
+			FileType? fileType = null,
+			double? timeout = null,
+			double? readWriteTimeout = null,
+			int? retries = null)
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
@@ -88,6 +105,12 @@ namespace Boots
 			};
 			if (timeout != null) {
 				boots.Timeout = TimeSpan.FromSeconds (timeout.Value);
+			}
+			if (readWriteTimeout != null) {
+				boots.ReadWriteTimeout = TimeSpan.FromSeconds (readWriteTimeout.Value);
+			}
+			if (retries != null) {
+				boots.NetworkRetries = retries.Value;
 			}
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);
