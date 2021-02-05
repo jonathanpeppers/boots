@@ -33,6 +33,7 @@ Task("Boots")
         await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
 
         var settings = new BootsSettings {
+            Channel = ReleaseChannel.Stable,
             Product = Product.XamarinAndroid,
             Timeout = TimeSpan.FromSeconds (200),
             ReadWriteTimeout = TimeSpan.FromMinutes (10),
