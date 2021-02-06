@@ -29,10 +29,19 @@ Task("Boots")
         // Let's really run through the gauntlet and install 6 .pkg files
         await Boots (Product.XamariniOS,     ReleaseChannel.Stable);
         await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
-        await Boots (Product.XamarinAndroid, ReleaseChannel.Stable);
         await Boots (Product.XamariniOS,     ReleaseChannel.Preview);
         await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
-        await Boots (Product.XamarinAndroid, ReleaseChannel.Preview);
+
+        var settings = new BootsSettings {
+            Channel = ReleaseChannel.Stable,
+            Product = Product.XamarinAndroid,
+            Timeout = TimeSpan.FromSeconds (200),
+            ReadWriteTimeout = TimeSpan.FromMinutes (10),
+            NetworkRetries = 1,
+        };
+        await Boots (settings);
+        settings.Channel = ReleaseChannel.Preview;
+        await Boots (settings);
     }
 });
 

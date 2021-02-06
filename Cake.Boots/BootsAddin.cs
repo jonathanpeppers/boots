@@ -35,6 +35,31 @@ namespace Cake.Boots
 			await boots.Install ();
 		}
 
+		[CakeMethodAlias]
+		public static async Task Boots (this ICakeContext context, BootsSettings settings)
+		{
+			var boots = new Bootstrapper {
+				Logger = new CakeWriter (context)
+			};
+
+			if (settings.Timeout != null)
+				boots.Timeout = settings.Timeout;
+			if (settings.ReadWriteTimeout != null)
+				boots.ReadWriteTimeout = settings.ReadWriteTimeout.Value;
+			if (settings.NetworkRetries != null)
+				boots.NetworkRetries = settings.NetworkRetries.Value;
+			if (settings.Channel != null)
+				boots.Channel = settings.Channel.Value;
+			if (settings.Product != null)
+				boots.Product = settings.Product.Value;
+			if (settings.FileType != null)
+				boots.FileType = settings.FileType;
+			if (settings.Url != null)
+				boots.Url = settings.Url;
+
+			await boots.Install ();
+		}
+
 		class CakeWriter : TextWriter
 		{
 			const Verbosity verbosity = Verbosity.Normal;

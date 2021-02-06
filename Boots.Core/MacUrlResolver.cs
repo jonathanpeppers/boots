@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -21,20 +20,14 @@ namespace Boots.Core
 
 		public async override Task<string> Resolve (ReleaseChannel channel, Product product, CancellationToken token = new CancellationToken ())
 		{
-			using HttpClient httpClient = Boots.GetHttpClient ();
+			using var httpClient = new HttpClientWithPolicy (Boots);
 			string level = GetLevel (channel);
 			string productId = GetProductId (product);
 
 			var uri = new Uri (Url + level);
 			Boots.Logger.WriteLine ($"Querying {uri}");
-			var response = await httpClient.GetAsync (uri, token);
-			response.EnsureSuccessStatusCode ();
 
-			var document = new XmlDocument ();
-			using var stream = await response.Content.ReadAsStreamAsync ();
-			token.ThrowIfCancellationRequested ();
-			document.Load (stream);
-
+			var document = await httpClient.GetXmlDocumentAsync (uri, token);
 			var node = document.SelectSingleNode ($"/UpdateInfo/Application[@id='{productId}']/Update/@url");
 			if (node == null) {
 				throw new XmlException ($"Did not find {product}, at channel {channel}");

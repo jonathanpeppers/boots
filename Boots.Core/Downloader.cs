@@ -24,18 +24,8 @@ namespace Boots.Core
 		public async Task Download (CancellationToken token = new CancellationToken ())
 		{
 			boots.Logger.WriteLine ($"Downloading {uri}");
-
-			using HttpClient client = boots.GetHttpClient ();
-			var request = new HttpRequestMessage (HttpMethod.Get, uri);
-			var response = await client.SendAsync (request, HttpCompletionOption.ResponseHeadersRead, token);
-			response.EnsureSuccessStatusCode ();
-
-			using var httpStream = await response.Content.ReadAsStreamAsync ();
-			token.ThrowIfCancellationRequested ();
-
-			using var fileStream = File.Create (TempFile);
-			boots.Logger.WriteLine ($"Writing to {TempFile}");
-			await httpStream.CopyToAsync (fileStream, 8 * 1024, token);
+			using var client = new HttpClientWithPolicy (boots);
+			await client.DownloadAsync (uri, TempFile, token);
 		}
 
 		public void Dispose ()
