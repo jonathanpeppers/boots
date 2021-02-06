@@ -36,7 +36,8 @@ namespace Boots.Core
 			ActivePolicy = Policy
 				.Handle<HttpRequestException> ()
 				.Or<TimeoutRejectedException> ()
-				.RetryAsync (NetworkRetries)
+				.RetryAsync (NetworkRetries,
+					(exc, count) => Logger.WriteLine ($"Retry attempt {count}: {exc}"))
 				.WrapAsync (Policy.TimeoutAsync (ReadWriteTimeout));
 		}
 

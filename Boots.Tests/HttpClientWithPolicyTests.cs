@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
@@ -42,26 +44,42 @@ namespace Boots.Tests
 			Assert.Equal (0, client.TimesCalled);
 		}
 
-		[Fact]
-		public async Task RetryPolicy ()
+		[Theory]
+		[InlineData (typeof (AlwaysTimeoutClient), typeof (TimeoutRejectedException))]
+		[InlineData (typeof (AlwaysThrowsClient),  typeof (HttpRequestException))]
+		[InlineData (typeof (AlwaysThrowsClient),  typeof (NotImplementedException), 0)]
+		public async Task TimeoutPolicy (Type clientType, Type exceptionType, int expectedRetries = 5)
 		{
+			var writer = new StringWriter ();
 			var boots = new Bootstrapper {
 				NetworkRetries = 5,
 				ReadWriteTimeout = TimeSpan.FromMilliseconds (1),
+				Logger = writer,
 			};
 			boots.UpdateActivePolicy ();
 
-			using var client = new AlwaysTimeoutClient (boots);
-			await Assert.ThrowsAsync<TimeoutRejectedException> (() =>
+			using var client = (TestClient) Activator.CreateInstance (clientType, new object [] { boots });
+			client.ExceptionType = exceptionType;
+			await Assert.ThrowsAsync (exceptionType, () =>
 				client.DownloadAsync (new Uri ("http://google.com"), "", CancellationToken.None));
-			Assert.Equal (boots.NetworkRetries + 1, client.TimesCalled);
+			Assert.Equal (expectedRetries + 1, client.TimesCalled);
+			for (int i = 1; i <= expectedRetries; i++) {
+				Assert.Contains ($"Retry attempt {i}: {exceptionType.FullName}", writer.ToString ());
+			}
 		}
 
-		class AlwaysTimeoutClient : HttpClientWithPolicy
+		class TestClient : HttpClientWithPolicy
 		{
-			public AlwaysTimeoutClient (Bootstrapper boots) : base (boots) { }
+			public TestClient (Bootstrapper boots) : base (boots) { }
 
 			public int TimesCalled { get; set; }
+
+			public Type ExceptionType { get; set; }
+		}
+
+		class AlwaysTimeoutClient : TestClient
+		{
+			public AlwaysTimeoutClient (Bootstrapper boots) : base (boots) { }
 
 			async Task<T> Forever<T> (CancellationToken token)
 			{
@@ -75,6 +93,23 @@ namespace Boots.Tests
 			protected override Task<T> DoGetJsonAsync<T> (Uri uri, CancellationToken token) => Forever<T> (token);
 
 			protected override Task<XmlDocument> DoGetXmlDocumentAsync (Uri uri, CancellationToken token) => Forever<XmlDocument> (token);
+		}
+
+		class AlwaysThrowsClient : TestClient
+		{
+			public AlwaysThrowsClient (Bootstrapper boots) : base (boots) { }
+
+			Task<T> Throw<T> ()
+			{
+				TimesCalled++;
+				throw (Exception) Activator.CreateInstance (ExceptionType);
+			}
+
+			protected override Task DoDownloadAsync (Uri uri, string tempFile, CancellationToken token) => Throw<object> ();
+
+			protected override Task<T> DoGetJsonAsync<T> (Uri uri, CancellationToken token) => Throw<T> ();
+
+			protected override Task<XmlDocument> DoGetXmlDocumentAsync (Uri uri, CancellationToken token) => Throw<XmlDocument> ();
 		}
 	}
 }
