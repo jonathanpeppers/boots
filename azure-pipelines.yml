@@ -8,7 +8,7 @@ trigger:
 
 variables:
   Configuration: Release
-  BootsVersion: 1.0.3
+  BootsVersion: 1.0.4
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   XA.Version: 11.2
