@@ -90,7 +90,7 @@ Then invoke Cake twice:
 CI systems are somewhat notorious for random networking failures.
 Starting in boots 1.0.4, you can control some of this behavior:
 
-```bash
+```
   --timeout <seconds>               Specifies a timeout for HttpClient. If omitted, uses the .NET default of 100 seconds.
   --read-write-timeout <seconds>    Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 300 seconds.
   --retries <int>                   Specifies a number of retries for HttpClient failures. If omitted, uses a default of 3 retries.
