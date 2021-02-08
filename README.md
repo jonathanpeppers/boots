@@ -27,26 +27,29 @@ boots https://url/to/your/package
 * On Windows - assumes the file is a `.vsix` and installs it into all instances of Visual Studio via `VSIXInstaller.exe`.
 * On Mac OSX - assumes the file is a `.pkg` and installs it
 
-### New Xamarin Hotness
+### Builds from Stable & Preview Visual Studio Channels
 
-By querying the Visual Studio updater manifests, `boots` 1.0.2.x allows you to install the latest versions of Xamarin or Mono from the stable or preview channels.
+By querying the Visual Studio updater manifests, `boots` 1.0.2 or
+higher allows you to install the latest versions of Xamarin or Mono
+from the stable or preview channels.
 
 Some examples:
 
 ```bash
-dotnet tool install --global boots --version 1.0.2.421
 boots --stable Mono
-boots --preview XamarinAndroid
-boots --preview XamariniOS
-boots --preview XamarinMac
+boots --preview Xamarin.Android
+boots --preview Xamarin.iOS
+boots --preview Xamarin.Mac
 ```
 
 This would install the latest stable Mono and the latest previews for Xamarin.Android, Xamarin.iOS, and Xamarin.Mac.
 
-You can also do this from a `cake` script:
+### Cake
+
+You can also use `boots` from a [Cake][cake] script:
 
 ```csharp
-#addin nuget:?package=Cake.Boots&version=1.0.2.421
+#addin nuget:?package=Cake.Boots&version=1.0.3.556
 
 Task("Boots")
     .Does(async () =>
@@ -78,6 +81,33 @@ Then invoke Cake twice:
 ```bash
 ./build.sh -t Mono
 ./build.sh -t Boots
+```
+
+[cake]: https://cakebuild.net/
+
+### Network Resiliency
+
+CI systems are somewhat notorious for random networking failures.
+Starting in boots 1.0.4, you can control some of this behavior:
+
+```bash
+  --timeout <seconds>               Specifies a timeout for HttpClient. If omitted, uses the .NET default of 100 seconds.
+  --read-write-timeout <seconds>    Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 300 seconds.
+  --retries <int>                   Specifies a number of retries for HttpClient failures. If omitted, uses a default of 3 retries.
+```
+
+This can also be defined in a [Cake][cake] script with the
+`BootsSettings` class:
+
+```csharp
+var settings = new BootsSettings {
+    Channel = ReleaseChannel.Stable,
+    Product = Product.XamarinAndroid,
+    Timeout = TimeSpan.FromSeconds (100),
+    ReadWriteTimeout = TimeSpan.FromMinutes (5),
+    NetworkRetries = 3,
+};
+await Boots (settings);
 ```
 
 ### Use the Azure Pipeline Extension Task
@@ -136,23 +166,24 @@ boots https://aka.ms/xamarin-android-commercial-d16-4-windows
 `boots` now uses `System.CommandLine`, so we get rich help text for free:
 
 ```
-> boots
-At least one of --url, --stable, or --preview must be used
-
+> boots --help
 boots:
-  boots 1.0.2.421 File issues at: https://github.com/jonathanpeppers/boots/issues
+  boots 1.0.x File issues at: https://github.com/jonathanpeppers/boots/issues
 
 Usage:
   boots [options]
 
 Options:
-  --url <url>            A URL to a pkg or vsix file to install
-  --stable <product>     Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
-  --preview <product>    Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
-  --version              Display version information
+  --url <url>                       A URL to a pkg or vsix file to install
+  --stable <product>                Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --preview <product>               Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
+  --file-type <msi|pkg|vsix>        Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.
+  --timeout <seconds>               Specifies a timeout for HttpClient. If omitted, uses the .NET default of 100 seconds.
+  --read-write-timeout <seconds>    Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 300 seconds.
+  --retries <int>                   Specifies a number of retries for HttpClient failures. If omitted, uses a default of 3 retries.
+  --version                         Show version information
+  -?, -h, --help                    Show help and usage information
 ```
-
-*NOTE: using a URL is still going to be the most stable & reproducible option. It is possible a Xamarin or Mono update could come along and break your build.* 👀
 
 ### App Center
 
@@ -167,21 +198,6 @@ See [`appcenter-pre-build.sh`](samples/HelloForms.Android/appcenter-pre-build.sh
 [Github Actions][actions] is currently in beta, but I was able to get `boots` to work on both Windows & macOS.
 
 See [`actions.yml`](.github/workflows/actions.yml) for an example.
-
-### Cake
-
-You can use `boots` from a [Cake](https://cakebuild.net/) script, which is helpful if you need other logic to decide what needs to be installed.
-
-```csharp
-#addin nuget:?package=Cake.Boots
-
-Task("Boots")
-    .Does(async () =>
-    {
-        var platform = IsRunningOnWindows() ? "windows" : "macos";
-        await Boots ($"https://aka.ms/xamarin-android-commercial-d16-4-{platform}");
-    });
-```
 
 ### Other CI Systems
 

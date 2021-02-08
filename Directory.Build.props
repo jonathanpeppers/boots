@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <BootsVersion Condition=" '$(BootsVersion)' == ''">1.0.2</BootsVersion>
-    <BootsSuffix Condition=" '$(BootsSuffix)' == '' "></BootsSuffix>
+    <BootsVersion Condition=" '$(BootsVersion)' == ''">1.0.4</BootsVersion>
+    <BootsSuffix Condition=" '$(BootsSuffix)' == '' ">preview1</BootsSuffix>
     <BuildNumber Condition=" '$(BuildNumber)' == '' And '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</BuildNumber>
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">1</BuildNumber>
     <AssemblyVersion>$(BootsVersion).$(BuildNumber)</AssemblyVersion>
