@@ -1,7 +1,6 @@
 var target = Argument("target", "Default");
 
-// Just import both
-#r "bin/Debug/netstandard2.0/Cake.Boots.dll"
+// NOTE: only Release builds work
 #r "bin/Release/netstandard2.0/Cake.Boots.dll"
 
 // NOTE: always update Mono in a separate process, run Cake twice.

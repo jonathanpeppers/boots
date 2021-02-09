@@ -27,7 +27,7 @@ jobs:
     parameters:
       platform: windows
 
-  - powershell: .\build.ps1
+  - powershell: dotnet cake
     displayName: Cake test
     workingDirectory: Cake.Boots
 
@@ -41,5 +41,6 @@ jobs:
     parameters:
       platform: mac
 
-  - bash: ./Cake.Boots/build.sh -t Mono && ./Cake.Boots/build.sh
+  - bash: dotnet cake --target=Mono && dotnet cake
+    workingDirectory: Cake.Boots
     displayName: Cake test
