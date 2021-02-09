@@ -6,9 +6,7 @@
     <RollForward>Major</RollForward>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>boots</ToolCommandName>
-    <PackageOutputPath>..\bin</PackageOutputPath>
     <PackageId>boots</PackageId>
-    <Title>$(PackageId)</Title>
   </PropertyGroup>
 
   <ItemGroup>
