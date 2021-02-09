@@ -2,9 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageOutputPath>..\bin</PackageOutputPath>
     <PackageId>Cake.Boots</PackageId>
-    <Title>$(PackageId)</Title>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <_NuGetPackagePath>lib\$(TargetFramework)</_NuGetPackagePath>

@@ -1,5 +1,11 @@
 <Project>
-  <!-- NuGet packages -->
+  <!-- NuGet packaging settings -->
+  <PropertyGroup Condition=" '$(PackageId)' != '' ">
+    <Title>$(PackageId)</Title>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)bin</PackageOutputPath>
+  </PropertyGroup>
+  <!-- NuGet dependencies -->
   <ItemGroup>
     <PackageReference Update="Cake.Core"                              Version="1.0.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk"                 Version="16.8.3" />
