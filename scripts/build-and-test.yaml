@@ -2,6 +2,9 @@ parameters:
   platform: ''
 steps:
 
+- script: dotnet tool update --global Cake.Tool
+  displayName: install Cake
+
 - script: dotnet build boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/build.binlog
   displayName: dotnet build
 

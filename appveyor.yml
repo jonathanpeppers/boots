@@ -6,7 +6,9 @@ image: macOS
 test: off
 build_script:
 - sh: >-
+    dotnet tool update --global Cake.Tool &&
     dotnet build boots.sln &&
     dotnet pack boots.sln &&
-    ./Cake.Boots/build.sh -t Mono &&
-    ./Cake.Boots/build.sh
+    cd Cake.Boots &&
+    dotnet cake --target=Mono &&
+    dotnet cake

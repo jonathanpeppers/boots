@@ -79,8 +79,8 @@ Task("Mono")
 Then invoke Cake twice:
 
 ```bash
-./build.sh -t Mono
-./build.sh -t Boots
+dotnet cake --target=Mono
+dotnet cake --target=Boots
 ```
 
 [cake]: https://cakebuild.net/
