@@ -47,7 +47,9 @@ namespace Boots.Tests
 		[Theory]
 		[InlineData (typeof (AlwaysTimeoutClient), typeof (TimeoutRejectedException))]
 		[InlineData (typeof (AlwaysThrowsClient),  typeof (HttpRequestException))]
+		[InlineData (typeof (AlwaysThrowsClient),  typeof (IOException))]
 		[InlineData (typeof (AlwaysThrowsClient),  typeof (NotImplementedException), 0)]
+		[InlineData (typeof (AlwaysThrowsClient),  typeof (NullReferenceException), 0)]
 		public async Task TimeoutPolicy (Type clientType, Type exceptionType, int expectedRetries = 5)
 		{
 			var writer = new StringWriter ();
