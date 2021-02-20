@@ -4,7 +4,7 @@
 name: $(BuildID)
 
 trigger:
-- master
+- main
 
 variables:
   Configuration: Release
