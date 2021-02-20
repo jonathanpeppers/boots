@@ -6,6 +6,7 @@ image: macOS
 test: off
 build_script:
 - sh: >-
+    export PATH="$PATH:~/.dotnet/tools" &&
     dotnet tool update --global Cake.Tool &&
     dotnet build boots.sln &&
     cd Cake.Boots &&
