@@ -8,7 +8,7 @@
   <!-- NuGet dependencies -->
   <ItemGroup>
     <PackageReference Update="Cake.Core"                              Version="1.0.0" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk"                 Version="16.8.3" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk"                 Version="16.9.1" />
     <PackageReference Update="Polly"                                  Version="7.2.1" />
     <PackageReference Update="System.CommandLine"                     Version="2.0.0-beta1.20574.7" />
     <PackageReference Update="System.Text.Json"                       Version="5.0.1" />
