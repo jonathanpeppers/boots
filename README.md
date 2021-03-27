@@ -177,7 +177,7 @@ Options:
   --url <url>                       A URL to a pkg or vsix file to install
   --stable <product>                Install the latest *stable* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
   --preview <product>               Install the latest *preview* version of a product from VS manifests. Options include: Xamarin.Android, Xamarin.iOS, Xamarin.Mac, and Mono.
-  --file-type <msi|pkg|vsix>        Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.
+  --file-type <exe|msi|pkg|vsix>    Specifies the type of file to be installed such as vsix, pkg, msi, or exe. Inferred from URL, or defaults to vsix on Windows and pkg on macOS.
   --timeout <seconds>               Specifies a timeout for HttpClient. If omitted, uses the .NET default of 100 seconds.
   --read-write-timeout <seconds>    Specifies a timeout for reading/writing from a HttpClient stream. If omitted, uses a default of 300 seconds.
   --retries <int>                   Specifies a number of retries for HttpClient failures. If omitted, uses a default of 3 retries.

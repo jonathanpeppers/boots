@@ -24,6 +24,10 @@ Task("Boots")
         var firefox = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/82.0/win64/en-US/Firefox%20Setup%2082.0.msi";
         await Boots (firefox);
         await Boots (firefox, fileType: FileType.msi);
+        // Install .NET 6 twice
+        var dotnet = "https://download.visualstudio.microsoft.com/download/pr/2290b039-85d8-4d95-85f7-edbd9fcd118d/a64bef89625bc61db2a6832878610214/dotnet-sdk-6.0.100-preview.2.21155.3-win-x64.exe";
+        await Boots (dotnet);
+        await Boots (dotnet, fileType: FileType.exe);
     } else {
         // Let's really run through the gauntlet and install 6 .pkg files
         await Boots (Product.XamariniOS,     ReleaseChannel.Stable);

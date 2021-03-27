@@ -42,6 +42,17 @@ namespace Boots.Tests
 		}
 
 		[SkippableFact]
+		public async Task InstallExe ()
+		{
+			Skip.If (!Helpers.IsWindows, ".exes are only supported on Windows");
+			boots.FileType = FileType.exe;
+			boots.Url = "https://download.visualstudio.microsoft.com/download/pr/2290b039-85d8-4d95-85f7-edbd9fcd118d/a64bef89625bc61db2a6832878610214/dotnet-sdk-6.0.100-preview.2.21155.3-win-x64.exe";
+			await boots.Install ();
+			// Two installs back-to-back should be fine
+			await boots.Install ();
+		}
+
+		[SkippableFact]
 		public async Task InvalidInstallerFile ()
 		{
 			Skip.If (!Helpers.IsMac && !Helpers.IsWindows, "Not supported on Linux yet");

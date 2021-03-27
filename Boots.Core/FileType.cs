@@ -2,5 +2,6 @@ public enum FileType
 {
 	vsix,
 	pkg,
-	msi
+	msi,
+	exe
 }

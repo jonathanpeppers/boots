@@ -68,6 +68,9 @@ namespace Boots.Core
 					if (Url.EndsWith (".msi", StringComparison.OrdinalIgnoreCase)) {
 						FileType = global::FileType.msi;
 						Logger.WriteLine ("Inferring .msi from URL.");
+					} else if (Url.EndsWith (".exe", StringComparison.OrdinalIgnoreCase)) {
+						FileType = global::FileType.exe;
+						Logger.WriteLine ("Inferring .exe from URL.");
 					} else if (Url.EndsWith (".vsix", StringComparison.OrdinalIgnoreCase)) {
 						FileType = global::FileType.vsix;
 						Logger.WriteLine ("Inferring .vsix from URL.");
@@ -75,6 +78,8 @@ namespace Boots.Core
 				}
 				if (FileType == global::FileType.msi) {
 					installer = new MsiInstaller (this);
+				} else if (FileType == global::FileType.exe) {
+					installer = new ExeInstaller (this);
 				} else {
 					installer = new VsixInstaller (this);
 				}

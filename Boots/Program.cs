@@ -40,7 +40,7 @@ namespace Boots
 				},
 				new Option(
 					"--file-type",
-					$"Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.")
+					$"Specifies the type of file to be installed such as vsix, pkg, msi, or exe. Inferred from URL, or defaults to vsix on Windows and pkg on macOS.")
 				{
 					Argument = new Argument<FileType>("file-type")
 				},
