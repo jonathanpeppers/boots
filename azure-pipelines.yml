@@ -11,7 +11,7 @@ variables:
   BootsVersion: 1.0.4
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
-  XA.Version: 11.2
+  XA.Version: 11.3
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
@@ -36,6 +36,9 @@ jobs:
     vmImage: macOS-latest
     demands: msbuild
   steps:
+
+  - script: echo '##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)'
+    displayName: set JI_JAVA_HOME
 
   - template: scripts/build-and-test.yaml
     parameters:
