@@ -27,6 +27,7 @@ jobs:
         dotnet tool install --global boots
         boots --preview Mono
         boots --preview XamarinAndroid
+        export JI_JAVA_HOME="$JAVA_HOME_11_X64"
         msbuild ./samples/HelloForms.Android/HelloForms.Android.csproj /restore /t:SignAndroidPackage
 
   windows:
