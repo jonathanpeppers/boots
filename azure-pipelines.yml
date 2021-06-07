@@ -26,6 +26,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       platform: windows
+      xamarinAndroidUrl: https://dl.internalx.com/vsts-devdiv/Xamarin.Android/public/4842306/main/bf63c3d116b38459678cb3aefd2f5826e78c385e/signed/Xamarin.Android.Sdk-11.3.99.57.vsix
 
   - powershell: dotnet cake
     displayName: Cake test
@@ -40,6 +41,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       platform: mac
+      xamarinAndroidUrl: https://dl.internalx.com/vsts-devdiv/Xamarin.Android/public/4842306/main/bf63c3d116b38459678cb3aefd2f5826e78c385e/xamarin.android-11.3.99.57.pkg
 
   - bash: dotnet cake --target=Mono && dotnet cake
     workingDirectory: Cake.Boots
