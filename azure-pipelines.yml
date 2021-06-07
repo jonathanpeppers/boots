@@ -37,9 +37,6 @@ jobs:
     demands: msbuild
   steps:
 
-  - script: echo '##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)'
-    displayName: set JI_JAVA_HOME
-
   - template: scripts/build-and-test.yaml
     parameters:
       platform: mac
