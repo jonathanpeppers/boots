@@ -27,6 +27,12 @@ namespace Boots.Core
 
 		public string Url { get; set; } = "";
 
+		public string Workload { get; set; } = "";
+
+		public string Version { get; set; } = "";
+
+		public string WorkloadSource { get; set; } = "";
+
 		public TextWriter Logger { get; set; } = Console.Out;
 
 		internal AsyncPolicy ActivePolicy { get; set; } = Policy.NoOpAsync ();
@@ -46,7 +52,11 @@ namespace Boots.Core
 		{
 			UpdateActivePolicy ();
 
-			if (string.IsNullOrEmpty (Url)) {
+			if (!string.IsNullOrEmpty (Workload)) {
+				Logger.WriteLine ("* .NET 6 workload installs are experimental. File issues at: https://github.com/jonathanpeppers/boots/issues");
+				await new WorkloadInstaller (this).Install ("", token);
+				return;
+			} else if (string.IsNullOrEmpty (Url)) {
 				if (Channel == null)
 					throw new ArgumentNullException (nameof (Channel));
 				if (Product == null)

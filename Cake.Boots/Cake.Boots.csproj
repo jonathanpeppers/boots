@@ -20,6 +20,8 @@
     <!--These are listed explicitly so if they are missing, we get a build error-->
     <None Include="$(OutputPath)Boots.Core.dll"                             Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
     <None Include="$(OutputPath)Boots.Core.pdb"                             Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)NuGet.Packaging.dll"                        Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
+    <None Include="$(OutputPath)NuGet.Protocol.dll"                         Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
     <None Include="$(OutputPath)Polly.dll"                                  Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
     <None Include="$(OutputPath)System.Buffers.dll"                         Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />
     <None Include="$(OutputPath)System.Memory.dll"                          Pack="true" PackagePath="$(_NuGetPackagePath)" Visible="false" />

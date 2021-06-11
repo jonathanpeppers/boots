@@ -2,6 +2,7 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Boots.Core;
@@ -59,11 +60,34 @@ namespace Boots
 				{
 					Argument = new Argument<int>("int")
 				},
+				new Option(
+					"--workload",
+					$"*Experimental* install a .NET 6 workload. 'dotnet workload search' for valid workload names.")
+				{
+					Argument = new Argument<string>("workload")
+				},
+				new Option(
+					"--version",
+					$"*Experimental* specify a specific version for .NET 6 workloads. If omitted, latest is used.")
+				{
+					Argument = new Argument<string>("version")
+				},
+				new Option(
+					"--workload-source",
+					$"*Experimental* specify a NuGet feed for .NET 6 workloads. If omitted, uses NuGet.org.")
+				{
+					Argument = new Argument<string>("url")
+				},
 			};
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?, double?, int?> (Run);
+			var method = typeof (Program).GetMethod (nameof (Run), BindingFlags.Static | BindingFlags.NonPublic);
+			if (method == null) {
+				throw new Exception ("Unable to find Run method!");
+			}
+			rootCommand.Handler = CommandHandler.Create (method);
+
 			await rootCommand.InvokeAsync (args);
 		}
 
@@ -81,8 +105,12 @@ namespace Boots
 		{
 			if (result.OptionResult ("--url") == null &&
 				result.OptionResult ("--stable") == null &&
-				result.OptionResult ("--preview") == null) {
-				return "At least one of --url, --stable, or --preview must be used";
+				result.OptionResult ("--preview") == null &&
+				result.OptionResult ("--workload") == null) {
+				return "At least one of --url, --stable, --preview, or --workload must be used";
+			}
+			if (result.OptionResult ("--workload") != null && Environment.Version < new Version (6, 0)) {
+				return "Must be running on .NET 6 or higher to use --workload.";
 			}
 			return "";
 		}
@@ -94,7 +122,10 @@ namespace Boots
 			FileType? fileType = null,
 			double? timeout = null,
 			double? readWriteTimeout = null,
-			int? retries = null)
+			int? retries = null,
+			string workload = "",
+			string version = "",
+			string workloadSource = "")
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
@@ -102,6 +133,9 @@ namespace Boots
 			var boots = new Bootstrapper {
 				Url = url,
 				FileType = fileType,
+				Workload = workload,
+				Version = version,
+				WorkloadSource = workloadSource,
 			};
 			if (timeout != null) {
 				boots.Timeout = TimeSpan.FromSeconds (timeout.Value);
