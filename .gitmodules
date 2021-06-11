@@ -1,0 +1,3 @@
+[submodule "external/sdk"]
+	path = external/sdk
+	url = https://github.com/dotnet/sdk.git

@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.NET.Sdk.WorkloadManifestReader;
 using NuGet.Common;
 using NuGet.Configuration;
 using NuGet.Packaging.Core;
@@ -15,13 +17,14 @@ namespace Boots.Core
 	{
 		static readonly SourceCacheContext cache = NullSourceCacheContext.Instance;
 
+		readonly string sourceUrl;
 		readonly SourceRepository source;
 		readonly ILogger logger;
 
 		public WorkloadInstaller (Bootstrapper boots) : base (boots)
 		{
-			var url = string.IsNullOrEmpty (boots.WorkloadSource) ? NuGetConstants.V3FeedUrl : boots.WorkloadSource;
-			source = Repository.Factory.GetCoreV3 (url);
+			sourceUrl = string.IsNullOrEmpty (boots.WorkloadSource) ? NuGetConstants.V3FeedUrl : boots.WorkloadSource;
+			source = Repository.Factory.GetCoreV3 (sourceUrl);
 			logger = new NuGetLogger (boots);
 		}
 
@@ -29,11 +32,30 @@ namespace Boots.Core
 
 		public async override Task Install (string _, CancellationToken token = default)
 		{
+			var provider = new SdkDirectoryWorkloadManifestProvider ("", "");
+			var workload = GetWorkloadDefinition (provider);
+			if (workload == null) {
+				throw new Exception ($"Unable to find a workload named '{Boots.Workload}'.");
+			}
+
+			var resolver = WorkloadResolver.Create (provider, "", "");
+
 			if (!string.IsNullOrEmpty (Boots.Version)) {
 				// Download workload .nupkg file
 				var package = new PackageIdentity (Boots.Workload, new NuGetVersion (Boots.Version));
 				await Download (package, Path.GetTempPath (), token);
 			}
+		}
+
+		WorkloadDefinition? GetWorkloadDefinition (SdkDirectoryWorkloadManifestProvider provider)
+		{
+			var id = new WorkloadDefinitionId (Boots.Workload);
+			foreach (var manifestFile in provider.GetManifests ()) {
+				var manifest = WorkloadManifestReader.ReadWorkloadManifest (manifestFile.manifestId, manifestFile.manifestStream);
+				if (manifest.Workloads.TryGetValue (id, out var workload))
+					return workload;
+			}
+			return null;
 		}
 
 		async Task Download (PackageIdentity package, string destination, CancellationToken token)

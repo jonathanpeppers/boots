@@ -1,14 +1,36 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <DefineConstants>$(DefineConstants);USE_SYSTEM_TEXT_JSON</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\external\sdk\src\Resolvers\Microsoft.NET.Sdk.WorkloadManifestReader\*.cs" Link="WorkloadManifestReader\%(FileName)%(Extension)" />
+    <Compile Include="..\external\sdk\src\Resolvers\Microsoft.DotNet.MSBuildSdkResolver\FXVersion.cs" Link="WorkloadManifestResolver\%(FileName)%(Extension)" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NuGet.Packaging" />
     <PackageReference Include="NuGet.Protocol" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="..\external\sdk\src\Resolvers\Microsoft.NET.Sdk.WorkloadManifestReader\Strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\external\sdk\src\Resolvers\Microsoft.NET.Sdk.WorkloadManifestReader\Strings.resx" Link="WorkloadManifestReader\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Microsoft.NET.Sdk.Localization</CustomToolNamespace>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
