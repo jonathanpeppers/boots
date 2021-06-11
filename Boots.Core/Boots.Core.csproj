@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -9,6 +9,12 @@
     <PackageReference Include="NuGet.Protocol" />
     <PackageReference Include="Polly" />
     <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.DotNet.MSBuildSdkResolver">
+      <HintPath>..\libs\Microsoft.DotNet.MSBuildSdkResolver.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

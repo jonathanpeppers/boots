@@ -1,7 +1,10 @@
 using System;
+using System.Globalization;
 using System.IO;
+using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.NET.Sdk.WorkloadManifestReader;
 using NuGet.Common;
 using NuGet.Configuration;
 using NuGet.Packaging.Core;
@@ -29,29 +32,49 @@ namespace Boots.Core
 
 		public async override Task Install (string _, CancellationToken token = default)
 		{
+			var directory = GetManifestDirectory ();
+			if (directory == null) {
+				throw new Exception ($"Unable to find a workload named '{Boots.Workload}'.");
+			}
 			if (!string.IsNullOrEmpty (Boots.Version)) {
 				// Download workload .nupkg file
-				var package = new PackageIdentity (Boots.Workload, new NuGetVersion (Boots.Version));
-				await Download (package, Path.GetTempPath (), token);
+				var textInfo = CultureInfo.InvariantCulture.TextInfo;
+				var id = $"{textInfo.ToTitleCase (directory.Name)}.Manifest-{directory.Parent.Name}";
+				var package = new PackageIdentity (id, new NuGetVersion (Boots.Version));
+				await Download (package, directory.FullName, token);
 			}
 		}
 
-		async Task Download (PackageIdentity package, string destination, CancellationToken token)
+		DirectoryInfo? GetManifestDirectory ()
+		{
+			var provider = new SdkDirectoryWorkloadManifestProvider (@"C:\Program Files\dotnet", "6.0.100-preview.5.21302.13");
+			foreach (var directory in provider.GetManifestDirectories ()) {
+				var dir = new DirectoryInfo (directory);
+				if (dir.Name.IndexOf (Boots.Workload, StringComparison.OrdinalIgnoreCase) != -1) {
+					return dir;
+				}
+			}
+			return null;
+		}
+
+		async Task Download (PackageIdentity package, string manifestDirectory, CancellationToken token)
 		{
 			var byIdRes = await source.GetResourceAsync<FindPackageByIdResource> ();
 			if (await byIdRes.DoesPackageExistAsync (package.Id, package.Version, cache, logger, token)) {
 				Boots.Logger.WriteLine ($"Found {package}");
-
+				var temp = Path.GetTempPath ();
 				var resource = await source.GetResourceAsync<DownloadResource> (token);
 				using var downloader = await byIdRes.GetPackageDownloaderAsync (package, cache, logger, token);
-				var context = new PackageDownloadContext (cache, directDownloadDirectory: destination, directDownload: true);
-				using var result = await resource.GetDownloadResourceResultAsync (package, context, destination, logger, token);
-				string path = Path.Combine (destination, $"{package}.nupkg");
-				using (var stream = File.Create (path)) {
-					await result.PackageStream.CopyToAsync (stream);
+				var context = new PackageDownloadContext (cache, directDownloadDirectory: temp, directDownload: true);
+				using var result = await resource.GetDownloadResourceResultAsync (package, context, temp, logger, token);
+				using var zip = new ZipArchive (result.PackageStream);
+				foreach (var entry in zip.Entries) {
+					if (entry.Name.StartsWith ("WorkloadManifest.", StringComparison.OrdinalIgnoreCase)) {
+						var path = Path.Combine (manifestDirectory, entry.Name);
+						Boots.Logger.WriteLine ($"Updating: {path}");
+						entry.ExtractToFile (path, overwrite: true);
+					}
 				}
-
-				Boots.Logger.WriteLine ($"Downloaded {path}");
 			} else {
 				throw new Exception ($"{package} not found!");
 			}

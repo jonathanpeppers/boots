@@ -18,7 +18,7 @@ namespace Boots.Tests
 		public async Task Test ()
 		{
 			var boots = new Bootstrapper {
-				Workload = "Microsoft.NET.Sdk.Android.Manifest-6.0.100",
+				Workload = "Microsoft.NET.Sdk.Android",
 				WorkloadSource = "https://aka.ms/maui-preview/index.json",
 				Version = "30.0.100-preview.5.28",
 				Logger = logger,
