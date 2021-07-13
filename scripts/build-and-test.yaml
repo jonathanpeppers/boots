@@ -1,5 +1,6 @@
 parameters:
   platform: ''
+  xaversion: 11.4
 steps:
 
 - script: dotnet tool update --global Cake.Tool
@@ -27,7 +28,7 @@ steps:
   displayName: verify
   inputs:
     solution: scripts/xa-version.targets
-    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=$(XA.Version) /bl:$(System.DefaultWorkingDirectory)/bin/verify.binlog'
+    msbuildArguments: '/v:minimal /nologo /t:Check /p:Expected=${{ parameters.xaversion }} /bl:$(System.DefaultWorkingDirectory)/bin/verify.binlog'
 
 - task: MSBuild@1
   displayName: build sample

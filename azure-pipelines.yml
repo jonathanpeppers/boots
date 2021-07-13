@@ -11,7 +11,6 @@ variables:
   BootsVersion: 1.0.4
   BootsSuffix: ''
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
-  XA.Version: 11.4
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
 
@@ -43,6 +42,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       platform: mac
+      xaversion: 11.3
 
   - bash: dotnet cake --target=Mono && dotnet cake
     workingDirectory: Cake.Boots
