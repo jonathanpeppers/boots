@@ -30,12 +30,14 @@ namespace Boots.Tests
 			await boots.Install ();
 		}
 
-		[SkippableFact]
-		public async Task InstallMsi ()
+		[SkippableTheory]
+		[InlineData ("https://download-installer.cdn.mozilla.net/pub/firefox/releases/82.0/win64/en-US/Firefox%20Setup%2082.0.msi")]
+		[InlineData ("https://aka.ms/download-jdk/microsoft-jdk-11.0.12.7.1-windows-x64.msi")]
+		public async Task InstallMsi (string url)
 		{
 			Skip.If (!Helpers.IsWindows, ".msis are only supported on Windows");
 			boots.FileType = FileType.msi;
-			boots.Url = "https://download-installer.cdn.mozilla.net/pub/firefox/releases/82.0/win64/en-US/Firefox%20Setup%2082.0.msi";
+			boots.Url = url;
 			await boots.Install ();
 			// Two installs back-to-back should be fine
 			await boots.Install ();
