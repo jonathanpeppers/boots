@@ -1,5 +1,5 @@
 parameters:
-  platform: ''
+  name: ''
   xaversion: 11.4
 steps:
 
@@ -17,7 +17,7 @@ steps:
   inputs:
     testResultsFormat: VSTest
     testResultsFiles: TestResults/*.trx
-    testRunTitle: ${{ parameters.platform }}
+    testRunTitle: ${{ parameters.name }}
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
 
@@ -39,6 +39,6 @@ steps:
 - task: PublishPipelineArtifact@0
   displayName: artifacts
   inputs:
-    artifactName: ${{ parameters.platform }}
+    artifactName: ${{ parameters.name }}
     targetPath: bin
   condition: succeededOrFailed()
