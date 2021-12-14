@@ -11,7 +11,7 @@
     <PackageReference Update="Microsoft.NET.Test.Sdk"                 Version="17.0.0" />
     <PackageReference Update="Polly"                                  Version="7.2.2" />
     <PackageReference Update="System.CommandLine"                     Version="2.0.0-beta1.20574.7" />
-    <PackageReference Update="System.Text.Json"                       Version="6.0.0" />
+    <PackageReference Update="System.Text.Json"                       Version="6.0.1" />
     <PackageReference Update="Xamarin.Forms"                          Version="5.0.0.2083" />
     <PackageReference Update="Xamarin.Essentials"                     Version="1.7.0" />
     <PackageReference Update="xunit"                                  Version="2.4.1" />
