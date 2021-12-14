@@ -8,8 +8,8 @@ trigger:
 
 variables:
   Configuration: Release
-  BootsVersion: 1.0.4
-  BootsSuffix: ''
+  BootsVersion: 1.1.0
+  BootsSuffix: '-preview1'
   PackageVersion: $(BootsVersion).$(Build.BuildNumber)$(BootsSuffix)
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
