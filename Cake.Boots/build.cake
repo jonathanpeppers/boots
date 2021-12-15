@@ -14,7 +14,7 @@ Task("Boots")
     .Does(async () =>
 {
     var url = IsRunningOnWindows() ?
-        "https://github.com/codecadwallader/codemaid/releases/download/v11.0/CodeMaid.v11.0.183.vsix" :
+        "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-vsliveshare/vsextensions/vsliveshare/1.0.5196/vspackage" :
         "https://aka.ms/objective-sharpie";
 
     await Boots (url);
