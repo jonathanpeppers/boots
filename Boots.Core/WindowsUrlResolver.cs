@@ -7,8 +7,8 @@ namespace Boots.Core
 {
 	class WindowsUrlResolver : UrlResolver
 	{
-		const string ReleaseUrl = "https://aka.ms/vs/16/release/channel";
-		const string PreviewUrl = "https://aka.ms/vs/16/pre/channel";
+		const string ReleaseUrl = "https://aka.ms/vs/17/release/channel";
+		const string PreviewUrl = "https://aka.ms/vs/17/pre/channel";
 
 		public WindowsUrlResolver (Bootstrapper boots) : base (boots) { }
 
