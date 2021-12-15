@@ -39,6 +39,12 @@ namespace Boots
 					Argument = new Argument<string>("product")
 				},
 				new Option(
+					"--alpha",
+					$"Install the latest *alpha* version of a product from VS manifests. This is only valid for Visual Studio for Mac. {options}")
+				{
+					Argument = new Argument<string>("product")
+				},
+				new Option(
 					"--file-type",
 					$"Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.")
 				{
@@ -91,6 +97,7 @@ namespace Boots
 			string url,
 			string stable = "",
 			string preview = "",
+			string alpha = "",
 			FileType? fileType = null,
 			double? timeout = null,
 			double? readWriteTimeout = null,
@@ -112,6 +119,7 @@ namespace Boots
 			if (retries != null) {
 				boots.NetworkRetries = retries.Value;
 			}
+			SetChannelAndProduct (boots, alpha, ReleaseChannel.Alpha);
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);
 			await boots.Install (cts.Token);

@@ -21,7 +21,7 @@ steps:
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
 
-- script: dotnet Boots/bin/$(Configuration)/netcoreapp3.1/Boots.dll --preview Xamarin.Android
+- script: dotnet Boots/bin/$(Configuration)/netcoreapp3.1/Boots.dll --alpha Xamarin.Android
   displayName: install xamarin-android
 
 - task: MSBuild@1

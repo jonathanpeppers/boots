@@ -31,6 +31,8 @@ Task("Boots")
         await Boots (Product.XamarinMac,     ReleaseChannel.Stable);
         await Boots (Product.XamariniOS,     ReleaseChannel.Preview);
         await Boots (Product.XamarinMac,     ReleaseChannel.Preview);
+        await Boots (Product.XamariniOS,     ReleaseChannel.Alpha);
+        await Boots (Product.XamarinMac,     ReleaseChannel.Alpha);
 
         var settings = new BootsSettings {
             Channel = ReleaseChannel.Stable,
@@ -41,6 +43,8 @@ Task("Boots")
         };
         await Boots (settings);
         settings.Channel = ReleaseChannel.Preview;
+        await Boots (settings);
+        settings.Channel = ReleaseChannel.Alpha;
         await Boots (settings);
     }
 });
