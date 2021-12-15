@@ -13,8 +13,9 @@ Task("Mono")
 Task("Boots")
     .Does(async () =>
 {
+    string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
     var url = IsRunningOnWindows() ?
-        "https://github.com/codecadwallader/codemaid/releases/download/v11.0/CodeMaid.v11.0.183.vsix" :
+        $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix" :
         "https://aka.ms/objective-sharpie";
 
     await Boots (url);

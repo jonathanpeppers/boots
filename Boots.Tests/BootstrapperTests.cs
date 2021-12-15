@@ -19,7 +19,8 @@ namespace Boots.Tests
 		public async Task SimpleInstall ()
 		{
 			if (Helpers.IsWindows) {
-				boots.Url = "https://github.com/codecadwallader/codemaid/releases/download/v11.0/CodeMaid.v11.0.183.vsix";
+				string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
+				boots.Url = $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix";
 			} else if (Helpers.IsMac) {
 				boots.Url = "https://aka.ms/objective-sharpie";
 			} else {
