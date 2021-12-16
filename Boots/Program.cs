@@ -69,7 +69,7 @@ namespace Boots
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?, double?, int?> (Run);
+			rootCommand.Handler = CommandHandler.Create (Run);
 			await rootCommand.InvokeAsync (args);
 		}
 
