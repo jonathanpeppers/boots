@@ -3,6 +3,11 @@ parameters:
   xaversion: 11.4
 steps:
 
+- task: UseDotNet@2
+  displayName: install .NET 6
+  inputs:
+    version: 6.0.x
+
 - script: dotnet tool update --global Cake.Tool
   displayName: install Cake
 
