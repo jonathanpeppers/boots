@@ -87,8 +87,9 @@ namespace Boots
 		{
 			if (result.OptionResult ("--url") == null &&
 				result.OptionResult ("--stable") == null &&
-				result.OptionResult ("--preview") == null) {
-				return "At least one of --url, --stable, or --preview must be used";
+				result.OptionResult ("--preview") == null &&
+				result.OptionResult ("--alpha") == null) {
+				return "At least one of --url, --stable, --preview, or --alpha must be used";
 			}
 			return "";
 		}
