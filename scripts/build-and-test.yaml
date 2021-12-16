@@ -14,8 +14,8 @@ steps:
 - script: dotnet build boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/build.binlog
   displayName: dotnet build
 
-- script: dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.1/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
-  displayName: dotnet vstest
+- script: dotnet test Boots.Tests/bin/$(Configuration)/net6.0/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
+  displayName: dotnet test
 
 - task: PublishTestResults@2
   displayName: publish test results
