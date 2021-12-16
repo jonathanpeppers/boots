@@ -4,11 +4,6 @@ parameters:
 steps:
 
 - task: UseDotNet@2
-  displayName: install .NET 3.1
-  inputs:
-    version: 3.1.x
-
-- task: UseDotNet@2
   displayName: install .NET 6
   inputs:
     version: 6.0.x
