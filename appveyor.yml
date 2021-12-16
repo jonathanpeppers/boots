@@ -3,7 +3,7 @@ branches:
   only:
   - main
 image: macOS
-test: off
+test: false
 environment:
   Configuration: Release
   Verbosity: Diagnostic
@@ -11,7 +11,7 @@ build_script:
 - sh: >-
     export PATH="$PATH:~/.dotnet/tools" &&
     dotnet tool update --global Cake.Tool &&
-    dotnet build boots.sln &&
+    dotnet build Cake.Boots/Cake.Boots.csproj &&
     cd Cake.Boots &&
     dotnet cake --target=Mono --verbosity=$Verbosity &&
     dotnet cake --verbosity=$Verbosity
