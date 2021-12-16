@@ -3,14 +3,19 @@ parameters:
   xaversion: 11.4
 steps:
 
+- task: UseDotNet@2
+  displayName: install .NET 6
+  inputs:
+    version: 6.0.x
+
 - script: dotnet tool update --global Cake.Tool
   displayName: install Cake
 
 - script: dotnet build boots.sln -bl:$(System.DefaultWorkingDirectory)/bin/build.binlog
   displayName: dotnet build
 
-- script: dotnet vstest Boots.Tests/bin/$(Configuration)/netcoreapp3.1/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
-  displayName: dotnet vstest
+- script: dotnet test Boots.Tests/bin/$(Configuration)/net6.0/Boots.Tests.dll --logger:"trx;verbosity=normal" --logger:"console;verbosity=normal"
+  displayName: dotnet test
 
 - task: PublishTestResults@2
   displayName: publish test results
@@ -21,7 +26,7 @@ steps:
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
 
-- script: dotnet Boots/bin/$(Configuration)/netcoreapp3.1/Boots.dll --preview Xamarin.Android
+- script: dotnet Boots/bin/$(Configuration)/netcoreapp3.1/Boots.dll --alpha Xamarin.Android
   displayName: install xamarin-android
 
 - task: MSBuild@1

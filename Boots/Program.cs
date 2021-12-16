@@ -39,6 +39,12 @@ namespace Boots
 					Argument = new Argument<string>("product")
 				},
 				new Option(
+					"--alpha",
+					$"Install the latest *alpha* version of a product from VS manifests. This is only valid for Visual Studio for Mac. {options}")
+				{
+					Argument = new Argument<string>("product")
+				},
+				new Option(
 					"--file-type",
 					$"Specifies the type of file to be installed such as vsix, pkg, or msi. Defaults to vsix on Windows and pkg on macOS.")
 				{
@@ -63,7 +69,7 @@ namespace Boots
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
 			rootCommand.Description = $"boots {Version} File issues at: https://github.com/jonathanpeppers/boots/issues";
-			rootCommand.Handler = CommandHandler.Create <string, string, string, FileType?, double?, double?, int?> (Run);
+			rootCommand.Handler = CommandHandler.Create (Run);
 			await rootCommand.InvokeAsync (args);
 		}
 
@@ -81,8 +87,9 @@ namespace Boots
 		{
 			if (result.OptionResult ("--url") == null &&
 				result.OptionResult ("--stable") == null &&
-				result.OptionResult ("--preview") == null) {
-				return "At least one of --url, --stable, or --preview must be used";
+				result.OptionResult ("--preview") == null &&
+				result.OptionResult ("--alpha") == null) {
+				return "At least one of --url, --stable, --preview, or --alpha must be used";
 			}
 			return "";
 		}
@@ -91,6 +98,7 @@ namespace Boots
 			string url,
 			string stable = "",
 			string preview = "",
+			string alpha = "",
 			FileType? fileType = null,
 			double? timeout = null,
 			double? readWriteTimeout = null,
@@ -112,6 +120,7 @@ namespace Boots
 			if (retries != null) {
 				boots.NetworkRetries = retries.Value;
 			}
+			SetChannelAndProduct (boots, alpha, ReleaseChannel.Alpha);
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);
 			await boots.Install (cts.Token);

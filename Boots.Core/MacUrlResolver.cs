@@ -48,6 +48,7 @@ namespace Boots.Core
 			return channel switch {
 				ReleaseChannel.Stable => "Stable",
 				ReleaseChannel.Preview => "Beta",
+				ReleaseChannel.Alpha => "Alpha",
 				_ => throw new NotImplementedException ($"Unexpected value for release: {channel}"),
 			};
 		}

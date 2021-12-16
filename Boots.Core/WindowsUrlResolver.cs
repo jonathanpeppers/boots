@@ -61,6 +61,7 @@ namespace Boots.Core
 				case ReleaseChannel.Stable:
 					return new Uri (ReleaseUrl);
 				case ReleaseChannel.Preview:
+				case ReleaseChannel.Alpha:
 					return new Uri (PreviewUrl);
 				default:
 					throw new NotImplementedException ($"Unexpected value for {nameof (ReleaseChannel)}: {channel}"); ;
@@ -73,6 +74,7 @@ namespace Boots.Core
 				case ReleaseChannel.Stable:
 					return "Microsoft.VisualStudio.Manifests.VisualStudio";
 				case ReleaseChannel.Preview:
+				case ReleaseChannel.Alpha:
 					return "Microsoft.VisualStudio.Manifests.VisualStudioPreview";
 				default:
 					throw new NotImplementedException ($"Unexpected value for release: {channel}"); ;

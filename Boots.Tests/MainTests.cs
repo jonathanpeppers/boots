@@ -8,7 +8,7 @@ namespace Boots.Tests
 {
 	public class MainTests : IDisposable
 	{
-		const string DefaultErrorMessage = "At least one of --url, --stable, or --preview must be used";
+		const string DefaultErrorMessage = "At least one of --url, --stable, --preview, or --alpha must be used";
 		readonly TextWriter consoleError;
 		readonly StringWriter stderr;
 		readonly MethodInfo main;
