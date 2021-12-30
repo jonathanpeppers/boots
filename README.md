@@ -195,7 +195,7 @@ See [`appcenter-pre-build.sh`](samples/HelloForms.Android/appcenter-pre-build.sh
 
 ### GitHub Actions
 
-[Github Actions][actions] is currently in beta, but I was able to get `boots` to work on both Windows & macOS.
+I was able to get `boots` to work on both Windows & macOS agents in [Github Actions][actions].
 
 See [`actions.yml`](.github/workflows/actions.yml) for an example.
 
