@@ -25,7 +25,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: vs2022
-      xaversion: 12.1
+      xaversion: 12.2
 
   - powershell: dotnet cake
     displayName: Cake test
@@ -40,7 +40,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: vs2019
-      xaversion: 12.1
+      xaversion: 12.2
 
   - powershell: dotnet cake
     displayName: Cake test
