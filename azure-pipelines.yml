@@ -25,7 +25,6 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: vs2022
-      xaversion: 12.2
 
   - powershell: dotnet cake
     displayName: Cake test
@@ -40,7 +39,6 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: vs2019
-      xaversion: 12.2
 
   - powershell: dotnet cake
     displayName: Cake test
@@ -58,7 +56,6 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: mac
-      xaversion: 12.2
 
   - bash: dotnet cake --target=Mono && dotnet cake
     workingDirectory: Cake.Boots
