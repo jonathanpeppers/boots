@@ -32,6 +32,18 @@ namespace Boots.Tests
 		}
 
 		[SkippableFact]
+		public async Task DowngradeFirst ()
+		{
+			Skip.If (!Helpers.IsWindows, "DowngradeFirst is only applicable on Windows");
+			string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
+			boots.Url = $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix";
+			await boots.Install ();
+			 // NOTE: this only does something for .vsix files on Windows
+			boots.DowngradeFirst = true;
+			await boots.Install ();
+		}
+
+		[SkippableFact]
 		public async Task InstallMsi ()
 		{
 			Skip.If (!Helpers.IsWindows, ".msis are only supported on Windows");
