@@ -65,6 +65,8 @@ namespace Boots
 				{
 					Argument = new Argument<int>("int")
 				},
+				new Option ("--downgrade-first",
+					$"Downgrades the existing vsix back to the shipped VS default before install. This allows an earlier vsix to be installed."),
 			};
 			rootCommand.Name = "boots";
 			rootCommand.AddValidator (Validator);
@@ -102,7 +104,8 @@ namespace Boots
 			FileType? fileType = null,
 			double? timeout = null,
 			double? readWriteTimeout = null,
-			int? retries = null)
+			int? retries = null,
+			bool downgradeFirst = false)
 		{
 			var cts = new CancellationTokenSource ();
 			Console.CancelKeyPress += (sender, e) => cts.Cancel ();
@@ -120,6 +123,7 @@ namespace Boots
 			if (retries != null) {
 				boots.NetworkRetries = retries.Value;
 			}
+			boots.DowngradeFirst = downgradeFirst;
 			SetChannelAndProduct (boots, alpha, ReleaseChannel.Alpha);
 			SetChannelAndProduct (boots, preview, ReleaseChannel.Preview);
 			SetChannelAndProduct (boots, stable,  ReleaseChannel.Stable);
