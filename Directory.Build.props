@@ -2,7 +2,7 @@
   <PropertyGroup>
     <BootsVersion Condition=" '$(BootsVersion)' == ''">1.1.0</BootsVersion>
     <!--NOTE: if non-empty, include a `-` prefix! -->
-    <BootsSuffix Condition=" '$(BootsSuffix)' == '' ">-preview1</BootsSuffix>
+    <BootsSuffix Condition=" '$(BootsSuffix)' == '' ">-preview2</BootsSuffix>
     <BuildNumber Condition=" '$(BuildNumber)' == '' And '$(BUILD_BUILDNUMBER)' != '' ">$(BUILD_BUILDNUMBER)</BuildNumber>
     <BuildNumber Condition=" '$(BuildNumber)' == '' ">1</BuildNumber>
     <AssemblyVersion>$(BootsVersion).$(BuildNumber)</AssemblyVersion>
