@@ -15,12 +15,17 @@ namespace Boots.Tests
 			boots.Logger = new TestWriter (output);
 		}
 
+		string GetCodeMaidUrl()
+		{
+			string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
+			return $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix";
+		}
+
 		[SkippableFact]
 		public async Task SimpleInstall ()
 		{
 			if (Helpers.IsWindows) {
-				string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
-				boots.Url = $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix";
+				boots.Url = GetCodeMaidUrl();
 			} else if (Helpers.IsMac) {
 				boots.Url = "https://aka.ms/objective-sharpie";
 			} else {
@@ -35,8 +40,7 @@ namespace Boots.Tests
 		public async Task DowngradeFirst ()
 		{
 			Skip.If (!Helpers.IsWindows, "DowngradeFirst is only applicable on Windows");
-			string vs = Environment.GetEnvironmentVariable("AGENT_JOBNAME") == "vs2019" ? "2019" : "2022";
-			boots.Url = $"https://github.com/codecadwallader/codemaid/releases/download/v12.0/CodeMaid.VS{vs}.v12.0.300.vsix";
+			boots.Url = GetCodeMaidUrl();
 			await boots.Install ();
 			 // NOTE: this only does something for .vsix files on Windows
 			boots.DowngradeFirst = true;
