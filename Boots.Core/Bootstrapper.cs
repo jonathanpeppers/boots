@@ -27,6 +27,8 @@ namespace Boots.Core
 
 		public string Url { get; set; } = "";
 
+		public bool DowngradeFirst { get; set; }
+
 		public TextWriter Logger { get; set; } = Console.Out;
 
 		internal AsyncPolicy ActivePolicy { get; set; } = Policy.NoOpAsync ();

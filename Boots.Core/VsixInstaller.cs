@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.IO.Compression;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,6 +31,10 @@ namespace Boots.Core
 			var vsixInstaller = Path.Combine (vs, "Common7", "IDE", "VSIXInstaller.exe");
 			var log = Path.GetTempFileName ();
 			try {
+				if (Boots.DowngradeFirst) {
+					await DowngradeVsix (file, vsixInstaller, token);
+				}
+
 				using var process = new AsyncProcess (Boots) {
 					Command = vsixInstaller,
 					Arguments = $"/quiet /logFile:{log} \"{file}\"",
@@ -38,6 +44,32 @@ namespace Boots.Core
 					Boots.Logger.WriteLine ("VSIX already installed.");
 				} else if (exitCode != 0) {
 					process.ThrowForExitCode (exitCode);
+				}
+			} finally {
+				await PrintLogFileAndDelete (log, token);
+			}
+		}
+
+		async Task DowngradeVsix (string file, string vsixInstaller, CancellationToken token)
+		{
+			var log = Path.GetTempFileName ();
+
+			try {
+				if (GetVsixID (file) is not string id) {
+					Boots.Logger.WriteLine ("Could not determine VSIX id to downgrade.");
+				} else {
+					Boots.Logger.WriteLine ($"Downgrading VSIX id {id}.");
+
+					using var downgrade = new AsyncProcess (Boots) {
+						Command = vsixInstaller,
+						Arguments = $"/quiet /downgrade:{id} /logFile:{log}"
+					};
+
+					var exitCode = await downgrade.RunAsync (token, throwOnError: false);
+
+					if (exitCode != 0) {
+						Boots.Logger.WriteLine ($"Downgrade failed, exit code {exitCode}.");
+					}
 				}
 			} finally {
 				await PrintLogFileAndDelete (log, token);
@@ -70,6 +102,19 @@ namespace Boots.Core
 				Boots.Logger.WriteLine ($"Using path from %VSINSTALLDIR%: {visualStudioDirectory}");
 				return visualStudioDirectory = vsInstallDir;
 			}
+		}
+
+		string? GetVsixID (string vsix)
+		{
+			using var zip = ZipFile.OpenRead (vsix);
+
+			var entry = zip.GetEntry ("manifest.json");
+
+			using var stream = entry.Open ();
+
+			using var doc = JsonDocument.Parse (stream);
+
+			return doc.RootElement.GetProperty ("id").GetString ();
 		}
 	}
 }
