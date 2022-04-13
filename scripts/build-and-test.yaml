@@ -1,6 +1,6 @@
 parameters:
   name: ''
-  xaversion: 12.2
+  xaversion: 12.3
 steps:
 
 - task: UseDotNet@2
