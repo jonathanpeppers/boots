@@ -15,7 +15,7 @@
     <PackageReference Update="Xamarin.Forms"                          Version="5.0.0.2401+905-sha.aeec18668-azdo.5950840" />
     <PackageReference Update="Xamarin.Essentials"                     Version="1.7.2" />
     <PackageReference Update="xunit"                                  Version="2.4.1" />
-    <PackageReference Update="xunit.runner.visualstudio"              Version="2.4.4">
+    <PackageReference Update="xunit.runner.visualstudio"              Version="2.4.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
