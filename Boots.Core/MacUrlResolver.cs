@@ -8,7 +8,7 @@ namespace Boots.Core
 {
 	class MacUrlResolver : UrlResolver
 	{
-		const string Url = "https://software.xamarin.com/Service/Updates?v=2&pv964ebddd-1ffe-47e7-8128-5ce17ffffb05=0&pv4569c276-1397-4adb-9485-82a7696df22e=0&pvd1ec039f-f3db-468b-a508-896d7c382999=0&pv0ab364ff-c0e9-43a8-8747-3afb02dc7731=0&level=";
+		const string Url = "https://software.xamarin.com/Service/Updates?v=2&pv964ebddd-1ffe-47e7-8128-5ce17ffffb05=0&pv4569c276-1397-4adb-9485-82a7696df22e=0&pvd1ec039f-f3db-468b-a508-896d7c382999=0&pv0ab364ff-c0e9-43a8-8747-3afb02dc7731=0&pv34937104-97FC-42A0-9159-D951135F72CA=810000000&level=";
 		static readonly Dictionary<Product, string> ProductIds = new Dictionary<Product, string> {
 			{ Product.Mono,           "964ebddd-1ffe-47e7-8128-5ce17ffffb05" },
 			{ Product.XamarinAndroid, "d1ec039f-f3db-468b-a508-896d7c382999" },
