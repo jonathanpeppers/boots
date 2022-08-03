@@ -16,7 +16,7 @@ variables:
 
 jobs:
 
-- job: vs2022
+- job: windows
   pool:
     vmImage: windows-2022
     demands: msbuild
@@ -24,21 +24,7 @@ jobs:
 
   - template: scripts/build-and-test.yaml
     parameters:
-      name: vs2022
-
-  - powershell: dotnet cake
-    displayName: Cake test
-    workingDirectory: Cake.Boots
-
-- job: vs2019
-  pool:
-    vmImage: windows-2019
-    demands: msbuild
-  steps:
-
-  - template: scripts/build-and-test.yaml
-    parameters:
-      name: vs2019
+      name: windows
 
   - powershell: dotnet cake
     displayName: Cake test
