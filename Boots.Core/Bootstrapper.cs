@@ -54,8 +54,6 @@ namespace Boots.Core
 				if (Product == null)
 					throw new ArgumentNullException (nameof (Product));
 
-				Logger.WriteLine ("* Automatic URL resolving is a new feature. File issues at: https://github.com/jonathanpeppers/boots/issues");
-
 				var resolver = Helpers.IsMac ?
 					(UrlResolver) new MacUrlResolver (this) :
 					(UrlResolver) new WindowsUrlResolver (this);
