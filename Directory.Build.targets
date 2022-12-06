@@ -12,7 +12,7 @@
     <PackageReference Update="Polly"                                  Version="7.2.3" />
     <PackageReference Update="System.CommandLine"                     Version="2.0.0-beta1.20574.7" />
     <PackageReference Update="System.Text.Json"                       Version="7.0.0" />
-    <PackageReference Update="Xamarin.Forms"                          Version="5.0.0.2515+946-sha.94acebbb4-azdo.6439792" />
+    <PackageReference Update="Xamarin.Forms"                          Version="5.0.0.2545" />
     <PackageReference Update="Xamarin.Essentials"                     Version="1.7.3" />
     <PackageReference Update="xunit"                                  Version="2.4.2" />
     <PackageReference Update="xunit.runner.visualstudio"              Version="2.4.5">
