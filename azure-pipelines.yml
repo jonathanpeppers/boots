@@ -42,6 +42,7 @@ jobs:
   - template: scripts/build-and-test.yaml
     parameters:
       name: mac
+      xaversion: 13.2
 
   - bash: dotnet cake --target=Mono && dotnet cake
     workingDirectory: Cake.Boots
