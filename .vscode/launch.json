@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Boots/bin/Debug/netcoreapp2.1/Boots.dll",
+            "program": "${workspaceFolder}/Boots/bin/Debug/netcoreapp3.1/Boots.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Boots",
             "console": "internalConsole",
@@ -18,8 +18,7 @@
         {
             "name": ".NET Core Attach",
             "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "request": "attach"
         }
     ]
 }
