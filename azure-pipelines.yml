@@ -22,27 +22,11 @@ jobs:
     demands: msbuild
   steps:
 
-  - template: scripts/build-and-test.yaml
-    parameters:
-      name: windows
-
-  - powershell: dotnet cake
-    displayName: Cake test
-    workingDirectory: Cake.Boots
-
-- job: mac
-  pool:
-    vmImage: macOS-latest
-    demands: msbuild
-  steps:
-
-  - script: echo '##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)'
-    displayName: set JI_JAVA_HOME
-
-  - template: scripts/build-and-test.yaml
-    parameters:
-      name: mac
-
-  - bash: dotnet cake --target=Mono && dotnet cake
-    workingDirectory: Cake.Boots
-    displayName: Cake test
+  - task: UseDotNet@2
+    displayName: 'Use .Net 8.0.200'
+    inputs:
+      version: 8.0.200
+  
+  - script: |
+      dotnet workload install android maui-android
+    displayName: Install Android Workloads
