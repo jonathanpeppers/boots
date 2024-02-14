@@ -28,5 +28,5 @@ jobs:
       version: 8.0.200
   
   - script: |
-      dotnet workload install android maui-android
+      dotnet workload install android maui-android --verbosity diag
     displayName: Install Android Workloads
