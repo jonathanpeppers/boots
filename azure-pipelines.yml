@@ -23,9 +23,9 @@ jobs:
   steps:
 
   - task: UseDotNet@2
-    displayName: 'Use .Net 8.0.200'
+    displayName: 'Use .Net 8.0.x'
     inputs:
-      version: 8.0.200
+      version: 8.0.x
   
   - script: |
       dotnet workload install android maui-android --verbosity diag
